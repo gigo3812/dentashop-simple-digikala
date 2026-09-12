@@ -114,7 +114,7 @@ if (is_product_category()) {
                                 <div class="gpds-shop-grid__item">
                                     <?php
                                         include get_stylesheet_directory() . '/template-parts/product/card.php';
-                                        ?>
+                                    ?>
                                 </div>
                             <?php endwhile; ?>
                         </div>

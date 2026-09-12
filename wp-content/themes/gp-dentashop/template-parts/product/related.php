@@ -49,9 +49,14 @@ if (!$related_query->have_posts()) {
             if (!$rel_product) continue;
         ?>
             <div class="gpds-shop-grid__item">
-                <?php get_template_part('template-parts/product/card', null, [
-                    'product' => $rel_product,
-                ]); ?>
+                <?php 
+                
+                    include get_stylesheet_directory() . '/template-parts/product/card.php';
+
+                // get_template_part('template-parts/product/card', null, [
+                //     'product' => $rel_product,
+                // ]); 
+                ?>
             </div>
         <?php endwhile; ?>
     </div>

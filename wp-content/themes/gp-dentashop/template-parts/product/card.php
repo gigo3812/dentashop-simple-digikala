@@ -6,6 +6,8 @@
  * @var WC_Product $product
  */
 
+
+
 if (!defined('ABSPATH')) exit;
 
 // چک‌های امنیتی
