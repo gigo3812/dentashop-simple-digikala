@@ -641,7 +641,7 @@ table {
 }
 
 .gpds-input--search {
-    padding-right: 44px;
+    padding-right: 44px !important;
 }
 
 .gpds-input-icon {
@@ -881,4 +881,146 @@ table {
 
 .gpds-toast--error {
     background: var(--gpds-color-danger);
+}
+
+/* ============================================================
+ * Loading Screen
+ * صفحه لودینگ تمام‌صفحه
+ * ============================================================ */
+.gpds-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: var(--gpds-bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.gpds-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.gpds-loader__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gpds-space-lg);
+    text-align: center;
+    padding: var(--gpds-space-lg);
+}
+
+/* لوگو */
+.gpds-loader__logo img,
+.gpds-loader__logo .custom-logo {
+    max-height: 60px;
+    width: auto;
+    margin-bottom: var(--gpds-space-md);
+    animation: gpds-loader-pulse 2s ease-in-out infinite;
+}
+
+.gpds-loader__logo-text {
+    font-size: 32px;
+    font-weight: var(--gpds-fw-extrabold);
+    color: var(--gpds-color-primary);
+    letter-spacing: -0.5px;
+    animation: gpds-loader-pulse 2s ease-in-out infinite;
+    display: block;
+}
+
+/* Spinner */
+.gpds-loader__spinner {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gpds-loader__spinner-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--gpds-color-primary);
+    animation: gpds-loader-spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.gpds-loader__spinner-circle:nth-child(1) {
+    animation-delay: -0.45s;
+    border-top-color: var(--gpds-color-primary);
+}
+
+.gpds-loader__spinner-circle:nth-child(2) {
+    animation-delay: -0.3s;
+    border-top-color: var(--gpds-color-warning);
+    width: 80%;
+    height: 80%;
+}
+
+.gpds-loader__spinner-circle:nth-child(3) {
+    animation-delay: -0.15s;
+    border-top-color: var(--gpds-color-secondary);
+    width: 60%;
+    height: 60%;
+}
+
+/* متن */
+.gpds-loader__text {
+    font-size: var(--gpds-fs-base);
+    color: var(--gpds-text-secondary);
+    font-weight: var(--gpds-fw-medium);
+    animation: gpds-loader-fade 1.5s ease-in-out infinite;
+}
+
+/* ============================================================
+ * Animations
+ * ============================================================ */
+@keyframes gpds-loader-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes gpds-loader-pulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.7; 
+        transform: scale(0.98);
+    }
+}
+
+@keyframes gpds-loader-fade {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Body state when loading */
+body.gpds-is-loading {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* مخفی کردن در پرینت */
+@media print {
+    .gpds-loader {
+        display: none !important;
+    }
+}
+
+/* کاهش انیمیشن برای کاربران خاص */
+@media (prefers-reduced-motion: reduce) {
+    .gpds-loader__spinner-circle,
+    .gpds-loader__logo img,
+    .gpds-loader__logo-text,
+    .gpds-loader__text {
+        animation: none !important;
+    }
 }

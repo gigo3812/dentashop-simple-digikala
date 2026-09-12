@@ -1,12 +1,110 @@
 /**
  * GP DentaShop - Main Script
- * مدیریت عمومی: Dropdown, Mega Menu, Mobile Menu
+ * بهینه‌شده - Loading Screen سبک
  */
 (function() {
     'use strict';
     
     const $ = (sel, ctx = document) => ctx.querySelector(sel);
     const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+    
+    // ============================================
+    // 🎯 Loading Screen - بهینه
+    // ============================================
+    
+    // شروع فوری (قبل از DOMContentLoaded)
+    function initLoaderEarly() {
+        const loader = document.getElementById('gpds-loader');
+        if (!loader) return;
+        
+        // ذخیره start time
+        loader._gpdsStart = performance.now();
+        
+        // شروع انیمیشن progress با CSS (بدون JS)
+        loader.classList.add('is-loading');
+    }
+    
+    // اجرای فوری
+    if (document.readyState === 'loading') {
+        initLoaderEarly();
+    } else {
+        initLoaderEarly();
+    }
+    
+    // ============================================
+    // مخفی کردن لودر
+    // ============================================
+    function hideLoader() {
+        const loader = document.getElementById('gpds-loader');
+        if (!loader || loader._gpdsHidden) return;
+        
+        loader._gpdsHidden = true;
+        
+        const elapsed = performance.now() - (loader._gpdsStart || 0);
+        const MIN_TIME = 300;
+        const remaining = Math.max(0, MIN_TIME - elapsed);
+        
+        setTimeout(function() {
+            loader.classList.remove('is-loading');
+            loader.classList.add('is-hidden');
+            
+            setTimeout(function() {
+                if (loader && loader.parentNode) {
+                    loader.parentNode.removeChild(loader);
+                }
+            }, 500);
+        }, remaining);
+    }
+    
+    // ============================================
+    // استراتژی مخفی کردن (بهینه)
+    // ============================================
+    function setupLoaderStrategy() {
+        const loader = document.getElementById('gpds-loader');
+        if (!loader) return;
+        
+        // 🎯 روش 1: DOMContentLoaded (سریع‌ترین)
+        // - صفحه پارس شده، می‌تونه محو بشه
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                // تاخیر کوتاه برای smooth transition
+                requestAnimationFrame(function() {
+                    setTimeout(hideLoader, 100);
+                });
+            });
+        } else if (document.readyState === 'interactive') {
+            setTimeout(hideLoader, 100);
+        } else {
+            hideLoader();
+        }
+        
+        // 🎯 روش 2: window.load (fallback برای تصاویر)
+        // - فقط اگه هنوز مخفی نشده
+        window.addEventListener('load', function() {
+            if (!loader._gpdsHidden) {
+                setTimeout(hideLoader, 200);
+            }
+        });
+        
+        // 🎯 روش 3: Fallback قطعی (ضد گیر)
+        // - حداکثر 3 ثانیه (نه 8!)
+        setTimeout(function() {
+            if (!loader._gpdsHidden) {
+                hideLoader();
+            }
+        }, 3000);
+    }
+    
+    // راه‌اندازی استراتژی
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupLoaderStrategy);
+    } else {
+        setupLoaderStrategy();
+    }
+    
+    // ============================================
+    // بقیه اسکریپت‌ها (بدون تغییر)
+    // ============================================
     
     document.addEventListener('DOMContentLoaded', function() {
         document.documentElement.classList.add('gpds-js-ready');
@@ -17,9 +115,7 @@
         initSearchOverlay();
     });
     
-    // ============================================
-    // Dropdown (کاربر و ...)
-    // ============================================
+    // Dropdown
     function initDropdowns() {
         $$('[data-gpds-dropdown]').forEach(dropdown => {
             const trigger = $('[data-gpds-dropdown-trigger]', dropdown);
@@ -39,9 +135,7 @@
         });
     }
     
-    // ============================================
     // Mega Menu
-    // ============================================
     function initMegaMenu() {
         const trigger = $('[data-gpds-mega-menu-trigger]');
         const menu = $('[data-gpds-mega-menu]');
@@ -50,14 +144,11 @@
         const items = $$('[data-gpds-mm-item]', menu);
         const panels = $$('[data-gpds-mm-panel]', menu);
         
-        // باز/بسته کردن
         trigger.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            const isOpen = !menu.hasAttribute('hidden');
-            
-            if (isOpen) {
+            if (!menu.hasAttribute('hidden')) {
                 closeMegaMenu();
             } else {
                 openMegaMenu();
@@ -69,7 +160,6 @@
             menu.setAttribute('aria-hidden', 'false');
             trigger.setAttribute('aria-expanded', 'true');
             
-            // فعال‌سازی اولین آیتم
             if (items.length > 0 && panels.length > 0) {
                 activateItem(items[0].dataset.gpdsMmItem);
             }
@@ -81,10 +171,8 @@
             trigger.setAttribute('aria-expanded', 'false');
         }
         
-        // تغییر بین دسته‌ها
         items.forEach(item => {
             const id = item.dataset.gpdsMmItem;
-            
             item.addEventListener('mouseenter', () => activateItem(id));
             item.addEventListener('focus', () => activateItem(id));
         });
@@ -92,34 +180,22 @@
         function activateItem(id) {
             items.forEach(it => it.classList.toggle('is-active', it.dataset.gpdsMmItem === id));
             panels.forEach(p => {
-                if (p.dataset.gpdsMmPanel === id) {
-                    p.removeAttribute('hidden');
-                } else {
-                    p.setAttribute('hidden', '');
-                }
+                p.hidden = p.dataset.gpdsMmPanel !== id;
             });
         }
         
-        // بستن با کلیک بیرون
         document.addEventListener('click', function(e) {
-            if (!menu.hasAttribute('hidden') && 
-                !menu.contains(e.target) && 
-                !trigger.contains(e.target)) {
+            if (!menu.hidden && !menu.contains(e.target) && !trigger.contains(e.target)) {
                 closeMegaMenu();
             }
         });
         
-        // بستن با Escape
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && !menu.hasAttribute('hidden')) {
-                closeMegaMenu();
-            }
+            if (e.key === 'Escape' && !menu.hidden) closeMegaMenu();
         });
     }
     
-    // ============================================
     // Mobile Menu
-    // ============================================
     function initMobileMenu() {
         const trigger = $('[data-gpds-mobile-menu-trigger]');
         const menu = $('[data-gpds-mobile-menu]');
@@ -129,21 +205,20 @@
         if (!trigger || !menu) return;
         
         function open() {
-            menu.removeAttribute('hidden');
+            menu.hidden = false;
             menu.setAttribute('aria-hidden', 'false');
-            if (overlay) overlay.removeAttribute('hidden');
+            if (overlay) overlay.hidden = false;
             document.body.style.overflow = 'hidden';
-            
             requestAnimationFrame(() => menu.classList.add('is-open'));
         }
         
         function close() {
             menu.classList.remove('is-open');
-            if (overlay) overlay.setAttribute('hidden', '');
+            if (overlay) overlay.hidden = true;
             document.body.style.overflow = '';
             
             setTimeout(() => {
-                menu.setAttribute('hidden', '');
+                menu.hidden = true;
                 menu.setAttribute('aria-hidden', 'true');
             }, 250);
         }
@@ -153,13 +228,11 @@
         if (overlay) overlay.addEventListener('click', close);
         
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && !menu.hasAttribute('hidden')) close();
+            if (e.key === 'Escape' && !menu.hidden) close();
         });
     }
     
-    // ============================================
-    // Search Overlay (Mobile)
-    // ============================================
+    // Search Overlay
     function initSearchOverlay() {
         const trigger = $('[data-gpds-search-overlay-trigger]');
         const overlay = $('[data-gpds-search-overlay]');
@@ -168,7 +241,7 @@
         if (!trigger || !overlay) return;
         
         trigger.addEventListener('click', function() {
-            overlay.removeAttribute('hidden');
+            overlay.hidden = false;
             overlay.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
             
@@ -179,19 +252,18 @@
         });
         
         function close() {
-            overlay.setAttribute('hidden', '');
+            overlay.hidden = true;
             overlay.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
         }
         
         if (closeBtn) closeBtn.addEventListener('click', close);
-        
         overlay.addEventListener('click', function(e) {
             if (e.target === overlay) close();
         });
         
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && !overlay.hasAttribute('hidden')) close();
+            if (e.key === 'Escape' && !overlay.hidden) close();
         });
     }
     

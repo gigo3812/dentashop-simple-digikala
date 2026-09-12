@@ -62,3 +62,43 @@ add_filter('body_class', function($classes) {
     $classes[] = 'gpds-has-custom-header';
     return $classes;
 });
+
+// ============================================
+// 🎯 Loading Screen - صفحه لودینگ
+// ============================================
+add_action('wp_body_open', 'gpds_render_loading_screen', 1);
+
+function gpds_render_loading_screen() {
+    ?>
+    <!-- 🎯 Loading Screen -->
+    <div id="gpds-loader" class="gpds-loader" aria-hidden="true">
+        <div class="gpds-loader__inner">
+            
+            <!-- لوگو -->
+            <div class="gpds-loader__logo">
+                <?php 
+                if (has_custom_logo()) {
+                    the_custom_logo();
+                } else {
+                    echo '<span class="gpds-loader__logo-text">' . esc_html(get_bloginfo('name')) . '</span>';
+                }
+                ?>
+            </div>
+            
+            <!-- Spinner (سه حلقه چرخان) -->
+            <div class="gpds-loader__spinner">
+                <div class="gpds-loader__spinner-circle"></div>
+                <div class="gpds-loader__spinner-circle"></div>
+                <div class="gpds-loader__spinner-circle"></div>
+            </div>
+            
+            <!-- متن -->
+            <div class="gpds-loader__text">
+                در حال بارگذاری...
+            </div>
+            
+        </div>
+    </div>
+    <!-- /Loading Screen -->
+    <?php
+}
