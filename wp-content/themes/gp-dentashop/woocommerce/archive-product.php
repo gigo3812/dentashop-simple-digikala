@@ -103,21 +103,21 @@ if (is_product_category()) {
                     <?php get_template_part('template-parts/shop/toolbar'); ?>
                     
                     <!-- گرید -->
-                    <?php if (woocommerce_product_loop()) : ?>
+                    <?php if (have_posts()) : ?>
                         
-                        <?php woocommerce_product_loop_start(); ?>
-                        
-                        <?php while (have_posts()) : the_post(); 
-                            global $product;
-                        ?>
-                            <div class="gpds-shop-grid__item">
-                                <?php get_template_part('template-parts/product/card', null, [
-                                    'product' => $product,
-                                ]); ?>
-                            </div>
-                        <?php endwhile; ?>
-                        
-                        <?php woocommerce_product_loop_end(); ?>
+                        <div class="gpds-shop-grid">
+                            <?php while (have_posts()) : the_post(); 
+                                // مطمئن‌ترین راه گرفتن محصول
+                                $product = wc_get_product(get_the_ID());
+                                if (!$product) continue;
+                            ?>
+                                <div class="gpds-shop-grid__item">
+                                    <?php get_template_part('template-parts/product/card', null, [
+                                        'product' => $product,
+                                    ]); ?>
+                                </div>
+                            <?php endwhile; ?>
+                        </div>
                         
                         <!-- Pagination -->
                         <div class="gpds-shop-pagination">
@@ -126,9 +126,9 @@ if (is_product_category()) {
                                 'base'      => add_query_arg('paged', '%#%'),
                                 'format'    => '',
                                 'current'   => max(1, get_query_var('paged')),
-                                'total'     => wc_get_loop_prop('total_pages'),
-                                'prev_text' => gpds_get_icon('chevron-right', 16),
-                                'next_text' => gpds_get_icon('chevron-left', 16),
+                                'total'     => $GLOBALS['wp_query']->max_num_pages,
+                                'prev_text' => '→',
+                                'next_text' => '←',
                                 'type'      => 'list',
                             ]);
                             ?>
