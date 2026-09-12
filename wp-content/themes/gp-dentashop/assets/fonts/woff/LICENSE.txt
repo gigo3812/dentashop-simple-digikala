@@ -1,0 +1,11 @@
+Dana Font
+=========
+
+Copyright (c) 2020, Rastikerdar
+All rights reserved.
+
+Dana is a free Persian font released under the SIL Open Font License, Version 1.1.
+
+Full license: https://scripts.sil.org/OFL
+
+Usage: This font is used in GP DentaShop WordPress theme.

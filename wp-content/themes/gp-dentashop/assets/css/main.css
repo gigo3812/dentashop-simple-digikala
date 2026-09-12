@@ -1,0 +1,836 @@
+/* ============================================================
+ * GP DentaShop - Main Stylesheet
+ * سیستم طراحی پایه - الهام گرفته از دیجی‌کالا
+ * 
+ * ترتیب:
+ *   1. CSS Variables
+ *   2. Reset & Base
+ *   3. Typography
+ *   4. Layout Container
+ *   5. Utilities
+ *   6. Buttons
+ *   7. Badges
+ *   8. Forms
+ *   9. Components (Card, Breadcrumb, etc.)
+ *  10. Animations
+ * ============================================================ */
+
+
+/* ============================================================
+ * 1. CSS VARIABLES - سیستم طراحی
+ * ============================================================ */
+:root {
+    /* --- رنگ‌های اصلی --- */
+    --gpds-color-primary: #ef4056;          /* قرمز دیجی‌کالا */
+    --gpds-color-primary-hover: #d13048;
+    --gpds-color-primary-light: #ffeaed;
+    
+    --gpds-color-secondary: #00bfd0;        /* فیروزه‌ای */
+    --gpds-color-accent: #f9a825;            /* طلایی */
+    
+    /* --- رنگ‌های وضعیت --- */
+    --gpds-color-success: #0f8042;
+    --gpds-color-warning: #f9a825;
+    --gpds-color-danger: #ef4056;
+    --gpds-color-info: #0275d8;
+    
+    /* --- رنگ‌های متن --- */
+    --gpds-text-primary: #0c0c0c;
+    --gpds-text-secondary: #62666d;
+    --gpds-text-tertiary: #a1a3a8;
+    --gpds-text-muted: #c0c2c5;
+    --gpds-text-inverse: #ffffff;
+    
+    /* --- رنگ‌های پس‌زمینه --- */
+    --gpds-bg-body: #f5f5f5;
+    --gpds-bg-surface: #ffffff;
+    --gpds-bg-elevated: #ffffff;
+    --gpds-bg-muted: #f0f0f1;
+    --gpds-bg-hover: #f7f7f7;
+    
+    /* --- رنگ‌های مرز --- */
+    --gpds-border-light: #f0f0f1;
+    --gpds-border-base: #e0e0e2;
+    --gpds-border-dark: #c0c2c5;
+    
+    /* --- شعاع گوشه --- */
+    --gpds-radius-xs: 4px;
+    --gpds-radius-sm: 8px;
+    --gpds-radius-md: 12px;
+    --gpds-radius-lg: 16px;
+    --gpds-radius-xl: 24px;
+    --gpds-radius-full: 9999px;
+    
+    /* --- سایه‌ها --- */
+    --gpds-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --gpds-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+    --gpds-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --gpds-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --gpds-shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.16);
+    
+    /* --- فاصله‌ها (Spacing) --- */
+    --gpds-space-xxs: 4px;
+    --gpds-space-xs:  8px;
+    --gpds-space-sm:  12px;
+    --gpds-space-md:  16px;
+    --gpds-space-lg:  24px;
+    --gpds-space-xl:  32px;
+    --gpds-space-xxl: 48px;
+    
+    /* --- فونت --- */
+    --gpds-font-family: 'Dana', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
+    --gpds-font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    
+    --gpds-fs-xs: 11px;
+    --gpds-fs-sm: 12px;
+    --gpds-fs-base: 14px;
+    --gpds-fs-md: 15px;
+    --gpds-fs-lg: 16px;
+    --gpds-fs-xl: 18px;
+    --gpds-fs-2xl: 20px;
+    --gpds-fs-3xl: 24px;
+    --gpds-fs-4xl: 32px;
+    --gpds-fs-5xl: 40px;
+    
+    --gpds-fw-normal: 400;
+    --gpds-fw-medium: 500;
+    --gpds-fw-semibold: 600;
+    --gpds-fw-bold: 700;
+    --gpds-fw-extrabold: 800;
+    
+    --gpds-lh-tight: 1.2;
+    --gpds-lh-snug: 1.4;
+    --gpds-lh-normal: 1.6;
+    --gpds-lh-relaxed: 1.8;
+    
+    /* --- ابعاد مهم --- */
+    --gpds-container-width: 1360px;
+    --gpds-header-height: 168px;  /* 2 ردیف */
+    --gpds-header-height-mobile: 60px;
+    
+    /* --- انتقال‌ها --- */
+    --gpds-transition-fast: 150ms ease;
+    --gpds-transition-base: 250ms ease;
+    --gpds-transition-slow: 400ms ease;
+    
+    /* --- Z-Index --- */
+    --gpds-z-dropdown: 100;
+    --gpds-z-sticky: 500;
+    --gpds-z-fixed: 900;
+    --gpds-z-modal-backdrop: 1000;
+    --gpds-z-modal: 1100;
+    --gpds-z-tooltip: 1300;
+}
+
+/* حالت دارک (اختیاری، آماده برای آینده) */
+[data-theme="dark"] {
+    --gpds-text-primary: #f0f0f1;
+    --gpds-text-secondary: #a1a3a8;
+    --gpds-bg-body: #0c0c0c;
+    --gpds-bg-surface: #1a1a1a;
+    --gpds-bg-elevated: #252525;
+    --gpds-border-base: #333;
+    --gpds-border-light: #2a2a2a;
+}
+
+
+/* ============================================================
+ * 2. RESET & BASE
+ * ============================================================ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    font-size: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--gpds-font-family);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-normal);
+    line-height: var(--gpds-lh-normal);
+    color: var(--gpds-text-primary);
+    background-color: var(--gpds-bg-body);
+    direction: rtl;
+    text-align: right;
+    overflow-x: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: var(--gpds-text-primary);
+    text-decoration: none;
+    transition: color var(--gpds-transition-fast);
+}
+
+a:hover {
+    color: var(--gpds-color-primary);
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: var(--gpds-fw-bold);
+    line-height: var(--gpds-lh-snug);
+    color: var(--gpds-text-primary);
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--gpds-border-light);
+    margin: var(--gpds-space-lg) 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Remove outline on mouse click, keep on keyboard */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--gpds-color-primary);
+    outline-offset: 2px;
+}
+
+
+/* ============================================================
+ * 3. TYPOGRAPHY
+ * ============================================================ */
+.gpds-h1 { font-size: var(--gpds-fs-4xl); font-weight: var(--gpds-fw-extrabold); }
+.gpds-h2 { font-size: var(--gpds-fs-3xl); font-weight: var(--gpds-fw-bold); }
+.gpds-h3 { font-size: var(--gpds-fs-2xl); font-weight: var(--gpds-fw-bold); }
+.gpds-h4 { font-size: var(--gpds-fs-xl);  font-weight: var(--gpds-fw-semibold); }
+.gpds-h5 { font-size: var(--gpds-fs-lg);  font-weight: var(--gpds-fw-semibold); }
+.gpds-h6 { font-size: var(--gpds-fs-md);  font-weight: var(--gpds-fw-semibold); }
+
+.gpds-text-xs  { font-size: var(--gpds-fs-xs);  }
+.gpds-text-sm  { font-size: var(--gpds-fs-sm);  }
+.gpds-text-md  { font-size: var(--gpds-fs-md);  }
+.gpds-text-lg  { font-size: var(--gpds-fs-lg);  }
+
+.gpds-text-muted     { color: var(--gpds-text-secondary); }
+.gpds-text-tertiary  { color: var(--gpds-text-tertiary); }
+.gpds-text-primary   { color: var(--gpds-color-primary); }
+.gpds-text-success   { color: var(--gpds-color-success); }
+.gpds-text-danger    { color: var(--gpds-color-danger); }
+
+.gpds-font-medium    { font-weight: var(--gpds-fw-medium); }
+.gpds-font-semibold  { font-weight: var(--gpds-fw-semibold); }
+.gpds-font-bold      { font-weight: var(--gpds-fw-bold); }
+
+.gpds-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gpds-line-clamp-1,
+.gpds-line-clamp-2,
+.gpds-line-clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.gpds-line-clamp-1 { -webkit-line-clamp: 1; }
+.gpds-line-clamp-2 { -webkit-line-clamp: 2; }
+.gpds-line-clamp-3 { -webkit-line-clamp: 3; }
+
+
+/* ============================================================
+ * 4. LAYOUT - Container
+ * ============================================================ */
+.gpds-container {
+    width: 100%;
+    max-width: var(--gpds-container-width);
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: var(--gpds-space-md);
+    padding-left: var(--gpds-space-md);
+}
+
+.gpds-container--wide {
+    max-width: 1600px;
+}
+
+.gpds-container--narrow {
+    max-width: 900px;
+}
+
+/* Section (بلوک صفحه اصلی) */
+.gpds-section {
+    margin-bottom: var(--gpds-space-lg);
+}
+
+.gpds-section:first-child {
+    margin-top: var(--gpds-space-md);
+}
+
+/* Card Surface (کادر سفید با سایه) */
+.gpds-card {
+    background: var(--gpds-bg-surface);
+    border-radius: var(--gpds-radius-lg);
+    box-shadow: var(--gpds-shadow-xs);
+    padding: var(--gpds-space-lg);
+}
+
+.gpds-card--flat {
+    box-shadow: none;
+    border: 1px solid var(--gpds-border-light);
+}
+
+.gpds-card--padded {
+    padding: var(--gpds-space-lg);
+}
+
+/* Section Header */
+.gpds-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--gpds-space-md);
+    padding: 0 var(--gpds-space-xs);
+}
+
+.gpds-section-title {
+    font-size: var(--gpds-fs-xl);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+}
+
+.gpds-section-title svg {
+    width: 24px;
+    height: 24px;
+    color: var(--gpds-color-primary);
+}
+
+.gpds-section-more {
+    font-size: var(--gpds-fs-sm);
+    color: var(--gpds-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: var(--gpds-fw-medium);
+}
+
+.gpds-section-more:hover {
+    color: var(--gpds-color-primary);
+}
+
+
+/* ============================================================
+ * 5. UTILITY CLASSES
+ * ============================================================ */
+/* Display */
+.gpds-d-none    { display: none !important; }
+.gpds-d-block   { display: block !important; }
+.gpds-d-inline  { display: inline !important; }
+.gpds-d-flex    { display: flex !important; }
+.gpds-d-inline-flex { display: inline-flex !important; }
+.gpds-d-grid    { display: grid !important; }
+
+/* Flex utilities */
+.gpds-flex-row    { flex-direction: row; }
+.gpds-flex-col    { flex-direction: column; }
+.gpds-flex-wrap   { flex-wrap: wrap; }
+.gpds-flex-nowrap { flex-wrap: nowrap; }
+.gpds-items-center    { align-items: center; }
+.gpds-items-start     { align-items: flex-start; }
+.gpds-items-end       { align-items: flex-end; }
+.gpds-justify-center  { justify-content: center; }
+.gpds-justify-between { justify-content: space-between; }
+.gpds-justify-end     { justify-content: flex-end; }
+.gpds-flex-1          { flex: 1 1 auto; min-width: 0; }
+
+.gpds-gap-xxs { gap: var(--gpds-space-xxs); }
+.gpds-gap-xs  { gap: var(--gpds-space-xs); }
+.gpds-gap-sm  { gap: var(--gpds-space-sm); }
+.gpds-gap-md  { gap: var(--gpds-space-md); }
+.gpds-gap-lg  { gap: var(--gpds-space-lg); }
+
+/* Text align */
+.gpds-text-right   { text-align: right; }
+.gpds-text-center  { text-align: center; }
+.gpds-text-left    { text-align: left; }
+
+/* Margin/Padding helpers (کمی، برای موارد خاص) */
+.gpds-m-0    { margin: 0 !important; }
+.gpds-mt-sm  { margin-top: var(--gpds-space-sm); }
+.gpds-mt-md  { margin-top: var(--gpds-space-md); }
+.gpds-mt-lg  { margin-top: var(--gpds-space-lg); }
+.gpds-mb-sm  { margin-bottom: var(--gpds-space-sm); }
+.gpds-mb-md  { margin-bottom: var(--gpds-space-md); }
+.gpds-mb-lg  { margin-bottom: var(--gpds-space-lg); }
+
+/* Width */
+.gpds-w-100 { width: 100%; }
+
+/* Position */
+.gpds-relative { position: relative; }
+.gpds-absolute { position: absolute; }
+
+/* Overflow */
+.gpds-overflow-hidden { overflow: hidden; }
+
+/* Screen reader only */
+.gpds-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* ============================================================
+ * 6. BUTTONS
+ * ============================================================ */
+.gpds-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gpds-space-xs);
+    padding: 10px 20px;
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-semibold);
+    line-height: 1;
+    border-radius: var(--gpds-radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all var(--gpds-transition-fast);
+    white-space: nowrap;
+    text-align: center;
+    min-height: 40px;
+}
+
+.gpds-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Primary (قرمز) */
+.gpds-btn--primary {
+    background: var(--gpds-color-primary);
+    color: var(--gpds-text-inverse);
+    border-color: var(--gpds-color-primary);
+}
+
+.gpds-btn--primary:hover {
+    background: var(--gpds-color-primary-hover);
+    border-color: var(--gpds-color-primary-hover);
+    color: var(--gpds-text-inverse);
+}
+
+/* Outline */
+.gpds-btn--outline {
+    background: transparent;
+    color: var(--gpds-color-primary);
+    border-color: var(--gpds-color-primary);
+}
+
+.gpds-btn--outline:hover {
+    background: var(--gpds-color-primary);
+    color: var(--gpds-text-inverse);
+}
+
+/* Ghost (شفاف) */
+.gpds-btn--ghost {
+    background: transparent;
+    color: var(--gpds-text-primary);
+    border-color: transparent;
+}
+
+.gpds-btn--ghost:hover {
+    background: var(--gpds-bg-hover);
+    color: var(--gpds-color-primary);
+}
+
+/* Secondary (خاکستری) */
+.gpds-btn--secondary {
+    background: var(--gpds-bg-muted);
+    color: var(--gpds-text-primary);
+}
+
+.gpds-btn--secondary:hover {
+    background: var(--gpds-border-base);
+}
+
+/* اندازه‌ها */
+.gpds-btn--sm {
+    padding: 6px 14px;
+    font-size: var(--gpds-fs-sm);
+    min-height: 32px;
+}
+
+.gpds-btn--lg {
+    padding: 14px 28px;
+    font-size: var(--gpds-fs-lg);
+    min-height: 48px;
+}
+
+.gpds-btn--block {
+    width: 100%;
+}
+
+.gpds-btn--icon {
+    padding: 10px;
+    width: 40px;
+}
+
+.gpds-btn--icon.gpds-btn--sm {
+    padding: 6px;
+    width: 32px;
+}
+
+/* حالت disabled */
+.gpds-btn:disabled,
+.gpds-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+
+/* ============================================================
+ * 7. BADGES
+ * ============================================================ */
+.gpds-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    font-size: var(--gpds-fs-xs);
+    font-weight: var(--gpds-fw-semibold);
+    line-height: 1.4;
+    border-radius: var(--gpds-radius-xs);
+    white-space: nowrap;
+}
+
+.gpds-badge--primary {
+    background: var(--gpds-color-primary);
+    color: #fff;
+}
+
+.gpds-badge--success {
+    background: var(--gpds-color-success);
+    color: #fff;
+}
+
+.gpds-badge--warning {
+    background: var(--gpds-color-warning);
+    color: var(--gpds-text-inverse);
+}
+
+.gpds-badge--danger {
+    background: var(--gpds-color-danger);
+    color: #fff;
+}
+
+.gpds-badge--muted {
+    background: var(--gpds-bg-muted);
+    color: var(--gpds-text-secondary);
+}
+
+/* Badge دایره‌ای (برای تعداد سبد خرید) */
+.gpds-badge--circle {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: var(--gpds-radius-full);
+    justify-content: center;
+    font-size: 10px;
+}
+
+
+/* ============================================================
+ * 8. FORMS
+ * ============================================================ */
+.gpds-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: var(--gpds-fs-base);
+    line-height: 1.4;
+    color: var(--gpds-text-primary);
+    background: var(--gpds-bg-muted);
+    border: 1px solid transparent;
+    border-radius: var(--gpds-radius-sm);
+    transition: all var(--gpds-transition-fast);
+    min-height: 40px;
+}
+
+.gpds-input:focus {
+    outline: none;
+    border-color: var(--gpds-color-primary);
+    background: var(--gpds-bg-surface);
+}
+
+.gpds-input::placeholder {
+    color: var(--gpds-text-tertiary);
+}
+
+.gpds-input--search {
+    padding-right: 44px;
+}
+
+.gpds-input-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--gpds-text-tertiary);
+    pointer-events: none;
+}
+
+
+/* ============================================================
+ * 9. COMPONENTS
+ * ============================================================ */
+
+/* --- Breadcrumb --- */
+.gpds-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--gpds-space-xs);
+    padding: var(--gpds-space-md) 0;
+    font-size: var(--gpds-fs-sm);
+    color: var(--gpds-text-secondary);
+}
+
+.gpds-breadcrumb a {
+    color: var(--gpds-text-secondary);
+}
+
+.gpds-breadcrumb a:hover {
+    color: var(--gpds-color-primary);
+}
+
+.gpds-breadcrumb-sep {
+    color: var(--gpds-text-tertiary);
+    user-select: none;
+}
+
+/* --- Empty State --- */
+.gpds-empty {
+    text-align: center;
+    padding: var(--gpds-space-xxl) var(--gpds-space-lg);
+    color: var(--gpds-text-secondary);
+}
+
+.gpds-empty svg {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--gpds-space-md);
+    color: var(--gpds-text-muted);
+}
+
+.gpds-empty p {
+    font-size: var(--gpds-fs-base);
+    margin: 0;
+}
+
+/* --- Price --- */
+.gpds-price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+}
+
+.gpds-price__amount {
+    font-size: var(--gpds-fs-lg);
+}
+
+.gpds-price__currency {
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-medium);
+    color: var(--gpds-text-secondary);
+}
+
+.gpds-price--old {
+    text-decoration: line-through;
+    color: var(--gpds-text-tertiary);
+    font-weight: var(--gpds-fw-normal);
+    font-size: var(--gpds-fs-sm);
+}
+
+.gpds-price--sale {
+    color: var(--gpds-color-primary);
+}
+
+/* --- Discount Badge --- */
+.gpds-discount {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 24px;
+    padding: 0 6px;
+    background: var(--gpds-color-primary);
+    color: #fff;
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-bold);
+    border-radius: var(--gpds-radius-xs);
+}
+
+/* --- Rating Stars --- */
+.gpds-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-secondary);
+}
+
+.gpds-rating svg {
+    width: 14px;
+    height: 14px;
+    color: var(--gpds-color-warning);
+}
+
+
+/* ============================================================
+ * 10. ANIMATIONS
+ * ============================================================ */
+@keyframes gpds-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes gpds-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes gpds-fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gpds-shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.gpds-spin {
+    animation: gpds-spin 1s linear infinite;
+}
+
+.gpds-fade-in {
+    animation: gpds-fade-in var(--gpds-transition-base);
+}
+
+.gpds-fade-in-up {
+    animation: gpds-fade-in-up var(--gpds-transition-base);
+}
+
+/* Skeleton loader */
+.gpds-skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--gpds-bg-muted) 0%,
+        var(--gpds-border-light) 50%,
+        var(--gpds-bg-muted) 100%
+    );
+    background-size: 200% 100%;
+    animation: gpds-shimmer 1.5s infinite;
+    border-radius: var(--gpds-radius-sm);
+}
+
+
+/* ============================================================
+ * 11. ACCESSIBILITY
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Skip link */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    right: 0;
+    background: var(--gpds-color-primary);
+    color: #fff;
+    padding: 10px 20px;
+    z-index: 9999;
+    border-radius: 0 0 var(--gpds-radius-sm) var(--gpds-radius-sm);
+}
+
+.skip-link:focus {
+    top: 0;
+}

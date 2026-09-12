@@ -1,0 +1,78 @@
+/* ============================================================
+ * GP DentaShop - Fonts
+ * فونت Dana (نسخه فارسی)
+ * 
+ * استراتژی:
+ *   - فقط 4 وزن پرکاربرد (کاهش حجم ~50%)
+ *   - font-display: swap (نمایش سریع متن)
+ *   - unicode-range برای محدودکردن (اختیاری، برای آینده)
+ * ============================================================ */
+
+
+/* ============================================================
+ * Dana - Regular (400)
+ * ============================================================ */
+@font-face {
+    font-family: 'Dana';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('./woff/dana-regular.woff') format('woff');
+}
+
+/* ============================================================
+ * Dana - Medium (500)
+ * ============================================================ */
+@font-face {
+    font-family: 'Dana';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('./woff/dana-medium.woff') format('woff');
+}
+
+/* ============================================================
+ * Dana - Bold (700)
+ * ============================================================ */
+@font-face {
+    font-family: 'Dana';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('./woff/dana-bold.woff') format('woff');
+}
+
+/* ============================================================
+ * Dana - ExtraBold (800)
+ * ============================================================ */
+@font-face {
+    font-family: 'Dana';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('./woff/dana-extrabold.woff') format('woff');
+}
+
+
+/* ============================================================
+ * Apply Dana to body
+ * (main.css قبلاً این کار رو کرده ولی برای اطمینان)
+ * ============================================================ */
+body,
+button,
+input,
+select,
+textarea {
+    font-family: 'Dana', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* استثنا: آیکون‌های Dashicons (فقط در ادمین) */
+.dashicons,
+.dashicons-before::before {
+    font-family: 'dashicons' !important;
+}
+
+/* استثنا: کد */
+code, pre, kbd, samp {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+}
