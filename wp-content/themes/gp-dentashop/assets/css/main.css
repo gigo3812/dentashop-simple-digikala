@@ -135,6 +135,19 @@
 
 
 /* ============================================================
+ * GeneratePress Layout Override
+ * فقط برای صفحاتی که از قالب سفارشی ما استفاده می‌کنن
+ * ============================================================ */
+
+/* --- صفحات Home, Shop, Cart, Checkout, Account --- */
+.gpds-body .site-content,
+.gpds-is-home .site-content,
+.gpds-is-shop .site-content {
+    display: block !important;
+    flex-wrap: nowrap !important;
+}
+
+/* ============================================================
  * 2. RESET & BASE
  * ============================================================ */
 *,
@@ -833,4 +846,39 @@ table {
 
 .skip-link:focus {
     top: 0;
+}
+
+
+/* =============================== Toast ============================================================ */
+.gpds-toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--gpds-text-primary);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: var(--gpds-radius-sm);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-medium);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: var(--gpds-shadow-lg);
+    pointer-events: none;
+    max-width: 90%;
+    text-align: center;
+}
+
+.gpds-toast.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.gpds-toast--success {
+    background: var(--gpds-color-success);
+}
+
+.gpds-toast--error {
+    background: var(--gpds-color-danger);
 }

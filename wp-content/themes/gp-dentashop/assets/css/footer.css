@@ -1,0 +1,449 @@
+/* ============================================================
+ * GP DentaShop - Footer Styles
+ * ============================================================ */
+
+.gpds-footer {
+    background: var(--gpds-bg-surface);
+    border-top: 1px solid var(--gpds-border-light);
+    margin-top: var(--gpds-space-xxl);
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-base);
+}
+
+
+/* ============================================================
+ * 1. FOOTER TOP
+ * ============================================================ */
+.gpds-footer-top {
+    padding: var(--gpds-space-lg) 0;
+    border-bottom: 1px solid var(--gpds-border-light);
+}
+
+.gpds-footer-top__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gpds-space-lg);
+    flex-wrap: wrap;
+}
+
+.gpds-footer-top__logo img,
+.gpds-footer-top__logo .custom-logo {
+    max-height: 40px;
+}
+
+.gpds-footer-top__support {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    color: var(--gpds-text-primary);
+    font-size: var(--gpds-fs-base);
+}
+
+.gpds-footer-top__support strong {
+    color: var(--gpds-color-primary);
+}
+
+.gpds-footer-top__back-to-top {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    padding: 8px 16px;
+    border: 1px solid var(--gpds-border-base);
+    border-radius: var(--gpds-radius-sm);
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-medium);
+    transition: all var(--gpds-transition-fast);
+}
+
+.gpds-footer-top__back-to-top:hover {
+    border-color: var(--gpds-color-primary);
+    color: var(--gpds-color-primary);
+}
+
+
+/* ============================================================
+ * 2. FOOTER SERVICES
+ * ============================================================ */
+.gpds-footer-services {
+    padding: var(--gpds-space-lg) 0;
+    background: var(--gpds-bg-surface);
+    border-bottom: 1px solid var(--gpds-border-light);
+}
+
+.gpds-footer-services__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--gpds-space-md);
+}
+
+.gpds-footer-service {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+    padding: var(--gpds-space-sm);
+    border-radius: var(--gpds-radius-sm);
+    transition: background var(--gpds-transition-fast);
+}
+
+.gpds-footer-service:hover {
+    background: var(--gpds-bg-hover);
+}
+
+.gpds-footer-service__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gpds-color-primary-light);
+    color: var(--gpds-color-primary);
+    border-radius: var(--gpds-radius-sm);
+    flex-shrink: 0;
+}
+
+.gpds-footer-service__title {
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-semibold);
+    color: var(--gpds-text-primary);
+    margin-bottom: 2px;
+}
+
+.gpds-footer-service__subtitle {
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-tertiary);
+}
+
+
+/* ============================================================
+ * 3. FOOTER LINKS
+ * ============================================================ */
+.gpds-footer-links {
+    padding: var(--gpds-space-xl) 0;
+    border-bottom: 1px solid var(--gpds-border-light);
+}
+
+.gpds-footer-links__inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gpds-space-xl);
+}
+
+.gpds-footer-links__title {
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+    margin-bottom: var(--gpds-space-md);
+}
+
+.gpds-footer-links__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gpds-space-xs);
+}
+
+.gpds-footer-links__list a {
+    font-size: var(--gpds-fs-sm);
+    color: var(--gpds-text-secondary);
+    line-height: 1.6;
+    transition: color var(--gpds-transition-fast);
+    display: inline-block;
+}
+
+.gpds-footer-links__list a:hover {
+    color: var(--gpds-color-primary);
+}
+
+
+/* ============================================================
+ * 3.1 Newsletter + Socials
+ * ============================================================ */
+.gpds-footer-links__col--newsletter {
+    display: flex;
+    flex-direction: column;
+}
+
+.gpds-footer-socials {
+    display: flex;
+    gap: var(--gpds-space-xs);
+    margin-bottom: var(--gpds-space-lg);
+}
+
+.gpds-footer-social {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gpds-bg-muted);
+    color: var(--gpds-text-secondary);
+    border-radius: var(--gpds-radius-sm);
+    transition: all var(--gpds-transition-fast);
+}
+
+.gpds-footer-social:hover {
+    background: var(--gpds-color-primary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.gpds-footer-newsletter__label {
+    display: block;
+    font-size: var(--gpds-fs-sm);
+    color: var(--gpds-text-secondary);
+    margin-bottom: var(--gpds-space-sm);
+    line-height: 1.6;
+}
+
+.gpds-footer-newsletter__row {
+    display: flex;
+    gap: var(--gpds-space-xs);
+}
+
+.gpds-footer-newsletter .gpds-input {
+    flex: 1;
+    background: var(--gpds-bg-surface);
+    border: 1px solid var(--gpds-border-base);
+}
+
+.gpds-footer-newsletter__message {
+    margin-top: var(--gpds-space-xs);
+    font-size: var(--gpds-fs-sm);
+    min-height: 20px;
+}
+
+.gpds-footer-newsletter__message.is-success {
+    color: var(--gpds-color-success);
+}
+
+.gpds-footer-newsletter__message.is-error {
+    color: var(--gpds-color-danger);
+}
+
+
+/* ============================================================
+ * 4. APP DOWNLOADS
+ * ============================================================ */
+.gpds-footer-apps {
+    padding: var(--gpds-space-lg) 0;
+    background: var(--gpds-bg-muted);
+}
+
+.gpds-footer-apps__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gpds-space-lg);
+    flex-wrap: wrap;
+}
+
+.gpds-footer-apps__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+    color: var(--gpds-text-primary);
+}
+
+.gpds-footer-apps__logo svg {
+    color: var(--gpds-color-primary);
+}
+
+.gpds-footer-apps__title {
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-bold);
+}
+
+.gpds-footer-apps__subtitle {
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-tertiary);
+}
+
+.gpds-footer-apps__buttons {
+    display: flex;
+    gap: var(--gpds-space-xs);
+    flex-wrap: wrap;
+}
+
+.gpds-footer-app-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    padding: 8px 16px;
+    background: var(--gpds-text-primary);
+    color: white;
+    border-radius: var(--gpds-radius-sm);
+    transition: all var(--gpds-transition-fast);
+    min-width: 150px;
+}
+
+.gpds-footer-app-btn:hover {
+    background: #000;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.gpds-footer-app-btn span {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.gpds-footer-app-btn small {
+    font-size: 10px;
+    opacity: 0.7;
+}
+
+.gpds-footer-app-btn strong {
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-semibold);
+}
+
+
+/* ============================================================
+ * 5. FOOTER BOTTOM
+ * ============================================================ */
+.gpds-footer-bottom {
+    padding: var(--gpds-space-lg) 0;
+    background: var(--gpds-bg-surface);
+    border-top: 1px solid var(--gpds-border-light);
+}
+
+.gpds-footer-bottom__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gpds-space-md);
+}
+
+.gpds-footer-badges {
+    display: flex;
+    gap: var(--gpds-space-md);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gpds-footer-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: var(--gpds-bg-muted);
+    border-radius: var(--gpds-radius-sm);
+    color: var(--gpds-text-tertiary);
+    transition: all var(--gpds-transition-fast);
+}
+
+.gpds-footer-badge:hover {
+    background: var(--gpds-bg-hover);
+    color: var(--gpds-text-secondary);
+}
+
+.gpds-footer-copyright {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.gpds-footer-copyright p {
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-tertiary);
+    line-height: 1.8;
+    margin: 0;
+}
+
+
+/* ============================================================
+ * RESPONSIVE
+ * ============================================================ */
+@media (max-width: 1024px) {
+    .gpds-footer-services__grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .gpds-footer-links__inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--gpds-space-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    .gpds-footer-top__inner {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--gpds-space-md);
+    }
+    
+    .gpds-footer-services__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .gpds-footer-service {
+        padding: var(--gpds-space-xs);
+    }
+    
+    .gpds-footer-service__icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .gpds-footer-links__inner {
+        grid-template-columns: 1fr;
+    }
+    
+    .gpds-footer-apps__inner {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .gpds-footer-apps__logo {
+        justify-content: center;
+    }
+    
+    .gpds-footer-apps__buttons {
+        justify-content: center;
+    }
+    
+    .gpds-footer-app-btn {
+        min-width: 130px;
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .gpds-footer-services__grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gpds-footer-service {
+        justify-content: flex-start;
+    }
+    
+    .gpds-footer-newsletter__row {
+        flex-direction: column;
+    }
+    
+    .gpds-footer-newsletter__row .gpds-btn {
+        width: 100%;
+    }
+    
+    .gpds-footer-app-btn {
+        min-width: 100%;
+    }
+    
+    .gpds-footer-badges {
+        gap: var(--gpds-space-sm);
+    }
+    
+    .gpds-footer-badge {
+        width: 60px;
+        height: 60px;
+    }
+}

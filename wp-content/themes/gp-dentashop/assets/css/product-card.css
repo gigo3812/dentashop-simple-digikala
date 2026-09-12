@@ -1,0 +1,204 @@
+/* ============================================================
+ * GP DentaShop - Product Card
+ * ============================================================ */
+
+.gpds-product-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: var(--gpds-space-sm);
+    background: var(--gpds-bg-surface);
+    border-radius: var(--gpds-radius-md);
+    transition: all var(--gpds-transition-base);
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.gpds-product-card:hover {
+    border-color: var(--gpds-border-light);
+    box-shadow: var(--gpds-shadow-md);
+}
+
+/* --- تصویر --- */
+.gpds-product-card__image-link {
+    display: block;
+    margin-bottom: var(--gpds-space-sm);
+}
+
+.gpds-product-card__image {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: var(--gpds-radius-sm);
+    background: var(--gpds-bg-muted);
+}
+
+.gpds-product-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--gpds-transition-slow);
+}
+
+.gpds-product-card:hover .gpds-product-card__image img {
+    transform: scale(1.05);
+}
+
+.gpds-product-card__discount {
+    position: absolute;
+    top: var(--gpds-space-xs);
+    left: var(--gpds-space-xs);
+    z-index: 2;
+}
+
+/* --- بدنه --- */
+.gpds-product-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 4px;
+    min-height: 0;
+    position: relative;
+}
+
+.gpds-product-card__title {
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-medium);
+    color: var(--gpds-text-primary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 42px;
+    transition: color var(--gpds-transition-fast);
+}
+
+.gpds-product-card__title:hover {
+    color: var(--gpds-color-primary);
+}
+
+/* --- امتیاز --- */
+.gpds-product-card__rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-secondary);
+    height: 18px;
+}
+
+.gpds-product-card__rating-empty {
+    height: 18px;
+}
+
+/* --- موجودی --- */
+.gpds-product-card__stock {
+    height: 16px;
+}
+
+/* --- قیمت --- */
+.gpds-product-card__prices {
+    margin-top: auto;
+    padding-top: var(--gpds-space-xs);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-height: 44px;
+}
+
+.gpds-product-card__prices .price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+}
+
+.gpds-product-card__prices del {
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-tertiary);
+    text-decoration: line-through;
+}
+
+.gpds-product-card__prices ins {
+    text-decoration: none;
+    color: var(--gpds-color-primary);
+    font-size: var(--gpds-fs-md);
+    font-weight: var(--gpds-fw-bold);
+}
+
+.gpds-product-card__prices .woocommerce-Price-amount {
+    font-size: var(--gpds-fs-md);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+}
+
+.gpds-product-card__prices ins .woocommerce-Price-amount {
+    color: var(--gpds-color-primary);
+}
+
+.gpds-product-card__prices .woocommerce-Price-currencySymbol {
+    font-size: var(--gpds-fs-xs);
+    font-weight: var(--gpds-fw-normal);
+    color: var(--gpds-text-secondary);
+}
+
+/* --- دکمه افزودن --- */
+.gpds-product-card__add-btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gpds-color-primary);
+    color: white;
+    border-radius: var(--gpds-radius-sm);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all var(--gpds-transition-fast);
+    z-index: 3;
+}
+
+.gpds-product-card:hover .gpds-product-card__add-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gpds-product-card__add-btn:hover {
+    background: var(--gpds-color-primary-hover);
+    transform: scale(1.05);
+}
+
+.gpds-product-card__add-btn.is-loading {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+
+/* ============================================================
+ * RESPONSIVE
+ * ============================================================ */
+@media (max-width: 768px) {
+    .gpds-product-card {
+        padding: var(--gpds-space-xs);
+    }
+    
+    .gpds-product-card__title {
+        font-size: var(--gpds-fs-sm);
+        min-height: 36px;
+    }
+    
+    .gpds-product-card__prices .woocommerce-Price-amount {
+        font-size: var(--gpds-fs-base);
+    }
+    
+    .gpds-product-card__add-btn {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

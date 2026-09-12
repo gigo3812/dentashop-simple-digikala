@@ -194,3 +194,67 @@ function gpds_shop_url() {
     }
     return home_url('/shop/');
 }
+
+/**
+ * Breadcrumb سفارشی (RTL + سازگار با WooCommerce)
+ */
+function gpds_wc_breadcrumb() {
+    if (is_front_page()) return;
+    
+    $sep = gpds_get_icon('chevron-left', 14);
+    
+    echo '<nav class="gpds-breadcrumb" aria-label="مسیر">';
+    echo '<a href="' . esc_url(home_url('/')) . '">خانه</a>';
+    
+    if (function_exists('is_shop') && (is_shop() || is_product_category() || is_product_tag())) {
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<a href="' . esc_url(gpds_shop_url()) . '">فروشگاه</a>';
+        
+        if (is_product_category() || is_product_tag()) {
+            $term = get_queried_object();
+            
+            // والدها
+            $parents = array_reverse(get_ancestors($term->term_id, 'product_cat'));
+            foreach ($parents as $parent_id) {
+                $parent = get_term($parent_id);
+                if ($parent && !is_wp_error($parent)) {
+                    echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+                    echo '<a href="' . esc_url(get_term_link($parent)) . '">' . esc_html($parent->name) . '</a>';
+                }
+            }
+            
+            echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+            echo '<span>' . esc_html($term->name) . '</span>';
+        }
+    }
+    
+    if (is_product()) {
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<a href="' . esc_url(gpds_shop_url()) . '">فروشگاه</a>';
+        
+        $terms = get_the_terms(get_the_ID(), 'product_cat');
+        if ($terms && !is_wp_error($terms)) {
+            $term = array_shift($terms);
+            $parents = array_reverse(get_ancestors($term->term_id, 'product_cat'));
+            foreach ($parents as $parent_id) {
+                $parent = get_term($parent_id);
+                if ($parent && !is_wp_error($parent)) {
+                    echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+                    echo '<a href="' . esc_url(get_term_link($parent)) . '">' . esc_html($parent->name) . '</a>';
+                }
+            }
+            echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+            echo '<a href="' . esc_url(get_term_link($term)) . '">' . esc_html($term->name) . '</a>';
+        }
+        
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<span>' . esc_html(get_the_title()) . '</span>';
+    }
+    
+    if (is_singular('post')) {
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<span>' . esc_html(get_the_title()) . '</span>';
+    }
+    
+    echo '</nav>';
+}

@@ -1,20 +1,29 @@
 /**
  * GP DentaShop - Cart Script
- * مدیریت Mini Cart
+ * مدیریت Mini Cart + Add to Cart (Ajax)
  */
 (function() {
     'use strict';
     
-    const $ = (sel, ctx = document) => ctx.querySelector(sel);
+    const $  = (sel, ctx = document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
     
     document.addEventListener('DOMContentLoaded', function() {
         if (typeof GPDS === 'undefined') return;
         
+        initMiniCart();
+        initAddToCart();
+    });
+    
+    // ============================================
+    // MINI CART
+    // ============================================
+    function initMiniCart() {
         const miniCart = $('[data-gpds-mini-cart]');
         if (!miniCart) return;
         
         const trigger = $('[data-gpds-cart-trigger]', miniCart);
-        const panel = $('[data-gpds-cart-panel]', miniCart);
+        const panel   = $('[data-gpds-cart-panel]', miniCart);
         const content = $('[data-gpds-cart-content]', miniCart);
         const loading = $('[data-gpds-cart-loading]', miniCart);
         
@@ -32,7 +41,8 @@
                 closePanel();
             } else {
                 openPanel();
-                if (!isLoaded) await loadCart();
+                // همیشه دوباره لود کن تا مطمئن باشیم به‌روزه
+                await loadCart();
             }
         });
         
@@ -45,8 +55,7 @@
         }
         
         document.addEventListener('click', function(e) {
-            if (!panel.hasAttribute('hidden') && 
-                !miniCart.contains(e.target)) {
+            if (!panel.hasAttribute('hidden') && !miniCart.contains(e.target)) {
                 closePanel();
             }
         });
@@ -130,49 +139,121 @@
             
             container.innerHTML = html;
         }
-        
-        // ============================================
-        // به‌روزرسانی خودکار بعد از افزودن به سبد
-        // ============================================
-        if (typeof jQuery !== 'undefined') {
-            jQuery(document.body).on('added_to_cart', function() {
-                isLoaded = false;
-                updateCartCount();
-            });
-        }
-        
-        async function updateCartCount() {
-            const formData = new FormData();
-            formData.append('action', 'gpds_get_cart');
-            formData.append('nonce', GPDS.nonce);
+    }
+    
+    // ============================================
+    // ADD TO CART (Ajax - بدون رفرش)
+    // ============================================
+    function initAddToCart() {
+        document.addEventListener('click', async function(e) {
+            const btn = e.target.closest('[data-gpds-add-to-cart]');
+            if (!btn) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (btn.classList.contains('is-loading')) return;
+            
+            const productId = btn.dataset.productId;
+            if (!productId) return;
+            
+            btn.classList.add('is-loading');
             
             try {
-                const response = await fetch(GPDS.ajaxUrl, {
-                    method: 'POST',
-                    body: formData,
-                });
-                const data = await response.json();
+                // روش امن: ارسال به افزودن سبد ووکامرس با کوکی سشن
+                const url = new URL(GPDS.homeUrl);
+                url.searchParams.set('add-to-cart', productId);
+                url.searchParams.set('quantity', '1');
                 
-                if (data.success) {
-                    const countEl = $('[data-gpds-cart-count]');
-                    if (countEl) {
-                        countEl.textContent = data.data.count;
-                        if (data.data.count > 0) {
-                            countEl.removeAttribute('hidden');
-                        } else {
-                            countEl.setAttribute('hidden', '');
-                        }
-                    }
-                }
-            } catch (err) {}
-        }
-        
-    });
+                // Fetch به ووکامرس (پیاده‌سازی سریع و سبک)
+                await fetch(url.toString(), {
+                    method: 'GET',
+                    credentials: 'same-origin',
+                });
+                
+                // به‌روزرسانی تعداد سبد خرید
+                await refreshCartCount();
+                
+                // پیام موفقیت
+                showToast(GPDS.i18n.addedToCart);
+                
+            } catch (err) {
+                console.error('[GPDS] Add to cart error:', err);
+                showToast(GPDS.i18n.error, 'error');
+            } finally {
+                btn.classList.remove('is-loading');
+            }
+        });
+    }
     
+    // ============================================
+    // به‌روزرسانی تعداد سبد خرید
+    // ============================================
+    async function refreshCartCount() {
+        const formData = new FormData();
+        formData.append('action', 'gpds_get_cart');
+        formData.append('nonce', GPDS.nonce);
+        
+        try {
+            const res = await fetch(GPDS.ajaxUrl, { method: 'POST', body: formData });
+            const data = await res.json();
+            
+            if (data.success) {
+                $$('[data-gpds-cart-count]').forEach(el => {
+                    el.textContent = data.data.count;
+                    if (data.data.count > 0) {
+                        el.removeAttribute('hidden');
+                    } else {
+                        el.setAttribute('hidden', '');
+                    }
+                });
+            }
+        } catch (err) {
+            console.error('[GPDS] Cart refresh error:', err);
+        }
+    }
+    
+    // ============================================
+    // Toast (پیام کوتاه)
+    // ============================================
+    function showToast(message, type = 'success') {
+        // حذف Toast قبلی
+        const existing = $('.gpds-toast');
+        if (existing) existing.remove();
+        
+        const toast = document.createElement('div');
+        toast.className = `gpds-toast gpds-toast--${type}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        // Trigger animation
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => toast.classList.add('is-visible'));
+        });
+        
+        // Auto remove
+        setTimeout(() => {
+            toast.classList.remove('is-visible');
+            setTimeout(() => toast.remove(), 300);
+        }, 2500);
+    }
+    
+    // ============================================
+    // HTML Escape
+    // ============================================
     function escapeHTML(str) {
+        if (str === null || str === undefined) return '';
         const div = document.createElement('div');
-        div.textContent = str;
+        div.textContent = String(str);
         return div.innerHTML;
     }
+    
+    // ============================================
+    // Export برای استفاده در جاهای دیگر
+    // ============================================
+    window.GPDSCart = {
+        refresh: refreshCartCount,
+        toast: showToast,
+    };
     
 })();

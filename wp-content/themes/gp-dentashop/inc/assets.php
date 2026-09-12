@@ -3,6 +3,8 @@
  * Assets - مدیریت بهینه CSS/JS
  * 
  * استراتژی: فقط چیزی که لازمه لود بشه
+ *
+ * @package GP_DentaShop
  */
 
 if (!defined('ABSPATH')) exit;
@@ -17,10 +19,10 @@ function gpds_enqueue_frontend() {
     // ============================================
     // CSS پایه (همیشه)
     // ============================================
-    wp_enqueue_style('gpds-fonts',    GPDS_ASSETS . '/fonts/fonts.css', [], GPDS_VERSION);
-    wp_enqueue_style('gpds-main',     GPDS_ASSETS . '/css/main.css',    ['gpds-fonts'], GPDS_VERSION);
-    wp_enqueue_style('gpds-header',   GPDS_ASSETS . '/css/header.css',  ['gpds-main'], GPDS_VERSION);
-    wp_enqueue_style('gpds-footer',   GPDS_ASSETS . '/css/footer.css',  ['gpds-main'], GPDS_VERSION);
+    wp_enqueue_style('gpds-fonts',      GPDS_ASSETS . '/fonts/fonts.css', [], GPDS_VERSION);
+    wp_enqueue_style('gpds-main',       GPDS_ASSETS . '/css/main.css',    ['gpds-fonts'], GPDS_VERSION);
+    wp_enqueue_style('gpds-header',     GPDS_ASSETS . '/css/header.css',  ['gpds-main'], GPDS_VERSION);
+    wp_enqueue_style('gpds-footer',     GPDS_ASSETS . '/css/footer.css',  ['gpds-main'], GPDS_VERSION);
     wp_enqueue_style('gpds-responsive', GPDS_ASSETS . '/css/responsive.css', ['gpds-main'], GPDS_VERSION);
     
     // ============================================
@@ -48,8 +50,8 @@ function gpds_enqueue_frontend() {
     // Swiper (فقط صفحاتی که اسلایدر دارن)
     // ============================================
     if (gpds_page_has_slider()) {
-        wp_enqueue_style('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.css', [], '11.0.0');
-        wp_enqueue_script('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.js', [], '11.0.0', true);
+        wp_enqueue_style('gpds-swiper',  GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.css', [], '11.0.0');
+        wp_enqueue_script('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.js',  [], '11.0.0', true);
     }
     
     // ============================================
@@ -58,7 +60,7 @@ function gpds_enqueue_frontend() {
     wp_enqueue_script('gpds-main', GPDS_ASSETS . '/js/main.js', ['jquery'], GPDS_VERSION, true);
     
     // ============================================
-    // JS مخصوص صفحه اصلی
+    // JS اسلایدر (فقط صفحات با اسلایدر)
     // ============================================
     if (is_front_page() || is_page_template('page-templates/template-home.php')) {
         wp_enqueue_script('gpds-slider', GPDS_ASSETS . '/js/slider.js', ['gpds-swiper', 'gpds-main'], GPDS_VERSION, true);
@@ -75,6 +77,30 @@ function gpds_enqueue_frontend() {
     if (class_exists('WooCommerce')) {
         wp_enqueue_script('gpds-cart', GPDS_ASSETS . '/js/cart.js', ['gpds-main'], GPDS_VERSION, true);
     }
+    
+    // ============================================
+    // JS محصول (فقط صفحات محصول/فروشگاه)
+    // ============================================
+    if (is_product() || is_shop() || is_product_category() || is_product_tag()) {
+        wp_enqueue_script(
+            'gpds-product',
+            GPDS_ASSETS . '/js/product.js',
+            ['gpds-main'],
+            GPDS_VERSION,
+            true
+        );
+    }
+    
+    // ============================================
+    // JS فوتر (back to top + newsletter)
+    // ============================================
+    wp_enqueue_script(
+        'gpds-footer',
+        GPDS_ASSETS . '/js/footer.js',
+        ['gpds-main'],
+        GPDS_VERSION,
+        true
+    );
     
     // ============================================
     // Data به JS
@@ -103,7 +129,13 @@ function gpds_enqueue_frontend() {
 add_filter('script_loader_tag', function($tag, $handle) {
     if (is_admin()) return $tag;
     
-    $defer = ['gpds-search', 'gpds-cart', 'gpds-slider'];
+    $defer = [
+        'gpds-search',
+        'gpds-cart',
+        'gpds-slider',
+        'gpds-footer',
+        'gpds-product',
+    ];
     
     if (in_array($handle, $defer, true)) {
         return str_replace(' src=', ' defer src=', $tag);
@@ -121,7 +153,7 @@ function gpds_preload_fonts() {
     $fonts = [
         'dana-regular.woff',
         'dana-medium.woff',
-        'dana-demibold.woff',
+        'dana-bold.woff',
     ];
     
     foreach ($fonts as $font) {
