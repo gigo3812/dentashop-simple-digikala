@@ -112,9 +112,9 @@ if (is_product_category()) {
                                 if (!$product) continue;
                             ?>
                                 <div class="gpds-shop-grid__item">
-                                    <?php get_template_part('template-parts/product/card', null, [
-                                        'product' => $product,
-                                    ]); ?>
+                                    <?php
+                                        include get_stylesheet_directory() . '/template-parts/product/card.php';
+                                        ?>
                                 </div>
                             <?php endwhile; ?>
                         </div>

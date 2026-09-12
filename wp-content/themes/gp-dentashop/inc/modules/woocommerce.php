@@ -164,3 +164,127 @@ add_action('wp_enqueue_scripts', function() {
         wp_dequeue_style('wc-blocks-vendors-style');
     }
 }, 99);
+
+
+// ============================================
+// حذف استایل‌های اضافی WC در Cart/Checkout
+// ============================================
+add_action('wp_enqueue_scripts', function() {
+    if (!is_cart() && !is_checkout()) {
+        wp_dequeue_style('wc-blocks-style');
+    }
+}, 99);
+
+// ============================================
+// Order Received page
+// ============================================
+remove_action('woocommerce_thankyou', 'woocommerce_order_details_table', 10);
+add_action('woocommerce_thankyou', 'gpds_order_received_content', 10);
+
+function gpds_order_received_content($order_id) {
+    if (!$order_id) return;
+    
+    $order = wc_get_order($order_id);
+    if (!$order) return;
+    ?>
+    
+    <div class="gpds-thankyou">
+        <div class="gpds-thankyou__icon">
+            <?php gpds_icon('check-circle', 64); ?>
+        </div>
+        <h2 class="gpds-thankyou__title">سفارش شما با موفقیت ثبت شد!</h2>
+        <p class="gpds-thankyou__subtitle">
+            شماره سفارش: <strong>#<?php echo esc_html($order->get_order_number()); ?></strong>
+        </p>
+        
+        <div class="gpds-thankyou__details">
+            <div class="gpds-thankyou__row">
+                <span>تاریخ:</span>
+                <strong><?php echo esc_html(wc_format_datetime($order->get_date_created())); ?></strong>
+            </div>
+            <div class="gpds-thankyou__row">
+                <span>مجموع:</span>
+                <strong><?php echo wp_kses_post($order->get_formatted_order_total()); ?></strong>
+            </div>
+            <div class="gpds-thankyou__row">
+                <span>روش پرداخت:</span>
+                <strong><?php echo wp_kses_post($order->get_payment_method_title()); ?></strong>
+            </div>
+        </div>
+        
+        <div class="gpds-thankyou__actions">
+            <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>" class="gpds-btn gpds-btn--primary">
+                ادامه خرید
+            </a>
+            <a href="<?php echo esc_url($order->get_view_order_url()); ?>" class="gpds-btn gpds-btn--outline">
+                مشاهده جزئیات سفارش
+            </a>
+        </div>
+    </div>
+    
+    <?php
+}
+
+// ============================================
+// Checkout - حذف فیلدهای اضافی
+// ============================================
+add_filter('woocommerce_checkout_fields', function($fields) {
+    // حذف فیلد "شرکت"
+    unset($fields['billing']['billing_company']);
+    
+    // حذف فیلد "کشور" (همیشه ایران)
+    unset($fields['billing']['billing_country']);
+    unset($fields['shipping']['shipping_country']);
+    
+    // ترتیب فیلدها
+    if (isset($fields['billing']['billing_first_name'])) {
+        $fields['billing']['billing_first_name']['priority'] = 10;
+        $fields['billing']['billing_first_name']['placeholder'] = 'نام';
+    }
+    if (isset($fields['billing']['billing_last_name'])) {
+        $fields['billing']['billing_last_name']['priority'] = 20;
+        $fields['billing']['billing_last_name']['placeholder'] = 'نام خانوادگی';
+    }
+    if (isset($fields['billing']['billing_phone'])) {
+        $fields['billing']['billing_phone']['priority'] = 30;
+    }
+    if (isset($fields['billing']['billing_email'])) {
+        $fields['billing']['billing_email']['priority'] = 40;
+    }
+    if (isset($fields['billing']['billing_state'])) {
+        $fields['billing']['billing_state']['priority'] = 50;
+        $fields['billing']['billing_state']['label'] = 'استان';
+    }
+    if (isset($fields['billing']['billing_city'])) {
+        $fields['billing']['billing_city']['priority'] = 60;
+        $fields['billing']['billing_city']['label'] = 'شهر';
+    }
+    if (isset($fields['billing']['billing_address_1'])) {
+        $fields['billing']['billing_address_1']['priority'] = 70;
+        $fields['billing']['billing_address_1']['label'] = 'آدرس';
+        $fields['billing']['billing_address_1']['placeholder'] = 'آدرس دقیق';
+    }
+    if (isset($fields['billing']['billing_postcode'])) {
+        $fields['billing']['billing_postcode']['priority'] = 80;
+        $fields['billing']['billing_postcode']['label'] = 'کد پستی';
+    }
+    
+    return $fields;
+}, 20);
+
+// ============================================
+// حذف فیلدهای اضافی از Checkout
+// ============================================
+add_filter('woocommerce_checkout_fields', function($fields) {
+    // حذف فیلد "یادداشت سفارش"
+    if (isset($fields['order']['order_comments'])) {
+        $fields['order']['order_comments']['placeholder'] = 'توضیحات سفارش (اختیاری)';
+    }
+    
+    return $fields;
+}, 30);
+
+// ============================================
+// حذف لینک "تخمین زدن" در سبد
+// ============================================
+add_filter('woocommerce_shipping_estimate_is_required', '__return_false');
