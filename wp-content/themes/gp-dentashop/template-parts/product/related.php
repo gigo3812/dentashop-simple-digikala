@@ -50,12 +50,7 @@ if (!$related_query->have_posts()) {
         ?>
             <div class="gpds-shop-grid__item">
                 <?php 
-                
                     include get_stylesheet_directory() . '/template-parts/product/card.php';
-
-                // get_template_part('template-parts/product/card', null, [
-                //     'product' => $rel_product,
-                // ]); 
                 ?>
             </div>
         <?php endwhile; ?>

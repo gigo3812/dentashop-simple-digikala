@@ -1,15 +1,118 @@
 /**
- * GP DentaShop - Stories System
- * بهینه + Instagram-like loading + Modal داینامیک
+ * GP DentaShop - Slider + Countdown + Stories
+ * کامل + بهینه
  */
 (function() {
     'use strict';
     
-    const STORY_DURATION = 5000;
+    // ============================================
+    // 1. Swiper Sliders
+    // ============================================
+    function initSliders() {
+        if (typeof Swiper === 'undefined') return;
+        
+        // اسلایدر اصلی صفحه
+        const mainSlider = document.querySelector('#gpds-home-slider');
+        if (mainSlider) {
+            new Swiper('#gpds-home-slider', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                speed: 700,
+                effect: 'slide',
+                pagination: {
+                    el: mainSlider.querySelector('.swiper-pagination'),
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: mainSlider.querySelector('.swiper-button-next'),
+                    prevEl: mainSlider.querySelector('.swiper-button-prev'),
+                },
+            });
+        }
+        
+        // کاروسل محصولات (پرفروش‌ها، شگفت‌انگیزها، ...)
+        document.querySelectorAll('.gpds-products-carousel').forEach(function(el) {
+            const nextEl = el.querySelector('.swiper-button-next');
+            const prevEl = el.querySelector('.swiper-button-prev');
+            
+            new Swiper(el, {
+                slidesPerView: 2,
+                spaceBetween: 12,
+                breakpoints: {
+                    480:  { slidesPerView: 2, spaceBetween: 12 },
+                    640:  { slidesPerView: 3, spaceBetween: 12 },
+                    768:  { slidesPerView: 4, spaceBetween: 12 },
+                    1024: { slidesPerView: 5, spaceBetween: 14 },
+                    1280: { slidesPerView: 6, spaceBetween: 14 },
+                },
+                navigation: nextEl && prevEl ? { nextEl, prevEl } : false,
+            });
+        });
+    }
     
+    // ============================================
+    // 2. Countdown (شگفت‌انگیزها) - از سرور
+    // ============================================
+    function initCountdowns() {
+        document.querySelectorAll('[data-gpds-countdown]').forEach(function(el) {
+            var endTime = parseInt(el.dataset.end, 10) * 1000; // به میلی‌ثانیه
+            if (!endTime || isNaN(endTime)) return;
+            
+            var hoursEl   = el.querySelector('[data-gpds-cd="hours"]');
+            var minutesEl = el.querySelector('[data-gpds-cd="minutes"]');
+            var secondsEl = el.querySelector('[data-gpds-cd="seconds"]');
+            
+            // 🎯 هماهنگی زمان سرور و کلاینت
+            var serverNow = parseInt(el.dataset.serverNow || 0, 10) * 1000;
+            var clientNow = Date.now();
+            var timeOffset = serverNow > 0 ? (clientNow - serverNow) : 0;
+            
+            var intervalId = null;
+            
+            function update() {
+                var now = Date.now() - timeOffset; // زمان سرور
+                var diff = Math.max(0, endTime - now);
+                
+                if (diff <= 0) {
+                    // ⏰ زمان تموم شد → مخفی کردن بخش
+                    var section = el.closest('.gpds-section');
+                    if (section) {
+                        section.style.transition = 'opacity 0.3s';
+                        section.style.opacity = '0';
+                        setTimeout(function() {
+                            section.style.display = 'none';
+                        }, 300);
+                    }
+                    
+                    if (intervalId) clearInterval(intervalId);
+                    return;
+                }
+                
+                var h = Math.floor(diff / (1000 * 60 * 60));
+                var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                var s = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                if (hoursEl)   hoursEl.textContent   = String(h).padStart(2, '0');
+                if (minutesEl) minutesEl.textContent = String(m).padStart(2, '0');
+                if (secondsEl) secondsEl.textContent = String(s).padStart(2, '0');
+            }
+            
+            update();
+            intervalId = setInterval(update, 1000);
+        });
+    }
+    
+    // ============================================
+    // 3. Stories System
+    // ============================================
     function initStories() {
         const storyButtons = document.querySelectorAll('[data-gpds-story]');
         if (!storyButtons.length) return;
+        
+        const STORY_DURATION = 5000;
         
         // 🎯 State
         let stories = Array.from(storyButtons).map(btn => ({
@@ -28,7 +131,7 @@
         let isLoading = false;
         
         // ============================================
-        // 🎯 ساخت Modal (فقط یک بار، در اولین کلیک)
+        // ساخت Modal (فقط یک بار، در اولین کلیک)
         // ============================================
         function buildModal() {
             if (modal) return modal;
@@ -87,12 +190,12 @@
                 </div>
             `;
             
-            // Append به body
             document.body.appendChild(modal);
             
-            // 🎯 Event Listeners
-            const closeBtns = modal.querySelectorAll('[data-gpds-story-close]');
-            closeBtns.forEach(btn => btn.addEventListener('click', closeStory));
+            // Event Listeners
+            modal.querySelectorAll('[data-gpds-story-close]').forEach(btn => {
+                btn.addEventListener('click', closeStory);
+            });
             
             const prevBtn = modal.querySelector('[data-gpds-story-prev]');
             const nextBtn = modal.querySelector('[data-gpds-story-next]');
@@ -112,8 +215,8 @@
                 if (!modal || !document.body.classList.contains('gpds-story-open')) return;
                 
                 if (e.key === 'Escape') closeStory();
-                else if (e.key === 'ArrowLeft')  prevStory(); // RTL
-                else if (e.key === 'ArrowRight') nextStory(); // RTL
+                else if (e.key === 'ArrowLeft')  prevStory();
+                else if (e.key === 'ArrowRight') nextStory();
             });
             
             // Touch swipe
@@ -133,9 +236,7 @@
             return modal;
         }
         
-        // ============================================
-        // 🎯 باز کردن استوری
-        // ============================================
+        // باز کردن استوری
         function openStory(index) {
             if (isLoading) return;
             
@@ -145,24 +246,18 @@
             currentIndex = index;
             isLoading = true;
             
-            // 1. اضافه کردن کلاس loading به دکمه
             story.button.classList.add('is-loading');
             
-            // 2. شروع پیش‌لود تصویر
             const img = new Image();
             img.onload = function() {
-                // ✅ تصویر لود شد
                 setTimeout(function() {
                     story.button.classList.remove('is-loading');
                     isLoading = false;
-                    
-                    // 3. باز کردن Modal
                     showModal(index);
-                }, 400); // حداقل زمان لودینگ برای دیده شدن
+                }, 400);
             };
             
             img.onerror = function() {
-                // ❌ خطا در لود تصویر
                 story.button.classList.remove('is-loading');
                 isLoading = false;
                 console.error('[GPDS Story] Failed to load:', story.image);
@@ -171,17 +266,13 @@
             img.src = story.image;
         }
         
-        // ============================================
-        // 🎯 نمایش Modal
-        // ============================================
+        // نمایش Modal
         function showModal(index) {
             const story = stories[index];
             if (!story) return;
             
-            // ساخت Modal اگه نبود
             buildModal();
             
-            // المان‌ها
             const img         = modal.querySelector('[data-gpds-story-image]');
             const avatar      = modal.querySelector('[data-gpds-story-avatar]');
             const username    = modal.querySelector('[data-gpds-story-username]');
@@ -190,7 +281,7 @@
             const prevBtn     = modal.querySelector('[data-gpds-story-prev]');
             const nextBtn     = modal.querySelector('[data-gpds-story-next]');
             
-            // 🎯 Progress bars
+            // Progress bars
             progress.innerHTML = '';
             stories.forEach((_, i) => {
                 const bar = document.createElement('div');
@@ -200,13 +291,13 @@
                 progress.appendChild(bar);
             });
             
-            // 🎯 محتوا
+            // محتوا
             img.src = story.image;
             img.alt = story.title;
             avatar.src = story.thumb;
             username.textContent = story.title;
             
-            // 🎯 CTA
+            // CTA
             if (story.url) {
                 cta.href = story.url;
                 cta.style.display = '';
@@ -222,29 +313,23 @@
                 cta.style.display = 'none';
             }
             
-            // 🎯 ناوبری
+            // ناوبری
             prevBtn.style.display = index > 0 ? '' : 'none';
             nextBtn.style.display = index < stories.length - 1 ? '' : 'none';
             
-            // 🎯 نمایش Modal
+            // نمایش Modal
             modal.style.display = 'flex';
             document.body.classList.add('gpds-story-open');
             
-            // 🎯 تایمر
+            // تایمر
             startTimer();
         }
         
-        // ============================================
-        // 🎯 تایمر
-        // ============================================
         function startTimer() {
             clearTimeout(timer);
             timer = setTimeout(nextStory, STORY_DURATION);
         }
         
-        // ============================================
-        // 🎯 ناوبری
-        // ============================================
         function nextStory() {
             if (currentIndex < stories.length - 1) {
                 showModal(currentIndex + 1);
@@ -259,16 +344,11 @@
             }
         }
         
-        // ============================================
-        // 🎯 بستن
-        // ============================================
         function closeStory() {
             clearTimeout(timer);
             
             if (modal) {
                 modal.style.display = 'none';
-                
-                // پاک کردن محتوا
                 const img = modal.querySelector('[data-gpds-story-image]');
                 if (img) img.src = '';
             }
@@ -276,9 +356,7 @@
             document.body.classList.remove('gpds-story-open');
         }
         
-        // ============================================
-        // 🎯 رویداد کلیک روی استوری
-        // ============================================
+        // رویداد کلیک
         storyButtons.forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -286,16 +364,21 @@
                 openStory(index);
             });
         });
-        
     }
     
     // ============================================
-    // اجرا
+    // اجرا (همه با هم)
     // ============================================
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initStories);
-    } else {
+    function initAll() {
+        initSliders();
+        initCountdowns();
         initStories();
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAll);
+    } else {
+        initAll();
     }
     
 })();

@@ -44,12 +44,10 @@ if (empty($products)) {
                 <div class="swiper-wrapper">
                     <?php foreach ($products as $product) : ?>
                         <div class="swiper-slide">
-                            <?php 
-                            // استفاده از کارت محصول
-                            get_template_part('template-parts/product/card', null, [
-                                'product' => $product,
-                            ]);
+                            <?php
+                                include get_stylesheet_directory() . '/template-parts/product/card.php';
                             ?>
+                            
                         </div>
                     <?php endforeach; ?>
                 </div>
