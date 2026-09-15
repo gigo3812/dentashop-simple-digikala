@@ -24,7 +24,6 @@ function gpds_render_footer() {
         get_template_part('template-parts/footer/top');
         get_template_part('template-parts/footer/services');
         get_template_part('template-parts/footer/links');
-        get_template_part('template-parts/footer/app-download');
         get_template_part('template-parts/footer/bottom');
         ?>
     </footer>

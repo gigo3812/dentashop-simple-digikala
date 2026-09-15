@@ -23,9 +23,8 @@ if (empty($brands)) {
                     <?php gpds_icon('award', 24); ?>
                     محبوب‌ترین برندها
                 </h2>
-                
-                <a href="<?php echo esc_url(gpds_get_all_brands_url()); ?>">
-                    نمایش همه برندها
+                <a href="<?php echo esc_url(gpds_get_all_brands_url()); ?>" class="gpds-mega-menu__all">
+                    مشاهده همه <?php gpds_icon('arrow-left', 14); ?>
                 </a>
             </div>
             
