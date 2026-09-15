@@ -51,6 +51,10 @@ require_once GPDS_INC . '/modules/brands.php';
 require_once GPDS_INC . '/modules/banners.php';
 require_once GPDS_INC . '/modules/blog.php';
 require_once GPDS_INC . '/modules/special-offer.php';
+
+
+require_once GPDS_INC . '/modules/brands-filters.php';
+
 // ============================================
 // ماژول WooCommerce (فقط اگه ووکامرس فعاله)
 // ============================================

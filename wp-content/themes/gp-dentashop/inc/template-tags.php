@@ -228,6 +228,26 @@ function gpds_wc_breadcrumb() {
         }
     }
     
+
+
+    // ===== برند (product_brand) =====
+    if (is_tax('product_brand')) {
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<a href="' . esc_url(gpds_shop_url()) . '">فروشگاه</a>';
+        
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<a href="' . esc_url(gpds_get_all_brands_url()) . '">برندها</a>';
+        
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<span>' . esc_html(get_queried_object()->name) . '</span>';
+    }
+    
+    // ===== صفحه همه برندها (/brands/) =====
+    if (get_query_var('gpds_view') === 'all_brands') {
+        echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
+        echo '<span>برندها</span>';
+    }
+
     if (is_product()) {
         echo '<span class="gpds-breadcrumb-sep">' . $sep . '</span>';
         echo '<a href="' . esc_url(gpds_shop_url()) . '">فروشگاه</a>';

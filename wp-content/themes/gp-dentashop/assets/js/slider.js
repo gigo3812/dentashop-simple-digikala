@@ -45,6 +45,27 @@
                 navigation: nextEl && prevEl ? { nextEl, prevEl } : false,
             });
         });
+
+
+
+        // 🎯 کاروسل برندها
+        document.querySelectorAll('.gpds-brands-carousel').forEach(function(el) {
+            const nextEl = el.querySelector('.swiper-button-next');
+            const prevEl = el.querySelector('.swiper-button-prev');
+            
+            new Swiper(el, {
+                slidesPerView: 3,
+                spaceBetween: 12,
+                breakpoints: {
+                    480:  { slidesPerView: 4, spaceBetween: 12 },
+                    640:  { slidesPerView: 5, spaceBetween: 12 },
+                    768:  { slidesPerView: 6, spaceBetween: 14 },
+                    1024: { slidesPerView: 7, spaceBetween: 14 },
+                    1280: { slidesPerView: 8, spaceBetween: 16 },
+                },
+                navigation: nextEl && prevEl ? { nextEl, prevEl } : false,
+            });
+        });
     }
 
     // ============================================
