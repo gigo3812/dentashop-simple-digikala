@@ -136,6 +136,22 @@ function gpds_enqueue_frontend()
             'error'          => 'خطایی رخ داد، دوباره تلاش کنید',
         ],
     ]);
+
+
+
+    // ============================================
+    // CSS بلاگ (فقط صفحات بلاگ)
+    // ============================================
+    if (is_home() || is_singular('post') || is_category() || is_tag() || is_author() || is_date() || is_search()) {
+        wp_enqueue_style('gpds-blog', GPDS_ASSETS . '/css/blog.css', ['gpds-main'], GPDS_VERSION);
+    }
+
+    // ============================================
+    // JS بلاگ (فقط مقاله تکی)
+    // ============================================
+    if (is_singular('post')) {
+        wp_enqueue_script('gpds-blog', GPDS_ASSETS . '/js/blog.js', ['gpds-main'], GPDS_VERSION, true);
+    }
 }
 
 // ============================================
@@ -151,6 +167,7 @@ add_filter('script_loader_tag', function ($tag, $handle) {
         'gpds-footer',
         'gpds-product',
         'gpds-shop',
+        'gpds-blog'
     ];
 
     if (in_array($handle, $defer, true)) {
