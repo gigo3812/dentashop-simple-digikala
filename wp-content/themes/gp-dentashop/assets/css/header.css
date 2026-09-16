@@ -234,6 +234,7 @@
 
 .gpds-mainbar__categories-btn:hover {
     color: var(--gpds-color-primary);
+    background-color: var(--gpds-bg-body);
 }
 
 .gpds-mainbar__categories-arrow {
