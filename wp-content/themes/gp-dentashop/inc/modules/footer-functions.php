@@ -42,6 +42,8 @@ function gpds_get_footer_services()
     ]);
 }
 
+
+
 // ============================================
 // لینک‌های فوتر پیش‌فرض
 // ============================================
@@ -65,13 +67,63 @@ function gpds_get_footer_links()
         ],
         [
             'title' => 'دفاتر مرکزی',
-            'links' => [
-                ['title' => 'استان خراسان رضوی', 'url' => '#'],
-                ['title' => 'استان خراسان جنوبی', 'url' => '#'],
-                ['title' => 'سیستان و بلوچستان', 'url' => '#'],
-            ],
+            'links' => gpds_get_offices_footer_links(),  // ← این خط
         ],
     ]);
+}
+
+/**
+ * گرفتن لینک دفاتر برای فوتر (خودکار از CPT)
+ */
+function gpds_get_offices_footer_links()
+{
+    // اگه CPT دفاتر فعال نیست
+    if (!post_type_exists('office')) {
+        return [];
+    }
+
+    $offices = get_posts([
+        'post_type'      => 'office',
+        'posts_per_page' => -1,
+        'post_status'    => 'publish',
+        'orderby'        => 'menu_order title',
+        'order'          => 'ASC',
+    ]);
+
+    if (empty($offices)) {
+        return [];
+    }
+
+    $links = [];
+
+    foreach ($offices as $office) {
+        // گرفتن شهر از متادیتا
+        $city = get_post_meta($office->ID, '_office_city', true);
+        $province = get_post_meta($office->ID, '_office_province', true);
+
+        // عنوان: «شهر» یا «استان - شهر» یا «عنوان دفتر»
+        $title = '';
+        if ($city && $province) {
+            $title = $city;  // فقط شهر
+        } elseif ($city) {
+            $title = $city;
+        } else {
+            $title = $office->post_title;
+        }
+
+        $links[] = [
+            'title' => $title,
+            'url'   => get_permalink($office->ID),
+        ];
+    }
+
+    // دکمه «همه دفاتر» رو آخر اضافه کن (اختیاری)
+    $links[] = [
+        'title' => 'مشاهده همه دفاتر ←',
+        'url'   => get_post_type_archive_link('office'),
+    ];
+
+    return $links;
 }
 
 // ============================================

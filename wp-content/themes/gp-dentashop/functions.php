@@ -22,6 +22,7 @@ define('GPDS_INC',     GPDS_DIR . '/inc');
 define('GPDS_TPL',     GPDS_DIR . '/template-parts');
 define('GPDS_ASSETS',  GPDS_URI . '/assets');
 
+
 // ============================================
 // بارگذاری لودر اصلی
 // ============================================

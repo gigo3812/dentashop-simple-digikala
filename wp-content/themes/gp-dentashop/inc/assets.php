@@ -127,6 +127,7 @@ function gpds_enqueue_frontend()
         'cartUrl'     => function_exists('wc_get_cart_url') ? wc_get_cart_url() : '',
         'checkoutUrl' => function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : '',
         'isLoggedIn'  => is_user_logged_in(),
+        'themeUri'    => GPDS_URI,
         'currency'    => function_exists('get_woocommerce_currency_symbol') ? get_woocommerce_currency_symbol() : 'تومان',
         'i18n'        => [
             'searchLoading'  => 'در حال جستجو...',
@@ -152,6 +153,22 @@ function gpds_enqueue_frontend()
     if (is_singular('post')) {
         wp_enqueue_script('gpds-blog', GPDS_ASSETS . '/js/blog.js', ['gpds-main'], GPDS_VERSION, true);
     }
+
+
+    // ============================================
+    // CSS دفاتر (فقط صفحات دفاتر)
+    // ============================================
+    if (is_post_type_archive('office') || is_singular('office')) {
+        wp_enqueue_style('gpds-offices', GPDS_ASSETS . '/css/offices.css', ['gpds-main'], GPDS_VERSION);
+    }
+
+    // ============================================
+    // JS دفاتر (فقط صفحه تکی برای نقشه)
+    // ============================================
+    if (is_singular('office')) {
+        // فقط offices.js - Leaflet توسط خودش lazy load می‌شه
+        wp_enqueue_script('gpds-offices', GPDS_ASSETS . '/js/offices.js', ['gpds-main'], GPDS_VERSION, true);
+    }
 }
 
 // ============================================
@@ -167,7 +184,8 @@ add_filter('script_loader_tag', function ($tag, $handle) {
         'gpds-footer',
         'gpds-product',
         'gpds-shop',
-        'gpds-blog'
+        'gpds-blog',
+        'gpds-offices',
     ];
 
     if (in_array($handle, $defer, true)) {
