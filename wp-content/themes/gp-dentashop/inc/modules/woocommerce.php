@@ -15,12 +15,11 @@ if (!defined('ABSPATH')) exit;
 add_filter('woocommerce_enqueue_styles', 'gpds_remove_wc_styles');
 
 function gpds_remove_wc_styles($styles) {
-    // حذف کامل استایل‌های پیش‌فرض چون خودمون می‌سازیم
     return [];
 }
 
 // ============================================
-// حذف Sidebar پیش‌فرض WC در صفحات فروشگاه
+// حذف Sidebar پیش‌فرض WC
 // ============================================
 remove_action('woocommerce_sidebar', 'woocommerce_get_sidebar', 10);
 
@@ -42,18 +41,18 @@ add_filter('loop_shop_per_page', function() {
 remove_action('woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10);
 
 // ============================================
-// حذف Notice پیش‌فرض WC (خودمون می‌سازیم)
+// حذف Notice پیش‌فرض WC
 // ============================================
 remove_action('woocommerce_before_shop_loop', 'woocommerce_result_count', 20);
 remove_action('woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30);
 
 // ============================================
-// حذف Breadcrumb پیش‌فرض (خودمون می‌سازیم)
+// حذف Breadcrumb پیش‌فرض
 // ============================================
 remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
 
 // ============================================
-// اضافه کردن Wrap به محتوا
+// Wrapper محتوا
 // ============================================
 remove_action('woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
 remove_action('woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
@@ -70,12 +69,11 @@ function gpds_wc_wrapper_end() {
 }
 
 // ============================================
-// تب‌های محصول - سفارشی‌سازی
+// تب‌های محصول
 // ============================================
 add_filter('woocommerce_product_tabs', 'gpds_customize_product_tabs');
 
 function gpds_customize_product_tabs($tabs) {
-    // تغییر عنوان‌ها
     if (isset($tabs['description'])) {
         $tabs['description']['title'] = 'معرفی محصول';
         $tabs['description']['priority'] = 10;
@@ -88,7 +86,6 @@ function gpds_customize_product_tabs($tabs) {
         $tabs['reviews']['title'] = sprintf('نظرات (%d)', get_comments_number());
         $tabs['reviews']['priority'] = 30;
     }
-    
     return $tabs;
 }
 
@@ -102,17 +99,12 @@ add_filter('woocommerce_output_related_products_args', function($args) {
 });
 
 // ============================================
-// حذف لینک "افزودن به سبد" از Loop (خودمون داریم)
+// حذف لینک افزودن به سبد از Loop
 // ============================================
 remove_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10);
 
 // ============================================
-// حذف Sale Flash (خودمون نشون می‌دیم)
-// ============================================
-remove_action('woocommerce_before_shop_loop_item_title', 'woocommerce_show_product_loop_sale_flash', 10);
-
-// ============================================
-// AJAX: افزودن به سبد خرید از Loop
+// AJAX: افزودن سریع به سبد
 // ============================================
 add_action('wp_ajax_gpds_quick_add',        'gpds_ajax_quick_add');
 add_action('wp_ajax_nopriv_gpds_quick_add', 'gpds_ajax_quick_add');
@@ -135,7 +127,6 @@ function gpds_ajax_quick_add() {
         wp_send_json_error(['message' => 'محصول موجود نیست']);
     }
     
-    // فقط محصولات ساده
     if (!$product->is_type('simple')) {
         wp_send_json_error([
             'message' => 'لطفاً صفحه محصول را باز کنید',
@@ -165,10 +156,6 @@ add_action('wp_enqueue_scripts', function() {
     }
 }, 99);
 
-
-// ============================================
-// حذف استایل‌های اضافی WC در Cart/Checkout
-// ============================================
 add_action('wp_enqueue_scripts', function() {
     if (!is_cart() && !is_checkout()) {
         wp_dequeue_style('wc-blocks-style');
@@ -226,17 +213,13 @@ function gpds_order_received_content($order_id) {
 }
 
 // ============================================
-// Checkout - حذف فیلدهای اضافی
+// Checkout - حذف/تنظیم فیلدها
 // ============================================
 add_filter('woocommerce_checkout_fields', function($fields) {
-    // حذف فیلد "شرکت"
     unset($fields['billing']['billing_company']);
-    
-    // حذف فیلد "کشور" (همیشه ایران)
     unset($fields['billing']['billing_country']);
     unset($fields['shipping']['shipping_country']);
     
-    // ترتیب فیلدها
     if (isset($fields['billing']['billing_first_name'])) {
         $fields['billing']['billing_first_name']['priority'] = 10;
         $fields['billing']['billing_first_name']['placeholder'] = 'نام';
@@ -272,19 +255,75 @@ add_filter('woocommerce_checkout_fields', function($fields) {
     return $fields;
 }, 20);
 
-// ============================================
-// حذف فیلدهای اضافی از Checkout
-// ============================================
 add_filter('woocommerce_checkout_fields', function($fields) {
-    // حذف فیلد "یادداشت سفارش"
     if (isset($fields['order']['order_comments'])) {
         $fields['order']['order_comments']['placeholder'] = 'توضیحات سفارش (اختیاری)';
     }
-    
     return $fields;
 }, 30);
 
 // ============================================
-// حذف لینک "تخمین زدن" در سبد
+// حذف لینک تخمین در سبد
 // ============================================
 add_filter('woocommerce_shipping_estimate_is_required', '__return_false');
+
+
+// ============================================
+// ⭐ بخش جدید: My Account
+// ============================================
+//
+// لود تمپلیت‌های سفارشی برای /my-account/
+// از مسیر inc/templates/woocommerce/myaccount/
+// ============================================
+
+add_filter('template_include', 'gpds_myaccount_template_include', 99);
+
+function gpds_myaccount_template_include($template) {
+    if (!function_exists('is_account_page') || !is_account_page()) {
+        return $template;
+    }
+
+    $base = GPDS_INC . '/templates/woocommerce/myaccount';
+
+    if (!is_user_logged_in()) {
+        $custom = $base . '/auth.php';
+    } else {
+        $custom = $base . '/dashboard.php';
+    }
+
+    if (file_exists($custom)) {
+        return $custom;
+    }
+
+    return $template;
+}
+
+
+// ============================================
+// عنوان صفحه my-account
+// ============================================
+
+add_filter('document_title_parts', function($title) {
+    if (function_exists('is_account_page') && is_account_page()) {
+        if (!is_user_logged_in()) {
+            $title['title'] = 'ورود / ثبت‌نام';
+        } else {
+            $title['title'] = 'حساب کاربری';
+        }
+    }
+    return $title;
+});
+
+
+// ============================================
+// حذف استایل‌های اضافی WC در صفحات my-account
+// ============================================
+
+add_action('wp_enqueue_scripts', function() {
+    if (function_exists('is_account_page') && is_account_page()) {
+        // حذف استایل‌های پیش‌فرض ووکامرس که با قالب ما تداخل می‌کنن
+        wp_dequeue_style('woocommerce-general');
+        wp_dequeue_style('woocommerce-layout');
+        wp_dequeue_style('woocommerce-smallscreen');
+    }
+}, 100);

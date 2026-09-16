@@ -1,0 +1,424 @@
+/* ============================================================
+ * GP DentaShop - My Account Styles
+ * ============================================================ */
+
+/* ============================================
+ * Page Layout
+ * ============================================ */
+.gpds-account-page {
+    padding: var(--gpds-space-lg) 0 var(--gpds-space-xxl);
+}
+
+.gpds-account-page .gpds-page-header {
+    margin-bottom: var(--gpds-space-lg);
+    text-align: center;
+}
+
+.gpds-account-page .gpds-page-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+    margin: 0;
+}
+
+/* ============================================
+ * Auth (Login / Register)
+ * ============================================ */
+.gpds-account-auth {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gpds-space-lg);
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .gpds-account-auth {
+        grid-template-columns: 1fr;
+    }
+}
+
+.gpds-account-auth__box {
+    background: var(--gpds-bg-surface);
+    border: 1px solid var(--gpds-border-light);
+    border-radius: var(--gpds-radius-lg);
+    padding: var(--gpds-space-lg);
+    box-shadow: var(--gpds-shadow-xs);
+}
+
+.gpds-account-auth__title {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    font-size: var(--gpds-fs-xl);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+    margin: 0 0 var(--gpds-space-lg);
+    padding-bottom: var(--gpds-space-md);
+    border-bottom: 1px solid var(--gpds-border-light);
+}
+
+.gpds-account-auth__title svg {
+    color: var(--gpds-color-primary);
+}
+
+/* فرم‌ها */
+.gpds-account-auth .form-row {
+    margin-bottom: var(--gpds-space-md);
+}
+
+.gpds-account-auth label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-medium);
+    color: var(--gpds-text-primary);
+}
+
+.gpds-account-auth label .required {
+    color: var(--gpds-color-danger);
+}
+
+.gpds-account-auth input.input-text {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--gpds-border-base);
+    border-radius: var(--gpds-radius-sm);
+    background: var(--gpds-bg-surface);
+    font-size: var(--gpds-fs-base);
+    color: var(--gpds-text-primary);
+    min-height: 44px;
+    transition: border-color 0.2s ease;
+    font-family: inherit;
+}
+
+.gpds-account-auth input.input-text:focus {
+    outline: none;
+    border-color: var(--gpds-color-primary);
+}
+
+.gpds-account-auth .woocommerce-form__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--gpds-fs-sm);
+    color: var(--gpds-text-secondary);
+    cursor: pointer;
+    margin-bottom: var(--gpds-space-md);
+}
+
+.gpds-account-auth .woocommerce-form__input-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--gpds-color-primary);
+}
+
+.gpds-account-auth__lost {
+    margin-top: var(--gpds-space-sm);
+    text-align: center;
+    font-size: var(--gpds-fs-sm);
+}
+
+.gpds-account-auth__lost a {
+    color: var(--gpds-color-primary);
+    text-decoration: none;
+}
+
+.gpds-account-auth__lost a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+ * Account Layout (Dashboard)
+ * ============================================ */
+.gpds-account-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--gpds-space-lg);
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .gpds-account-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+ * Navigation Sidebar
+ * ============================================ */
+.gpds-account-nav {
+    background: var(--gpds-bg-surface);
+    border: 1px solid var(--gpds-border-light);
+    border-radius: var(--gpds-radius-lg);
+    padding: var(--gpds-space-md);
+    box-shadow: var(--gpds-shadow-xs);
+    position: sticky;
+    top: var(--gpds-space-md);
+}
+
+@media (max-width: 992px) {
+    .gpds-account-nav {
+        position: static;
+    }
+}
+
+/* کاربر */
+.gpds-account-nav__user {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+    padding-bottom: var(--gpds-space-md);
+    margin-bottom: var(--gpds-space-sm);
+    border-bottom: 1px solid var(--gpds-border-light);
+}
+
+.gpds-account-nav__avatar {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--gpds-color-primary), #c7304a);
+    color: white;
+    border-radius: 50%;
+    font-size: var(--gpds-fs-lg);
+    font-weight: var(--gpds-fw-bold);
+    flex-shrink: 0;
+}
+
+.gpds-account-nav__user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.gpds-account-nav__user-info strong {
+    font-size: var(--gpds-fs-base);
+    color: var(--gpds-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gpds-account-nav__user-info span {
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-tertiary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    direction: ltr;
+    text-align: right;
+}
+
+/* منو */
+.gpds-account-nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.gpds-account-nav__item a {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+    padding: 10px 12px;
+    border-radius: var(--gpds-radius-sm);
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-medium);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.gpds-account-nav__item a svg {
+    color: var(--gpds-text-tertiary);
+    transition: color 0.2s ease;
+}
+
+.gpds-account-nav__item a:hover {
+    background: var(--gpds-bg-hover);
+    color: var(--gpds-color-primary);
+}
+
+.gpds-account-nav__item a:hover svg {
+    color: var(--gpds-color-primary);
+}
+
+.gpds-account-nav__item.is-active a {
+    background: var(--gpds-color-primary-light);
+    color: var(--gpds-color-primary);
+    font-weight: var(--gpds-fw-semibold);
+}
+
+.gpds-account-nav__item.is-active a svg {
+    color: var(--gpds-color-primary);
+}
+
+/* ============================================
+ * Content Area
+ * ============================================ */
+.gpds-account-content {
+    background: var(--gpds-bg-surface);
+    border: 1px solid var(--gpds-border-light);
+    border-radius: var(--gpds-radius-lg);
+    padding: var(--gpds-space-lg);
+    box-shadow: var(--gpds-shadow-xs);
+    min-height: 400px;
+}
+
+.gpds-account-welcome {
+    margin-bottom: var(--gpds-space-lg);
+    padding-bottom: var(--gpds-space-md);
+    border-bottom: 1px solid var(--gpds-border-light);
+}
+
+.gpds-account-welcome__title {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+    margin: 0 0 var(--gpds-space-xs);
+}
+
+.gpds-account-welcome__subtitle {
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-base);
+    margin: 0;
+}
+
+/* ============================================
+ * Buttons
+ * ============================================ */
+.gpds-account-page .gpds-btn,
+.gpds-account-page button.button,
+.gpds-account-page .woocommerce-Button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gpds-space-xs);
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--gpds-radius-sm);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-bold);
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    min-height: 44px;
+    line-height: 1;
+}
+
+.gpds-account-page .gpds-btn--primary,
+.gpds-account-page button.button.alt,
+.gpds-account-page .woocommerce-Button {
+    background: var(--gpds-color-primary);
+    color: white;
+}
+
+.gpds-account-page .gpds-btn--primary:hover,
+.gpds-account-page button.button.alt:hover {
+    background: var(--gpds-color-primary-hover);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.gpds-account-page .gpds-btn--outline {
+    background: transparent;
+    color: var(--gpds-color-primary);
+    border: 1px solid var(--gpds-color-primary);
+}
+
+.gpds-account-page .gpds-btn--outline:hover {
+    background: var(--gpds-color-primary-light);
+}
+
+.gpds-account-page .gpds-btn--block {
+    width: 100%;
+}
+
+/* ============================================
+ * WooCommerce Content
+ * ============================================ */
+.gpds-account-content h2 {
+    font-size: var(--gpds-fs-xl);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+    margin: 0 0 var(--gpds-space-md);
+}
+
+.gpds-account-content h3 {
+    font-size: var(--gpds-fs-lg);
+    font-weight: var(--gpds-fw-semibold);
+    color: var(--gpds-text-primary);
+    margin: 0 0 var(--gpds-space-sm);
+}
+
+.gpds-account-content p {
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-base);
+    line-height: 1.8;
+}
+
+.gpds-account-content a {
+    color: var(--gpds-color-primary);
+}
+
+/* جدول سفارش‌ها */
+.gpds-account-content table.shop_table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    margin-bottom: var(--gpds-space-md);
+}
+
+.gpds-account-content table.shop_table th,
+.gpds-account-content table.shop_table td {
+    padding: 12px;
+    text-align: right;
+    border-bottom: 1px solid var(--gpds-border-light);
+    font-size: var(--gpds-fs-sm);
+}
+
+.gpds-account-content table.shop_table th {
+    font-weight: var(--gpds-fw-semibold);
+    color: var(--gpds-text-primary);
+    background: var(--gpds-bg-muted);
+}
+
+.gpds-account-content table.shop_table td {
+    color: var(--gpds-text-secondary);
+}
+
+/* Notices */
+.gpds-account-page .woocommerce-message,
+.gpds-account-page .woocommerce-info,
+.gpds-account-page .woocommerce-error {
+    padding: var(--gpds-space-md);
+    border-radius: var(--gpds-radius-md);
+    margin-bottom: var(--gpds-space-md);
+    border-right: 4px solid;
+    font-size: var(--gpds-fs-sm);
+}
+
+.gpds-account-page .woocommerce-message {
+    background: #ecfdf5;
+    color: #065f46;
+    border-color: #10b981;
+}
+
+.gpds-account-page .woocommerce-info {
+    background: #eff6ff;
+    color: #1e40af;
+    border-color: #3b82f6;
+}
+
+.gpds-account-page .woocommerce-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border-color: #ef4444;
+}

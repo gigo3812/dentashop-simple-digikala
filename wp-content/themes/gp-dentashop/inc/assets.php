@@ -49,6 +49,18 @@ function gpds_enqueue_frontend()
     }
 
     // ============================================
+    // CSS حساب کاربری
+    // ============================================
+    if (function_exists('is_account_page') && is_account_page()) {
+        wp_enqueue_style(
+            'gpds-account',
+            GPDS_ASSETS . '/css/woocommerce-account.css',
+            ['gpds-main'],
+            GPDS_VERSION
+        );
+    }
+
+    // ============================================
     // Swiper (فقط صفحاتی که اسلایدر دارن)
     // ============================================
     if (gpds_page_has_slider()) {
