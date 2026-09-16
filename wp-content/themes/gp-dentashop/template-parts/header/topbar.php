@@ -84,7 +84,7 @@ if (!defined('ABSPATH')) exit;
                         </div>
                     <?php else : ?>
                         <a 
-                            href="<?php echo esc_url(wp_login_url()); ?>" 
+                            href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" 
                             class="gpds-btn gpds-btn--ghost gpds-topbar__auth-btn"
                         >
                             <?php gpds_icon('user', 20); ?>

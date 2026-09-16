@@ -95,7 +95,7 @@ if (!defined('ABSPATH')) exit;
                 <?php gpds_icon('logout', 18); ?> خروج از حساب
             </a>
         <?php else : ?>
-            <a href="<?php echo esc_url(wp_login_url()); ?>" class="gpds-btn gpds-btn--primary gpds-btn--block">
+            <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="gpds-btn gpds-btn--primary gpds-btn--block">
                 ورود | ثبت‌نام
             </a>
         <?php endif; ?>
