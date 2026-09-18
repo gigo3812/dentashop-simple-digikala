@@ -44,25 +44,54 @@
     color: var(--gpds-color-primary);
 }
 
-.gpds-footer-top__back-to-top {
+
+/* دکمه شناور بازگشت به بالا */
+.gpds-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 999;
+    
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    
+
+
+    background: var(--gpds-color-primary);
+
+    color: #fff;
+    
     display: flex;
     align-items: center;
-    gap: var(--gpds-space-xs);
-    padding: 8px 16px;
-    border: 1px solid var(--gpds-border-base);
-    border-radius: var(--gpds-radius-sm);
-    color: var(--gpds-text-secondary);
-    font-size: var(--gpds-fs-sm);
-    font-weight: var(--gpds-fw-medium);
-    transition: all var(--gpds-transition-fast);
+    justify-content: center;
+    
+    /* فقط یک ترنزیشن سبک برای ظاهر/محو شدن */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
 }
 
-.gpds-footer-top__back-to-top:hover {
-    border-color: var(--gpds-color-primary);
-    color: var(--gpds-color-primary);
+.gpds-back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
 }
 
+/* فقط تغییر رنگ ساده در هاور (بدون transform و سایه) */
+.gpds-back-to-top:hover {
+    background: var(--gpds-color-primary-hover);
+}
 
+@media (max-width: 768px) {
+    .gpds-back-to-top {
+        width: 38px;
+        height: 38px;
+        bottom: 15px;
+        left: 15px;
+    }
+}
 /* ============================================================
  * 2. FOOTER SERVICES
  * ============================================================ */
