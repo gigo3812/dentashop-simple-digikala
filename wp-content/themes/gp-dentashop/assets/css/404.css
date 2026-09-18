@@ -1,0 +1,795 @@
+
+/* ============================================================
+   GP DentaShop — Modern 404 Page
+   Dental / Medical / Lightweight
+   ============================================================ */
+
+
+/* ============================================================
+   Main
+   ============================================================ */
+
+.gpds-404 {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    /*
+     * فضای صفحه بین Header و Footer
+     * باعث می‌شود محتوای 404 در دسکتاپ
+     * واقعاً در مرکز صفحه قرار بگیرد.
+     */
+    min-height: calc(100svh - 180px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: clamp(50px, 6vw, 75px) 0;
+
+    background: var(--gpds-bg-body, #f8fafc);
+
+    color: var(--gpds-text-primary);
+
+    text-align: center;
+}
+
+
+/* ============================================================
+   Soft Background
+   ============================================================ */
+
+.gpds-404::before {
+    content: "";
+
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    top: -320px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 7%,
+            transparent
+        );
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+.gpds-404::after {
+    content: "";
+
+    position: absolute;
+
+    width: 280px;
+    height: 280px;
+
+    right: -120px;
+    bottom: -170px;
+
+    border-radius: 50%;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 4%,
+            transparent
+        );
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+/* ============================================================
+   Inner
+   ============================================================ */
+
+.gpds-404__inner {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ============================================================
+   Dental Visual
+   ============================================================ */
+
+.gpds-404__visual {
+    position: relative;
+
+    width: 90px;
+    height: 90px;
+
+    margin-bottom: 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.gpds-404__tooth {
+    position: relative;
+
+    width: 62px;
+    height: 72px;
+
+    color: var(--gpds-color-primary);
+
+    opacity: .92;
+
+    z-index: 2;
+}
+
+
+.gpds-404__tooth svg {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ============================================================
+   Decorative Rings
+   ============================================================ */
+
+.gpds-404__pulse {
+    position: absolute;
+
+    border: 1px solid
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 20%,
+            transparent
+        );
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.gpds-404__pulse--1 {
+    width: 78px;
+    height: 78px;
+}
+
+
+.gpds-404__pulse--2 {
+    width: 94px;
+    height: 94px;
+
+    opacity: .45;
+}
+
+
+/* ============================================================
+   404 Number
+   ============================================================ */
+
+.gpds-404__code {
+    direction: ltr;
+
+    margin: 0 0 14px;
+
+    font-size: clamp(70px, 9vw, 108px);
+
+    line-height: .9;
+
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    color: var(--gpds-color-primary);
+
+    opacity: .13;
+
+    user-select: none;
+}
+
+
+/* ============================================================
+   Title
+   ============================================================ */
+
+.gpds-404__title {
+    margin: 0 0 10px;
+    padding: 0;
+
+    color: var(--gpds-text-primary);
+
+    font-size: clamp(24px, 3vw, 33px);
+
+    line-height: 1.5;
+
+    font-weight: var(--gpds-fw-bold, 700);
+}
+
+
+/* ============================================================
+   Description
+   ============================================================ */
+
+.gpds-404__text {
+    max-width: 600px;
+
+    margin: 0 auto 25px;
+    padding: 0 10px;
+
+    color: var(--gpds-text-secondary);
+
+    font-size: var(--gpds-fs-base, 15px);
+
+    line-height: 1.95;
+
+    text-wrap: balance;
+}
+
+
+/* ============================================================
+   Main Actions
+   ============================================================ */
+
+.gpds-404__actions {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 42px;
+}
+
+
+.gpds-404__btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    min-height: 47px;
+
+    padding: 0 22px;
+
+    border-radius:
+        var(--gpds-radius-sm, 8px);
+
+    font-family: inherit;
+
+    font-size:
+        var(--gpds-fs-sm, 14px);
+
+    font-weight:
+        var(--gpds-fw-semibold, 600);
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background-color .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+}
+
+
+.gpds-404__btn svg {
+    width: 19px;
+    height: 19px;
+
+    flex: 0 0 auto;
+}
+
+
+/* ============================================================
+   Primary Button
+   ============================================================ */
+
+.gpds-404__btn--primary {
+    color: #fff;
+
+    background:
+        var(--gpds-color-primary);
+
+    border: 1px solid
+        var(--gpds-color-primary);
+
+    box-shadow:
+        0 8px 22px -10px
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 55%,
+            transparent
+        );
+}
+
+
+.gpds-404__btn--primary:hover {
+    color: #fff;
+
+    background:
+        var(
+            --gpds-color-primary-hover,
+            var(--gpds-color-primary)
+        );
+
+    border-color:
+        var(
+            --gpds-color-primary-hover,
+            var(--gpds-color-primary)
+        );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px -10px
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 50%,
+            transparent
+        );
+}
+
+
+/* ============================================================
+   Secondary Button
+   ============================================================ */
+
+.gpds-404__btn--secondary {
+    color: var(--gpds-text-primary);
+
+    background:
+        var(--gpds-bg-surface);
+
+    border: 1px solid
+        var(--gpds-border-base);
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, .03);
+}
+
+
+.gpds-404__btn--secondary:hover {
+    color:
+        var(--gpds-color-primary);
+
+    border-color:
+        var(--gpds-color-primary);
+
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   Quick Links
+   ============================================================ */
+
+.gpds-404__quick {
+    width: 100%;
+    max-width: 850px;
+}
+
+
+.gpds-404__quick-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 14px;
+
+    color:
+        var(--gpds-text-tertiary);
+
+    font-size:
+        var(--gpds-fs-xs, 12px);
+
+    font-weight:
+        var(--gpds-fw-medium, 500);
+
+    white-space: nowrap;
+}
+
+
+.gpds-404__quick-title::before,
+.gpds-404__quick-title::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        var(--gpds-border-light);
+}
+
+
+/* ============================================================
+   Link Grid
+   ============================================================ */
+
+.gpds-404__links {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 11px;
+}
+
+
+/* ============================================================
+   Link Card
+   ============================================================ */
+
+.gpds-404__links > a {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 70px;
+
+    padding: 10px 13px;
+
+    text-align: right;
+
+    text-decoration: none;
+
+    background:
+        var(--gpds-bg-surface);
+
+    border: 1px solid
+        var(--gpds-border-light);
+
+    border-radius:
+        var(--gpds-radius-sm, 8px);
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.gpds-404__links > a:hover {
+    border-color:
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 35%,
+            var(--gpds-border-light)
+        );
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 28px -18px
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 35%,
+            transparent
+        );
+}
+
+
+/* ============================================================
+   Link Icon
+   ============================================================ */
+
+.gpds-404__link-icon {
+    flex: 0 0 auto;
+
+    width: 41px;
+    height: 41px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 10px;
+
+    color:
+        var(--gpds-color-primary);
+
+    background:
+        color-mix(
+            in srgb,
+            var(--gpds-color-primary) 8%,
+            transparent
+        );
+
+    border-radius: 9px;
+
+    transition:
+        background-color .2s ease,
+        color .2s ease;
+}
+
+
+.gpds-404__link-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+.gpds-404__links > a:hover
+.gpds-404__link-icon {
+    color: #fff;
+
+    background:
+        var(--gpds-color-primary);
+}
+
+
+/* ============================================================
+   Link Text
+   ============================================================ */
+
+.gpds-404__links > a > span:nth-child(2) {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.gpds-404__links strong {
+    display: block;
+
+    color:
+        var(--gpds-text-primary);
+
+    font-size:
+        var(--gpds-fs-sm, 14px);
+
+    font-weight:
+        var(--gpds-fw-bold, 700);
+
+    line-height: 1.5;
+}
+
+
+.gpds-404__links small {
+    display: block;
+
+    overflow: hidden;
+
+    color:
+        var(--gpds-text-tertiary);
+
+    font-size:
+        var(--gpds-fs-xs, 12px);
+
+    line-height: 1.5;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   Arrow
+   ============================================================ */
+
+.gpds-404__arrow {
+    width: 16px;
+    height: 16px;
+
+    margin-right: auto;
+
+    flex: 0 0 auto;
+
+    color:
+        var(--gpds-text-tertiary);
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+
+.gpds-404__links > a:hover
+.gpds-404__arrow {
+    color:
+        var(--gpds-color-primary);
+
+    transform:
+        translateX(-3px);
+}
+
+
+/* ============================================================
+   RTL
+   ============================================================ */
+
+[dir="rtl"]
+.gpds-404__arrow {
+    transform: scaleX(-1);
+}
+
+
+[dir="rtl"]
+.gpds-404__links > a:hover
+.gpds-404__arrow {
+    transform:
+        scaleX(-1)
+        translateX(-3px);
+}
+
+
+/* ============================================================
+   Tablet
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .gpds-404 {
+        min-height: auto;
+
+        padding:
+            55px 0 65px;
+    }
+
+    .gpds-404__links {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* ============================================================
+   Mobile
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .gpds-404 {
+        padding:
+            42px 0 55px;
+    }
+
+
+    .gpds-404__visual {
+        transform: scale(.9);
+
+        margin-bottom: 0;
+    }
+
+
+    .gpds-404__code {
+        font-size: 76px;
+
+        letter-spacing: 2px;
+
+        margin-bottom: 11px;
+    }
+
+
+    .gpds-404__title {
+        font-size: 24px;
+
+        margin-bottom: 9px;
+    }
+
+
+    .gpds-404__text {
+        padding: 0 12px;
+
+        margin-bottom: 22px;
+
+        font-size: 14px;
+
+        line-height: 1.9;
+    }
+
+
+    .gpds-404__actions {
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 8px;
+
+        margin-bottom: 35px;
+    }
+
+
+    .gpds-404__btn {
+        width: 100%;
+
+        max-width: 360px;
+    }
+
+
+    .gpds-404__links {
+        gap: 8px;
+    }
+
+}
+
+
+/* ============================================================
+   Small Mobile
+   ============================================================ */
+
+@media (max-width: 380px) {
+
+    .gpds-404__title {
+        font-size: 22px;
+    }
+
+
+    .gpds-404__code {
+        font-size: 68px;
+    }
+
+
+    .gpds-404__links > a {
+        padding:
+            9px 11px;
+    }
+
+
+    .gpds-404__link-icon {
+        width: 38px;
+        height: 38px;
+
+        margin-left: 9px;
+    }
+
+}
+
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .gpds-404 *,
+    .gpds-404 *::before,
+    .gpds-404 *::after {
+
+        transition: none !important;
+
+        transform: none !important;
+    }
+
+}
