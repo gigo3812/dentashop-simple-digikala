@@ -61,6 +61,31 @@ function gpds_enqueue_frontend()
     }
 
     // ============================================
+    // CSS سبد خرید
+    // ============================================
+    if (function_exists('is_cart') && is_cart()) {
+        wp_enqueue_style(
+            'gpds-cart',
+            GPDS_ASSETS . '/css/woocommerce-cart.css',
+            ['gpds-main'],
+            GPDS_VERSION
+        );
+    }
+
+    // ============================================
+    // CSS تسویه حساب
+    // ============================================
+    if (function_exists('is_checkout') && is_checkout() && !is_order_received_page()) {
+        wp_enqueue_style(
+            'gpds-checkout',
+            GPDS_ASSETS . '/css/woocommerce-checkout.css',
+            ['gpds-main'],
+            GPDS_VERSION
+        );
+    }
+
+
+    // ============================================
     // Swiper (فقط صفحاتی که اسلایدر دارن)
     // ============================================
     if (gpds_page_has_slider()) {

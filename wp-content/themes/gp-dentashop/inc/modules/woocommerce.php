@@ -327,3 +327,74 @@ add_action('wp_enqueue_scripts', function() {
         wp_dequeue_style('woocommerce-smallscreen');
     }
 }, 100);
+
+
+// ============================================
+// ⭐ لود تمپلیت سفارشی Cart
+// ============================================
+
+add_filter('template_include', 'gpds_cart_template_include', 999);
+
+function gpds_cart_template_include($template) {
+    if (!function_exists('is_cart') || !is_cart()) {
+        return $template;
+    }
+
+    $custom = GPDS_INC . '/templates/woocommerce/cart.php';
+    if (file_exists($custom)) {
+        return $custom;
+    }
+
+    return $template;
+}
+
+
+// ============================================
+// ⭐ لود تمپلیت سفارشی Checkout
+// ============================================
+
+add_filter('template_include', 'gpds_checkout_template_include', 999);
+
+function gpds_checkout_template_include($template) {
+    if (!function_exists('is_checkout') || !is_checkout()) {
+        return $template;
+    }
+
+    $custom = GPDS_INC . '/templates/woocommerce/checkout.php';
+    if (file_exists($custom)) {
+        return $custom;
+    }
+
+    return $template;
+}
+
+
+
+
+// ============================================
+// عنوان صفحات Cart/Checkout
+// ============================================
+
+add_filter('document_title_parts', function($title) {
+    if (!function_exists('is_cart')) return $title;
+    
+    if (is_cart()) {
+        $title['title'] = 'سبد خرید';
+    } elseif (is_checkout() && !is_order_received_page()) {
+        $title['title'] = 'تسویه حساب';
+    }
+    
+    return $title;
+});
+
+// ============================================
+// حذف تمپلیت‌های GeneratePress برای Cart/Checkout
+// ============================================
+
+add_action('init', function() {
+    // اگه GeneratePress هست، فیلترهاش رو حذف کن
+    if (function_exists('generate_get_option')) {
+        // حذف فیلترهای احتمالی GP
+        remove_all_filters('template_include', 100);
+    }
+}, 1);
