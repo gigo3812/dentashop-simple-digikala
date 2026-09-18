@@ -15,6 +15,11 @@
     --gpds-ui-shadow: var(--gpds-shadow-sm);
 }
 
+*{
+    font-weight: 100;
+}
+
+
 .gpds-cart-page {
     background: var(--gpds-bg-body);
     padding: var(--gpds-space-lg) 0 var(--gpds-space-xxl);
@@ -143,10 +148,10 @@
     margin: 0 !important;
 }
 
+
 /* Name */
 .gpds-cart-page .product-name a {
     color: var(--gpds-ui-text);
-    font-weight: var(--gpds-fw-bold);
     text-decoration: none;
     line-height: var(--gpds-lh-relaxed);
 }
@@ -198,7 +203,7 @@
     color: var(--gpds-ui-text);
     font-family: inherit;
     font-size: 18px;
-    font-weight: var(--gpds-fw-bold);
+    /* font-weight: var(--gpds-fw-bold); */
     line-height: 1;
     cursor: pointer;
     transition: all var(--gpds-transition-fast);
@@ -221,7 +226,7 @@
     color: var(--gpds-ui-text);
     font-family: inherit;
     font-size: var(--gpds-fs-base);
-    font-weight: var(--gpds-fw-bold);
+    /* font-weight: var(--gpds-fw-bold); */
     text-align: center;
     outline: none;
     box-shadow: none;
@@ -327,7 +332,7 @@
     padding-bottom: 12px;
     border-bottom: 1px solid var(--gpds-ui-border);
     font-size: var(--gpds-fs-xl);
-    font-weight: var(--gpds-fw-bold);
+    /* font-weight: var(--gpds-fw-bold); */
 }
 .gpds-cart-page .cart_totals h2::before {
     content: '📋';
@@ -363,7 +368,7 @@
     border-top: 2px solid var(--gpds-ui-border);
     border-bottom: 0;
     font-size: var(--gpds-fs-xl);
-    font-weight: var(--gpds-fw-bold);
+    /* font-weight: var(--gpds-fw-bold); */
     color: var(--gpds-ui-accent);
 }
 
