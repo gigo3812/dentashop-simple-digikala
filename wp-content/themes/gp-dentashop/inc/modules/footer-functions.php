@@ -53,16 +53,15 @@ function gpds_get_footer_links()
         [
             'title' => 'با دنتاشاپ',
             'links' => [
-                ['title' => 'درباره ما', 'url' => '#'],
-                ['title' => 'راه های ارتباطی', 'url' => '#'],
-                ['title' => 'همکاری با ما', 'url' => '#'],
+                ['title' => 'درباره ما', 'url' => home_url('/about-us/')],
+                ['title' => 'راه های ارتباطی', 'url' => home_url('/contact/')],
             ],
         ],
         [
             'title' => 'خدمات مشتریان',
             'links' => [
-                ['title' => 'پاسخ به پرسش‌ها', 'url' => '#'],
-                ['title' => 'خرید اقساطی', 'url' => '#'],
+                ['title' => 'پاسخ به پرسش‌ها', 'url' => home_url('/faq/')],
+                ['title' => 'خرید اقساطی', 'url' => home_url('/installment/')],
             ],
         ],
         [
