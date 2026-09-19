@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) exit;
 
 get_header(); ?>
 
-<main id="gpds-main" class="gpds-main gpds-page" style="margin: 30px 20px;">
+<main id="gpds-main" class="gpds-main gpds-page" style="margin: 30px 20px; width: 100%;">
 
     <div class="gpds-container">
 

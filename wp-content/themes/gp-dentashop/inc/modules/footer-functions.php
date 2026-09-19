@@ -61,7 +61,7 @@ function gpds_get_footer_links()
             'title' => 'خدمات مشتریان',
             'links' => [
                 ['title' => 'پاسخ به پرسش‌ها', 'url' => home_url('/faq/')],
-                ['title' => 'خرید اقساطی', 'url' => home_url('/installment/')],
+                ['title' => 'خرید اقساطی', 'url' => home_url('/installment-payment/')],
             ],
         ],
         [
