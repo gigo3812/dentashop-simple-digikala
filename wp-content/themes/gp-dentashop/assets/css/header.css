@@ -1,30 +1,41 @@
 /* ============================================================
- * GP DentaShop - Header Styles
+ * GP DentaShop — Header
  * ============================================================ */
-
-.gpds-header {
-    background: var(--gpds-bg-surface);
-    box-shadow: 0 1px 0 var(--gpds-border-light);
-    position: relative;
-    z-index: var(--gpds-z-sticky);
-}
-
-/* اگه sticky می‌خوای، این کلاس رو با JS اضافه کن */
-.gpds-header.is-sticky {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: var(--gpds-z-sticky);
-    box-shadow: var(--gpds-shadow-sm);
-}
 
 
 /* ============================================================
- * TOPBAR - ردیف اول
+ * 1. HEADER BASE + STICKY
  * ============================================================ */
+
+.gpds-header {
+    position: relative;
+    background: var(--gpds-bg-surface);
+    box-shadow: 0 1px 0 var(--gpds-border-light);
+    z-index: var(--gpds-z-sticky);
+}
+
+.gpds-header.is-sticky {
+    position: fixed;
+    inset: 0 0 auto;
+    background: var(--gpds-bg-surface);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+.gpds-header.is-sticky .gpds-topbar              { padding: 8px 0; }
+.gpds-header.is-sticky .gpds-logo img,
+.gpds-header.is-sticky .custom-logo              { max-height: 36px; }
+.gpds-header.is-sticky .gpds-search-form__input  { min-height: 40px; }
+.gpds-header.is-sticky .gpds-topbar__auth-btn,
+.gpds-header.is-sticky .gpds-mini-cart__trigger  { min-height: 40px; }
+
+
+/* ============================================================
+ * 2. TOPBAR
+ * ============================================================ */
+
 .gpds-topbar {
-    padding: var(--gpds-space-md) 0;
+    padding: 14px 0;
+    transition: padding 200ms ease;
 }
 
 .gpds-topbar__inner {
@@ -34,29 +45,32 @@
     gap: var(--gpds-space-lg);
 }
 
-/* --- لوگو --- */
-.gpds-topbar__logo {
-    display: flex;
-    align-items: center;
-}
+
+/* ============================================================
+ * 3. LOGO
+ * ============================================================ */
+
+.gpds-topbar__logo { display: flex; align-items: center; }
 
 .gpds-logo img,
 .custom-logo {
+    display: block;
     max-height: 44px;
     width: auto;
-    display: block;
 }
 
-/* --- جستجو --- */
+
+/* ============================================================
+ * 4. SEARCH FORM
+ * ============================================================ */
+
 .gpds-topbar__search {
     position: relative;
-    max-width: 600px;
     width: 100%;
+    max-width: 600px;
 }
 
-.gpds-search-form {
-    position: relative;
-}
+.gpds-search-form { position: relative; }
 
 .gpds-search-form__input-wrap {
     position: relative;
@@ -79,6 +93,7 @@
     background: var(--gpds-bg-muted);
     border: 1px solid transparent;
     padding-right: 44px;
+    transition: background-color 180ms ease, border-color 180ms ease;
 }
 
 .gpds-search-form__input:focus {
@@ -86,130 +101,418 @@
     border-color: var(--gpds-color-primary);
 }
 
-/* --- نتایج جستجو --- */
+
+/* ============================================================
+ * 5. SEARCH RESULTS
+ * ============================================================ */
+
 .gpds-search-results {
     position: absolute;
     top: calc(100% + 8px);
-    right: 0;
-    left: 0;
-    background: var(--gpds-bg-surface);
-    border-radius: var(--gpds-radius-md);
-    box-shadow: var(--gpds-shadow-lg);
-    padding: var(--gpds-space-md);
-    z-index: var(--gpds-z-dropdown);
+    inset-inline: 0;
     max-height: 500px;
     overflow-y: auto;
-    animation: gpds-fade-in-up var(--gpds-transition-fast);
-}
-
-.gpds-search-results[hidden] {
-    display: none;
-}
-
-.gpds-search-results__loading {
-    text-align: center;
     padding: var(--gpds-space-md);
-    color: var(--gpds-text-secondary);
-}
-
-.gpds-search-results__loading[hidden] {
-    display: none;
-}
-
-/* --- اکشن‌ها --- */
-.gpds-topbar__actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: var(--gpds-space-xs);
-}
-
-.gpds-topbar__auth-btn {
-    display: flex;
-    align-items: center;
-    gap: var(--gpds-space-xs);
-    padding: 8px 12px;
-    border: 1px solid var(--gpds-border-base);
-    border-radius: var(--gpds-radius-sm);
-    color: var(--gpds-text-primary);
-    background: var(--gpds-bg-surface);
-    font-weight: var(--gpds-fw-medium);
-    transition: all var(--gpds-transition-fast);
-}
-
-.gpds-topbar__auth-btn:hover {
-    border-color: var(--gpds-color-primary);
-    color: var(--gpds-color-primary);
-}
-
-.gpds-topbar__divider {
-    width: 1px;
-    height: 24px;
-    background: var(--gpds-border-base);
-    margin: 0 var(--gpds-space-xs);
-}
-
-/* --- Mini Cart Trigger --- */
-.gpds-mini-cart {
-    position: relative;
-}
-
-.gpds-mini-cart__trigger {
-    position: relative;
-    padding: 8px 12px;
-    color: var(--gpds-text-primary);
-}
-
-.gpds-mini-cart__trigger:hover {
-    color: var(--gpds-color-primary);
-}
-
-.gpds-mini-cart__count {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    font-size: 10px;
-    line-height: 18px;
-}
-
-/* --- Mini Cart Panel --- */
-.gpds-mini-cart__panel {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    width: 380px;
     background: var(--gpds-bg-surface);
     border-radius: var(--gpds-radius-md);
     box-shadow: var(--gpds-shadow-lg);
     z-index: var(--gpds-z-dropdown);
-    animation: gpds-fade-in-up var(--gpds-transition-fast);
+    animation: gpds-fade-in-up 180ms ease;
 }
 
-.gpds-mini-cart__panel[hidden] {
-    display: none;
+.gpds-search-results[hidden]          { display: none; }
+.gpds-search-results__loading         { padding: var(--gpds-space-md); text-align: center; color: var(--gpds-text-secondary); }
+.gpds-search-results__loading[hidden] { display: none; }
+
+.gpds-search-cat,
+.gpds-search-products                 { margin-bottom: var(--gpds-space-md); }
+
+.gpds-search-cat__title,
+.gpds-search-products__title {
+    margin-bottom: var(--gpds-space-xs);
+    padding: 0 var(--gpds-space-xs);
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-semibold);
+    color: var(--gpds-text-tertiary);
 }
 
-.gpds-mini-cart__loading {
+.gpds-search-cat__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px var(--gpds-space-sm);
+    border-radius: var(--gpds-radius-sm);
+    font-size: var(--gpds-fs-base);
+    transition: background-color 150ms ease;
+}
+
+.gpds-search-cat__item:hover { background: var(--gpds-bg-hover); }
+
+.gpds-search-product {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+    padding: 8px var(--gpds-space-sm);
+    border-radius: var(--gpds-radius-sm);
+    transition: background-color 150ms ease;
+}
+
+.gpds-search-product:hover { background: var(--gpds-bg-hover); }
+
+.gpds-search-product img {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: var(--gpds-radius-xs);
+}
+
+.gpds-search-product__info  { flex: 1; min-width: 0; }
+
+.gpds-search-product__title {
+    margin-bottom: 4px;
+    overflow: hidden;
+    color: var(--gpds-text-primary);
+    font-size: var(--gpds-fs-base);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gpds-search-product__price {
+    color: var(--gpds-color-primary);
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-semibold);
+}
+
+.gpds-search-all {
+    display: block;
+    padding: var(--gpds-space-sm);
+    border-top: 1px solid var(--gpds-border-light);
+    color: var(--gpds-color-primary);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-medium);
     text-align: center;
+}
+
+.gpds-search-all:hover { background: var(--gpds-bg-hover); }
+
+.gpds-search-empty {
     padding: var(--gpds-space-lg);
     color: var(--gpds-text-secondary);
-}
-
-.gpds-mini-cart__content {
-    max-height: 400px;
-    overflow-y: auto;
+    text-align: center;
 }
 
 
 /* ============================================================
- * MAINBAR - ردیف دوم
+ * 6. TOPBAR ACTIONS
  * ============================================================ */
-.gpds-mainbar {
+
+.gpds-topbar__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.gpds-topbar__auth-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    min-height: 42px;
+    padding: 8px 13px;
+    border: 1px solid var(--gpds-border-light);
+    border-radius: 12px;
+    background: var(--gpds-bg-surface);
+    color: var(--gpds-text-primary);
+    font-weight: var(--gpds-fw-medium);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    transition: border-color 180ms ease,
+                color 180ms ease,
+                box-shadow 180ms ease,
+                transform 180ms ease;
+}
+
+.gpds-topbar__auth-btn:hover {
+    border-color: rgba(14, 165, 233, 0.35);
+    color: var(--gpds-color-primary);
+    box-shadow: 0 5px 16px rgba(15, 23, 42, 0.06);
+    transform: translateY(-1px);
+}
+
+.gpds-topbar__divider {
+    width: 1px;
+    height: 28px;
+    margin: 0 2px;
+    background: var(--gpds-border-base);
+}
+
+
+/* ============================================================
+ * 7. MINI CART TRIGGER
+ * ============================================================ */
+
+.gpds-mini-cart { position: relative; }
+
+.gpds-mini-cart__trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    min-height: 44px;
+    padding: 8px 13px;
+    border: 1px solid var(--gpds-border-light);
+    border-radius: 13px;
+    background: var(--gpds-bg-surface);
+    color: var(--gpds-text-primary);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+    transition: border-color 180ms ease,
+                color 180ms ease,
+                box-shadow 180ms ease,
+                transform 180ms ease;
+}
+
+.gpds-mini-cart__trigger:hover {
+    border-color: rgba(14, 165, 233, 0.3);
+    color: var(--gpds-color-primary);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    transform: translateY(-1px);
+}
+
+.gpds-mini-cart__trigger:active { transform: translateY(0); }
+
+.gpds-mini-cart__trigger svg,
+.gpds-mini-cart__trigger > i {
+    width: 21px;
+    height: 21px;
+    transition: transform 180ms ease;
+}
+
+.gpds-mini-cart__trigger:hover svg,
+.gpds-mini-cart__trigger:hover > i { transform: scale(1.06); }
+
+@media (min-width: 1025px) {
+    .gpds-mini-cart__trigger::after {
+        content: "سبد خرید";
+        margin-right: 8px;
+        font-size: var(--gpds-fs-sm);
+        font-weight: var(--gpds-fw-medium);
+        color: inherit;
+        white-space: nowrap;
+    }
+}
+
+
+/* ============================================================
+ * 8. MINI CART BADGE
+ * ============================================================ */
+
+.gpds-mini-cart__count {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border: 2px solid var(--gpds-bg-surface);
+    border-radius: 999px;
+    background: var(--gpds-color-primary);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+}
+
+.gpds-mini-cart__count:not([hidden]) {
+    animation: gpds-cart-badge-in 180ms ease;
+}
+
+@keyframes gpds-cart-badge-in {
+    from { opacity: 0; transform: scale(0.65); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+
+/* ============================================================
+ * 9. MINI CART PANEL
+ * ============================================================ */
+
+.gpds-mini-cart__panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    width: 390px;
+    max-width: calc(100vw - 24px);
+    overflow: hidden;
+    background: var(--gpds-bg-surface);
+    border: 1px solid var(--gpds-border-light);
+    border-radius: 18px;
+    box-shadow: 0 20px 55px rgba(15, 23, 42, 0.13);
+    z-index: var(--gpds-z-dropdown);
+    transform-origin: top left;
+    animation: gpds-cart-panel-in 180ms ease both;
+}
+
+.gpds-mini-cart__panel[hidden] { display: none; }
+
+@keyframes gpds-cart-panel-in {
+    from { opacity: 0; transform: translateY(-6px) scale(0.985); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);     }
+}
+
+
+/* ============================================================
+ * 10. MINI CART CONTENT
+ * ============================================================ */
+
+.gpds-mini-cart__content {
+    max-height: 420px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gpds-border-base) transparent;
+}
+
+.gpds-mini-cart__content::-webkit-scrollbar       { width: 5px; }
+.gpds-mini-cart__content::-webkit-scrollbar-track { background: transparent; }
+.gpds-mini-cart__content::-webkit-scrollbar-thumb {
+    background: var(--gpds-border-base);
+    border-radius: 999px;
+}
+
+.gpds-mini-cart__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 30px;
+    color: var(--gpds-text-tertiary);
+}
+
+
+/* ============================================================
+ * 11. CART ITEMS
+ * ============================================================ */
+
+.gpds-cart-items { padding: 8px; }
+
+.gpds-cart-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.gpds-cart-item:hover {
+    background: var(--gpds-bg-hover);
+    border-color: var(--gpds-border-light);
+}
+
+.gpds-cart-item:last-child { margin-bottom: 0; }
+
+.gpds-cart-item img {
+    flex: 0 0 58px;
+    width: 58px;
+    height: 58px;
+    object-fit: cover;
+    background: var(--gpds-bg-muted);
+    border: 1px solid var(--gpds-border-light);
+    border-radius: 11px;
+}
+
+.gpds-cart-item__info { flex: 1; min-width: 0; }
+
+.gpds-cart-item__title {
+    margin: 0 0 5px;
+    overflow: hidden;
+    color: var(--gpds-text-primary);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-medium);
+    line-height: 1.65;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gpds-cart-item__qty {
+    margin: 0 0 3px;
+    color: var(--gpds-text-tertiary);
+    font-size: var(--gpds-fs-xs);
+}
+
+.gpds-cart-item__price {
+    color: var(--gpds-color-primary);
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-semibold);
+}
+
+
+/* ============================================================
+ * 12. CART FOOTER
+ * ============================================================ */
+
+.gpds-cart-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gpds-space-xs);
+    padding: 15px;
     border-top: 1px solid var(--gpds-border-light);
+    background: var(--gpds-bg-muted);
+}
+
+.gpds-cart-subtotal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 12px;
+    padding: 0 2px 12px;
+    border-bottom: 1px dashed var(--gpds-border-base);
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-sm);
+}
+
+.gpds-cart-subtotal strong {
+    color: var(--gpds-color-primary);
+    font-size: var(--gpds-fs-lg);
+    font-weight: var(--gpds-fw-bold);
+}
+
+
+/* ============================================================
+ * 13. EMPTY CART
+ * ============================================================ */
+
+.gpds-cart-empty {
+    padding: 36px 20px;
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-sm);
+    text-align: center;
+}
+
+.gpds-cart-empty svg {
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 12px;
+    color: var(--gpds-text-tertiary);
+    opacity: 0.65;
+}
+
+
+/* ============================================================
+ * 14. MAINBAR
+ * ============================================================ */
+
+.gpds-mainbar {
     padding: 0;
+    border-top: 1px solid var(--gpds-border-light);
 }
 
 .gpds-mainbar__inner {
@@ -219,17 +522,16 @@
     height: 48px;
 }
 
-/* --- دکمه دسته‌بندی --- */
 .gpds-mainbar__categories-btn {
     display: flex;
     align-items: center;
     gap: var(--gpds-space-xs);
     padding: 8px 12px;
-    font-weight: var(--gpds-fw-semibold);
     color: var(--gpds-text-primary);
     font-size: var(--gpds-fs-base);
-    transition: color var(--gpds-transition-fast);
+    font-weight: var(--gpds-fw-semibold);
     white-space: nowrap;
+    transition: color 150ms ease, background-color 150ms ease;
 }
 
 .gpds-mainbar__categories-btn:hover {
@@ -237,19 +539,40 @@
     background-color: var(--gpds-bg-body);
 }
 
-.gpds-mainbar__categories-arrow {
-    transition: transform var(--gpds-transition-fast);
-}
+.gpds-mainbar__categories-arrow { transition: transform 150ms ease; }
 
 .gpds-mainbar__categories-btn[aria-expanded="true"] .gpds-mainbar__categories-arrow {
     transform: rotate(180deg);
 }
 
-/* --- منوی اصلی --- */
-.gpds-mainbar__nav {
-    flex: 1;
-    min-width: 0;
+.gpds-mainbar__nav { flex: 1; min-width: 0; }
+
+.gpds-mainbar__extra {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
 }
+
+.gpds-mainbar__extra-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: var(--gpds-radius-sm);
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-sm);
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+.gpds-mainbar__extra-link:hover {
+    background: var(--gpds-bg-hover);
+    color: var(--gpds-color-primary);
+}
+
+
+/* ============================================================
+ * 15. MAIN MENU
+ * ============================================================ */
 
 .gpds-main-menu {
     display: flex;
@@ -260,9 +583,7 @@
     list-style: none;
 }
 
-.gpds-main-menu > li {
-    position: relative;
-}
+.gpds-main-menu > li { position: relative; }
 
 .gpds-main-menu > li > a {
     display: flex;
@@ -272,8 +593,8 @@
     color: var(--gpds-text-secondary);
     font-size: var(--gpds-fs-base);
     font-weight: var(--gpds-fw-medium);
-    transition: color var(--gpds-transition-fast);
     white-space: nowrap;
+    transition: color 150ms ease;
 }
 
 .gpds-main-menu > li > a:hover,
@@ -281,21 +602,20 @@
     color: var(--gpds-color-primary);
 }
 
-/* زیرمنو */
 .gpds-main-menu .sub-menu {
     position: absolute;
     top: 100%;
     right: 0;
     min-width: 200px;
+    padding: var(--gpds-space-xs) 0;
     background: var(--gpds-bg-surface);
     border-radius: var(--gpds-radius-md);
     box-shadow: var(--gpds-shadow-md);
-    padding: var(--gpds-space-xs) 0;
+    z-index: var(--gpds-z-dropdown);
     opacity: 0;
     visibility: hidden;
     transform: translateY(8px);
-    transition: all var(--gpds-transition-fast);
-    z-index: var(--gpds-z-dropdown);
+    transition: opacity 150ms ease, transform 150ms ease, visibility 150ms;
 }
 
 .gpds-main-menu > li:hover > .sub-menu {
@@ -309,7 +629,7 @@
     padding: 8px 16px;
     color: var(--gpds-text-secondary);
     font-size: var(--gpds-fs-base);
-    transition: all var(--gpds-transition-fast);
+    transition: background-color 150ms ease, color 150ms ease;
 }
 
 .gpds-main-menu .sub-menu li a:hover {
@@ -317,71 +637,41 @@
     color: var(--gpds-color-primary);
 }
 
-/* --- اکشن‌های اضافی --- */
-.gpds-mainbar__extra {
-    display: flex;
-    align-items: center;
-    margin-right: auto;
-}
-
-.gpds-mainbar__extra-link {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--gpds-text-secondary);
-    font-size: var(--gpds-fs-sm);
-    padding: 6px 10px;
-    border-radius: var(--gpds-radius-sm);
-    transition: all var(--gpds-transition-fast);
-}
-
-.gpds-mainbar__extra-link:hover {
-    background: var(--gpds-bg-hover);
-    color: var(--gpds-color-primary);
-}
-
 
 /* ============================================================
- * MEGA MENU
+ * 16. MEGA MENU
  * ============================================================ */
+
 .gpds-mega-menu {
     position: absolute;
     top: 100%;
-    right: 0;
-    left: 0;
+    inset-inline: 0;
     background: var(--gpds-bg-surface);
     border-top: 1px solid var(--gpds-border-light);
     box-shadow: var(--gpds-shadow-lg);
     z-index: var(--gpds-z-dropdown);
-    animation: gpds-fade-in var(--gpds-transition-fast);
+    animation: gpds-fade-in 180ms ease;
 }
 
-.gpds-mega-menu[hidden] {
-    display: none;
-}
+.gpds-mega-menu[hidden] { display: none; }
 
 .gpds-mega-menu__inner {
     display: grid;
     grid-template-columns: 240px 1fr;
-    min-height: 420px;
     max-width: var(--gpds-container-width);
+    min-height: 420px;
     margin: 0 auto;
     padding: 0 var(--gpds-space-md);
 }
 
-/* --- ستون دسته‌بندی‌ها --- */
 .gpds-mega-menu__sidebar {
-    border-left: 1px solid var(--gpds-border-light);
+    max-height: 500px;
     padding: var(--gpds-space-md) 0;
     overflow-y: auto;
-    max-height: 500px;
+    border-left: 1px solid var(--gpds-border-light);
 }
 
-.gpds-mega-menu__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+.gpds-mega-menu__list { margin: 0; padding: 0; list-style: none; }
 
 .gpds-mega-menu__link {
     display: flex;
@@ -390,8 +680,7 @@
     padding: 8px var(--gpds-space-md);
     color: var(--gpds-text-primary);
     font-size: var(--gpds-fs-base);
-    transition: all var(--gpds-transition-fast);
-    position: relative;
+    transition: background-color 150ms ease, color 150ms ease;
 }
 
 .gpds-mega-menu__item:hover .gpds-mega-menu__link,
@@ -405,74 +694,113 @@
     color: var(--gpds-text-tertiary);
 }
 
-/* --- ستون محتوا --- */
 .gpds-mega-menu__content {
+    max-height: 500px;
     padding: var(--gpds-space-lg) var(--gpds-space-xl);
     overflow-y: auto;
-    max-height: 500px;
 }
 
-.gpds-mega-menu__panel[hidden] {
-    display: none;
-}
+.gpds-mega-menu__panel[hidden] { display: none; }
 
 .gpds-mega-menu__panel-title {
-    font-size: var(--gpds-fs-lg);
-    font-weight: var(--gpds-fw-bold);
-    color: var(--gpds-text-primary);
     margin-bottom: var(--gpds-space-md);
     padding-bottom: var(--gpds-space-xs);
     border-bottom: 1px solid var(--gpds-border-light);
+    color: var(--gpds-text-primary);
+    font-size: var(--gpds-fs-lg);
+    font-weight: var(--gpds-fw-bold);
 }
 
 .gpds-mega-menu__sub-list {
-    list-style: none;
-    margin: 0 0 var(--gpds-space-md);
-    padding: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--gpds-space-xs) var(--gpds-space-md);
+    margin: 0 0 var(--gpds-space-md);
+    padding: 0;
+    list-style: none;
 }
 
 .gpds-mega-menu__sub-list a {
+    display: inline-block;
+    padding: 4px 0;
     color: var(--gpds-text-secondary);
     font-size: var(--gpds-fs-base);
-    padding: 4px 0;
-    transition: color var(--gpds-transition-fast);
-    display: inline-block;
+    transition: color 150ms ease;
 }
 
-.gpds-mega-menu__sub-list a:hover {
-    color: var(--gpds-color-primary);
-}
+.gpds-mega-menu__sub-list a:hover { color: var(--gpds-color-primary); }
 
 .gpds-mega-menu__all {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     color: var(--gpds-color-primary);
-    font-weight: var(--gpds-fw-medium);
     font-size: var(--gpds-fs-base);
-}
-
-.gpds-mega-menu__all:hover {
-    color: var(--gpds-color-primary-hover);
+    font-weight: var(--gpds-fw-medium);
 }
 
 
 /* ============================================================
- * MOBILE HEADER - فقط در موبایل
+ * 17. DROPDOWN
  * ============================================================ */
-.gpds-mobile-header {
-    display: none;
+
+.gpds-dropdown { position: relative; }
+
+.gpds-dropdown__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    padding: var(--gpds-space-xs) 0;
+    background: var(--gpds-bg-surface);
+    border-radius: var(--gpds-radius-md);
+    box-shadow: var(--gpds-shadow-md);
+    z-index: var(--gpds-z-dropdown);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 150ms ease, transform 150ms ease, visibility 150ms;
 }
+
+.gpds-dropdown.is-open .gpds-dropdown__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.gpds-dropdown__menu a {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    padding: 8px 16px;
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-base);
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+.gpds-dropdown__menu a:hover {
+    background: var(--gpds-bg-hover);
+    color: var(--gpds-color-primary);
+}
+
+.gpds-dropdown__menu hr {
+    margin: var(--gpds-space-xs) 0;
+    border-top: 1px solid var(--gpds-border-light);
+}
+
+
+/* ============================================================
+ * 18. MOBILE HEADER
+ * ============================================================ */
+
+.gpds-mobile-header { display: none; }
 
 .gpds-mobile-header__inner {
     display: flex;
     align-items: center;
     gap: var(--gpds-space-xs);
-    padding: var(--gpds-space-xs) var(--gpds-space-md);
     height: 60px;
+    padding: var(--gpds-space-xs) var(--gpds-space-md);
 }
 
 .gpds-mobile-header__logo {
@@ -482,21 +810,19 @@
 }
 
 .gpds-mobile-header__logo img,
-.gpds-mobile-header__logo .custom-logo {
-    max-height: 32px;
-}
+.gpds-mobile-header__logo .custom-logo { max-height: 32px; }
 
 .gpds-mobile-header__btn {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 40px;
     height: 40px;
+    padding: 0;
     border-radius: var(--gpds-radius-sm);
     color: var(--gpds-text-primary);
-    transition: all var(--gpds-transition-fast);
-    position: relative;
-    padding: 0;
+    transition: background-color 150ms ease, color 150ms ease;
 }
 
 .gpds-mobile-header__btn:hover {
@@ -517,30 +843,26 @@
 
 
 /* ============================================================
- * MOBILE MENU PANEL
+ * 19. MOBILE MENU
  * ============================================================ */
+
 .gpds-mobile-menu {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
+    display: flex;
+    flex-direction: column;
     width: 85%;
     max-width: 340px;
     background: var(--gpds-bg-surface);
     z-index: var(--gpds-z-modal);
-    display: flex;
-    flex-direction: column;
     transform: translateX(100%);
-    transition: transform var(--gpds-transition-base);
+    transition: transform 250ms ease;
 }
 
-.gpds-mobile-menu[hidden] {
-    display: none;
-}
-
-.gpds-mobile-menu.is-open {
-    transform: translateX(0);
-}
+.gpds-mobile-menu[hidden] { display: none; }
+.gpds-mobile-menu.is-open { transform: translateX(0); }
 
 .gpds-mobile-menu__header {
     display: flex;
@@ -552,34 +874,30 @@
 }
 
 .gpds-mobile-menu__close {
-    width: 32px;
-    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 32px;
+    height: 32px;
     border-radius: var(--gpds-radius-sm);
     color: var(--gpds-text-secondary);
 }
 
 .gpds-mobile-menu__body {
     flex: 1;
-    overflow-y: auto;
     padding: var(--gpds-space-sm) 0;
+    overflow-y: auto;
 }
 
-.gpds-mobile-menu__nav {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+.gpds-mobile-menu__nav { margin: 0; padding: 0; list-style: none; }
 
 .gpds-mobile-menu__nav > li > a {
     display: block;
     padding: var(--gpds-space-md);
+    border-bottom: 1px solid var(--gpds-border-light);
     color: var(--gpds-text-primary);
     font-weight: var(--gpds-fw-medium);
-    border-bottom: 1px solid var(--gpds-border-light);
-    transition: background var(--gpds-transition-fast);
+    transition: background-color 150ms ease, color 150ms ease;
 }
 
 .gpds-mobile-menu__nav > li > a:hover {
@@ -597,39 +915,36 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: var(--gpds-z-modal-backdrop);
-    animation: gpds-fade-in var(--gpds-transition-base);
+    animation: gpds-fade-in 200ms ease;
 }
 
-.gpds-mobile-menu-overlay[hidden] {
-    display: none;
-}
+.gpds-mobile-menu-overlay[hidden] { display: none; }
 
 
 /* ============================================================
- * SEARCH OVERLAY (Mobile)
+ * 20. SEARCH OVERLAY (Mobile)
  * ============================================================ */
+
 .gpds-search-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: var(--gpds-z-modal);
     display: flex;
     align-items: flex-start;
     justify-content: center;
     padding-top: 60px;
-    animation: gpds-fade-in var(--gpds-transition-fast);
+    background: rgba(0, 0, 0, 0.5);
+    z-index: var(--gpds-z-modal);
+    animation: gpds-fade-in 180ms ease;
 }
 
-.gpds-search-overlay[hidden] {
-    display: none;
-}
+.gpds-search-overlay[hidden] { display: none; }
 
 .gpds-search-overlay__inner {
     width: 90%;
     max-width: 500px;
+    padding: var(--gpds-space-md);
     background: var(--gpds-bg-surface);
     border-radius: var(--gpds-radius-lg);
-    padding: var(--gpds-space-md);
     box-shadow: var(--gpds-shadow-xl);
 }
 
@@ -637,14 +952,14 @@
     position: absolute;
     left: 12px;
     top: 50%;
-    transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--gpds-text-secondary);
+    width: 28px;
+    height: 28px;
     border-radius: var(--gpds-radius-sm);
+    color: var(--gpds-text-secondary);
+    transform: translateY(-50%);
 }
 
 .gpds-search-overlay__close:hover {
@@ -654,254 +969,72 @@
 
 
 /* ============================================================
- * DROPDOWN (کلی)
+ * 21. RESPONSIVE
  * ============================================================ */
-.gpds-dropdown {
-    position: relative;
-}
 
-.gpds-dropdown__menu {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 180px;
-    background: var(--gpds-bg-surface);
-    border-radius: var(--gpds-radius-md);
-    box-shadow: var(--gpds-shadow-md);
-    padding: var(--gpds-space-xs) 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(8px);
-    transition: all var(--gpds-transition-fast);
-    z-index: var(--gpds-z-dropdown);
-}
-
-.gpds-dropdown.is-open .gpds-dropdown__menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.gpds-dropdown__menu a {
-    display: flex;
-    align-items: center;
-    gap: var(--gpds-space-xs);
-    padding: 8px 16px;
-    color: var(--gpds-text-secondary);
-    font-size: var(--gpds-fs-base);
-    transition: all var(--gpds-transition-fast);
-}
-
-.gpds-dropdown__menu a:hover {
-    background: var(--gpds-bg-hover);
-    color: var(--gpds-color-primary);
-}
-
-.gpds-dropdown__menu hr {
-    margin: var(--gpds-space-xs) 0;
-    border-top: 1px solid var(--gpds-border-light);
-}
-
-
-/* ============================================================
- * RESPONSIVE
- * ============================================================ */
 @media (max-width: 1024px) {
     .gpds-topbar,
-    .gpds-mainbar {
-        display: none;
-    }
-    
+    .gpds-mainbar { display: none; }
+
     .gpds-mobile-header {
         display: block;
-        background: var(--gpds-bg-surface);
-        box-shadow: 0 1px 0 var(--gpds-border-light);
         position: sticky;
         top: 0;
+        background: var(--gpds-bg-surface);
+        box-shadow: 0 1px 0 var(--gpds-border-light);
         z-index: var(--gpds-z-sticky);
+    }
+
+    .gpds-mini-cart__panel {
+        position: fixed;
+        top: 64px;
+        left: 12px;
+        right: 12px;
+        width: auto;
+        max-width: none;
+        border-radius: 16px;
+    }
+
+    .gpds-mini-cart__trigger::after { display: none; }
+}
+
+@media (max-width: 480px) {
+    .gpds-mini-cart__panel {
+        top: 62px;
+        left: 8px;
+        right: 8px;
+        border-radius: 15px;
+    }
+
+    .gpds-cart-items { padding: 6px; }
+    .gpds-cart-item  { padding: 8px; }
+
+    .gpds-cart-item img {
+        flex-basis: 52px;
+        width: 52px;
+        height: 52px;
     }
 }
 
 @media (max-width: 400px) {
-    .gpds-mobile-header__inner {
-        padding: var(--gpds-space-xs);
-    }
-    
+    .gpds-mobile-header__inner { padding: var(--gpds-space-xs); }
+
     .gpds-mobile-header__logo img,
-    .gpds-mobile-header__logo .custom-logo {
-        max-height: 28px;
+    .gpds-mobile-header__logo .custom-logo { max-height: 28px; }
+}
+
+
+/* ============================================================
+ * 22. REDUCED MOTION
+ * ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .gpds-topbar,
+    .gpds-mini-cart__trigger,
+    .gpds-mini-cart__trigger svg,
+    .gpds-mini-cart__panel,
+    .gpds-mini-cart__count {
+        animation: none;
+        transition: none;
     }
-}
-
-/* ============================================================
- * Search Results (Ajax)
- * ============================================================ */
-.gpds-search-cat,
-.gpds-search-products {
-    margin-bottom: var(--gpds-space-md);
-}
-
-.gpds-search-cat__title,
-.gpds-search-products__title {
-    font-size: var(--gpds-fs-sm);
-    font-weight: var(--gpds-fw-semibold);
-    color: var(--gpds-text-tertiary);
-    margin-bottom: var(--gpds-space-xs);
-    padding: 0 var(--gpds-space-xs);
-}
-
-.gpds-search-cat__item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px var(--gpds-space-sm);
-    border-radius: var(--gpds-radius-sm);
-    transition: background var(--gpds-transition-fast);
-    font-size: var(--gpds-fs-base);
-}
-
-.gpds-search-cat__item:hover {
-    background: var(--gpds-bg-hover);
-}
-
-.gpds-search-product {
-    display: flex;
-    align-items: center;
-    gap: var(--gpds-space-sm);
-    padding: 8px var(--gpds-space-sm);
-    border-radius: var(--gpds-radius-sm);
-    transition: background var(--gpds-transition-fast);
-}
-
-.gpds-search-product:hover {
-    background: var(--gpds-bg-hover);
-}
-
-.gpds-search-product img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: var(--gpds-radius-xs);
-    flex-shrink: 0;
-}
-
-.gpds-search-product__info {
-    flex: 1;
-    min-width: 0;
-}
-
-.gpds-search-product__title {
-    font-size: var(--gpds-fs-base);
-    color: var(--gpds-text-primary);
-    margin-bottom: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.gpds-search-product__price {
-    font-size: var(--gpds-fs-sm);
-    color: var(--gpds-color-primary);
-    font-weight: var(--gpds-fw-semibold);
-}
-
-.gpds-search-all {
-    display: block;
-    text-align: center;
-    padding: var(--gpds-space-sm);
-    border-top: 1px solid var(--gpds-border-light);
-    color: var(--gpds-color-primary);
-    font-weight: var(--gpds-fw-medium);
-    font-size: var(--gpds-fs-base);
-}
-
-.gpds-search-all:hover {
-    background: var(--gpds-bg-hover);
-}
-
-.gpds-search-empty {
-    text-align: center;
-    padding: var(--gpds-space-lg);
-    color: var(--gpds-text-secondary);
-}
-
-/* ============================================================
- * Cart Panel
- * ============================================================ */
-.gpds-cart-empty {
-    text-align: center;
-    padding: var(--gpds-space-lg);
-    color: var(--gpds-text-secondary);
-}
-
-.gpds-cart-items {
-    padding: var(--gpds-space-xs);
-}
-
-.gpds-cart-item {
-    display: flex;
-    gap: var(--gpds-space-sm);
-    padding: var(--gpds-space-sm);
-    border-bottom: 1px solid var(--gpds-border-light);
-}
-
-.gpds-cart-item:last-child {
-    border-bottom: none;
-}
-
-.gpds-cart-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: var(--gpds-radius-xs);
-    flex-shrink: 0;
-}
-
-.gpds-cart-item__info {
-    flex: 1;
-    min-width: 0;
-}
-
-.gpds-cart-item__title {
-    font-size: var(--gpds-fs-base);
-    color: var(--gpds-text-primary);
-    margin-bottom: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.gpds-cart-item__qty {
-    font-size: var(--gpds-fs-xs);
-    color: var(--gpds-text-secondary);
-    margin-bottom: 4px;
-}
-
-.gpds-cart-item__price {
-    font-size: var(--gpds-fs-sm);
-    color: var(--gpds-color-primary);
-    font-weight: var(--gpds-fw-semibold);
-}
-
-.gpds-cart-footer {
-    padding: var(--gpds-space-md);
-    border-top: 1px solid var(--gpds-border-light);
-    display: flex;
-    flex-direction: column;
-    gap: var(--gpds-space-xs);
-}
-
-.gpds-cart-subtotal {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: var(--gpds-space-xs);
-    margin-bottom: var(--gpds-space-xs);
-    border-bottom: 1px solid var(--gpds-border-light);
-    font-size: var(--gpds-fs-base);
-}
-
-.gpds-cart-subtotal strong {
-    color: var(--gpds-color-primary);
-    font-size: var(--gpds-fs-lg);
 }
