@@ -49,9 +49,10 @@ if (empty($brands)) {
                                         height="120"
                                     >
                                 </span>
-                                <span class="gpds-brand__name">
+                                <h3 class="gpds-brand__name">
                                     <?php echo esc_html($brand['name']); ?>
-                                </span>
+                                </h3>
+                              
                             </a>
                         </div>
                     <?php endforeach; ?>

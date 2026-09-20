@@ -839,7 +839,8 @@ body.gpds-story-open {
  * ============================================================ */
 .gpds-categories-grid {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(auto-fit, 120px);
+    justify-content: center;
     gap: var(--gpds-space-xs);
 }
 
@@ -1148,6 +1149,8 @@ body.gpds-story-open {
     height: 100%;
     min-height: 140px;
     justify-content: center;
+    margin: 10px;
+
 }
 
 .gpds-brand:hover {
@@ -1161,8 +1164,8 @@ body.gpds-story-open {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
-    height: 80px;
+    width: 100%;
+    height: 100px;
     padding: 6px;
     background: var(--gpds-bg-muted);
     border-radius: var(--gpds-radius-sm);
@@ -1191,7 +1194,7 @@ body.gpds-story-open {
 
 /* نام برند */
 .gpds-brand__name {
-    font-size: var(--gpds-fs-xs);
+    font-size: 15px;
     color: var(--gpds-text-secondary);
     font-weight: var(--gpds-fw-medium);
     text-align: center;
@@ -1201,6 +1204,7 @@ body.gpds-story-open {
     text-overflow: ellipsis;
     white-space: nowrap;
     transition: color 0.2s ease;
+    padding-top: 10px;
 }
 
 .gpds-brand:hover .gpds-brand__name {

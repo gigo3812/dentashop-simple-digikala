@@ -57,11 +57,11 @@
                 slidesPerView: 3,
                 spaceBetween: 12,
                 breakpoints: {
-                    480:  { slidesPerView: 4, spaceBetween: 12 },
-                    640:  { slidesPerView: 5, spaceBetween: 12 },
-                    768:  { slidesPerView: 6, spaceBetween: 14 },
-                    1024: { slidesPerView: 7, spaceBetween: 14 },
-                    1280: { slidesPerView: 8, spaceBetween: 16 },
+                    480:  { slidesPerView: 4, spaceBetween: 8 },
+                    640:  { slidesPerView: 4, spaceBetween: 8 },
+                    768:  { slidesPerView: 4, spaceBetween: 8 },
+                    1024: { slidesPerView: 4, spaceBetween: 8 },
+                    1280: { slidesPerView: 4, spaceBetween: 8 },
                 },
                 navigation: nextEl && prevEl ? { nextEl, prevEl } : false,
             });

@@ -97,6 +97,7 @@ debug.log
 /wp-content/debug.log
 *.log.*
 
+
 # ============================================
 # 💾 Backup & Database
 # ============================================
@@ -150,6 +151,7 @@ backups/
 /wp-links-opml.php
 /wp-activate.php
 /wp-config-sample.php
+/wp-content/uploads-webpc/
 
 # ============================================
 # 📦 wp-content

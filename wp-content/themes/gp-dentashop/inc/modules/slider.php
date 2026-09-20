@@ -85,7 +85,7 @@ function gpds_slider_box_render($post): void {
         <p style="font-size:11px;color:#666;margin:0;">
             <?php printf(
                 esc_html__('ابعاد: %s پیکسل', 'gp-dentashop'),
-                GPDS_SLIDER_DIMS[0] . '×' . GPDS_SLIDER_DIMS[1]
+                400 . '×' . 1200
             ); ?>
         </p>
 
