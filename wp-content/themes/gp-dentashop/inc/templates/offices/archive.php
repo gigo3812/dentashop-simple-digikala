@@ -21,7 +21,7 @@ $query = gpds_get_offices(['limit' => -1]);
         <header class="gpds-page-header gpds-offices-header">
             <h1 class="gpds-page-title">دفاتر و مراکز ما</h1>
             <p class="gpds-page-subtitle">
-                <?php echo esc_html($query->found_posts); ?> دفتر در سراسر کشور
+                3 دفتر فعال در سراسر کشور
             </p>
         </header>
 

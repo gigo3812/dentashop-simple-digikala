@@ -48,18 +48,21 @@
 
 
 
-        // 🎯 کاروسل برندها
-        document.querySelectorAll('.gpds-brands-carousel').forEach(function(el) {
-            const nextEl = el.querySelector('.swiper-button-next');
-            const prevEl = el.querySelector('.swiper-button-prev');
-            
+        // 🎯 کاروسل برندها — با تنظیمات بهینه
+        document.querySelectorAll('.gpds-brands-carousel').forEach(function (el) {
+            const wrapper = el.closest('.gpds-brands-wrapper');
+            const nextEl = wrapper?.querySelector('.swiper-button-next');
+            const prevEl = wrapper?.querySelector('.swiper-button-prev');
+
             new Swiper(el, {
                 slidesPerView: 3,
-                spaceBetween: 12,
+                spaceBetween: 10,
+                watchSlidesProgress: true,
+                grabCursor: true,
                 breakpoints: {
-                    480:  { slidesPerView: 4, spaceBetween: 12 },
-                    640:  { slidesPerView: 5, spaceBetween: 12 },
-                    768:  { slidesPerView: 6, spaceBetween: 14 },
+                    480: { slidesPerView: 4, spaceBetween: 10 },
+                    640: { slidesPerView: 5, spaceBetween: 12 },
+                    768: { slidesPerView: 6, spaceBetween: 14 },
                     1024: { slidesPerView: 7, spaceBetween: 14 },
                     1280: { slidesPerView: 8, spaceBetween: 16 },
                 },
@@ -130,8 +133,8 @@
         const stories = Array.from(storyButtons).map(btn => {
             // 🎯 رفع مشکل: 0 باید حفظ بشه، نه 5
             const rawDuration = btn.dataset.storyVideoDuration;
-            const parsedDuration = (rawDuration === '' || rawDuration === undefined || rawDuration === null) 
-                ? DEFAULT_VIDEO_DURATION 
+            const parsedDuration = (rawDuration === '' || rawDuration === undefined || rawDuration === null)
+                ? DEFAULT_VIDEO_DURATION
                 : parseInt(rawDuration, 10);
 
             return {
@@ -253,7 +256,7 @@
             state.modal = modal;
 
             // Event Listeners (یک بار)
-            modal.querySelectorAll('[data-gpds-story-close]').forEach(btn => 
+            modal.querySelectorAll('[data-gpds-story-close]').forEach(btn =>
                 btn.addEventListener('click', closeStory)
             );
 

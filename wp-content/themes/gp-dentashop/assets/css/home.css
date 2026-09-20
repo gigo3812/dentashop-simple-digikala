@@ -1117,64 +1117,144 @@ body.gpds-story-open {
 
 
 /* ============================================================
- * BRANDS SECTION
+ * BRANDS SECTION — MODERN REDESIGN
  * ============================================================ */
+
+.gpds-brands-section {
+    padding: 0;
+    margin-top: var(--gpds-space-lg);
+}
+
+/* ============================================
+ * Section Header (هماهنگ با محصولات/نوشته‌ها)
+ * ============================================ */
+.gpds-section-header--brands {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gpds-space-md);
+    margin-bottom: var(--gpds-space-md);
+    padding: 0 4px;
+}
+
+.gpds-section-header__right {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+}
+
+.gpds-section-header__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--gpds-radius-md);
+    background: linear-gradient(135deg, var(--gpds-color-primary), color-mix(in srgb, var(--gpds-color-primary) 60%, #fff));
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--gpds-color-primary) 60%, transparent);
+}
+
+.gpds-section-title {
+    font-size: var(--gpds-fs-lg);
+    font-weight: var(--gpds-fw-bold);
+    color: var(--gpds-text-primary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.gpds-section-subtitle {
+    font-size: var(--gpds-fs-xs);
+    color: var(--gpds-text-tertiary);
+    margin: 2px 0 0;
+    line-height: 1.4;
+}
+
+
+
+
+/* ============================================================
+ * BRANDS SECTION — ALIGNED & ENLARGED
+ * ============================================================ */
+
 .gpds-brands-section {
     padding: 0;
 }
 
-.gpds-brands {
-    padding: var(--gpds-space-md);
-}
-
-.gpds-brands-carousel {
-    overflow: hidden;
-    padding: 4px 0;
-}
-
 /* ============================================
- * Brand Item
+ * Brand Item — بزرگ‌تر و جادارتر
  * ============================================ */
 .gpds-brand {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--gpds-space-xs);
-    padding: var(--gpds-space-sm);
-    border-radius: var(--gpds-radius-md);
+    justify-content: center;
+    gap: var(--gpds-space-sm);
+    padding: var(--gpds-space-md) var(--gpds-space-sm);
+    border-radius: var(--gpds-radius-lg);
     background: var(--gpds-bg-surface);
     border: 1px solid var(--gpds-border-light);
     text-decoration: none;
-    transition: all 0.25s ease;
     height: 100%;
-    min-height: 140px;
-    justify-content: center;
-    margin: 10px;
+    min-height: 200px;
+    transition: 
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 0.25s ease,
+        box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
 
+/* افکت گرادیانت روی hover */
+.gpds-brand::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--gpds-color-primary) 6%, transparent),
+        transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .gpds-brand:hover {
-    border-color: var(--gpds-color-primary);
-    transform: translateY(-4px);
-    box-shadow: var(--gpds-shadow-md);
+    border-color: color-mix(in srgb, var(--gpds-color-primary) 40%, transparent);
+    transform: translateY(-6px);
+    box-shadow: 
+        0 12px 28px -10px rgba(0, 0, 0, 0.12),
+        0 4px 10px -4px color-mix(in srgb, var(--gpds-color-primary) 20%, transparent);
 }
 
-/* لوگو */
+.gpds-brand:hover::before {
+    opacity: 1;
+}
+
+/* ============================================
+ * Logo — بزرگ‌تر از طراحی قبلی
+ * ============================================ */
 .gpds-brand__logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100px;
-    padding: 6px;
+    width: 110px;
+    height: 110px;
+    padding: 14px;
     background: var(--gpds-bg-muted);
-    border-radius: var(--gpds-radius-sm);
+    border-radius: var(--gpds-radius-md);
     overflow: hidden;
-    transition: transform 0.25s ease;
+    transition: 
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.3s ease;
+    flex-shrink: 0;
 }
 
 .gpds-brand:hover .gpds-brand__logo {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    background: color-mix(in srgb, var(--gpds-color-primary) 8%, var(--gpds-bg-muted));
 }
 
 .gpds-brand__logo img {
@@ -1184,27 +1264,29 @@ body.gpds-story-open {
     height: auto;
     object-fit: contain;
     display: block;
-    filter: grayscale(20%);
-    transition: filter 0.25s ease;
+    filter: grayscale(30%) opacity(0.9);
+    transition: filter 0.3s ease;
 }
 
 .gpds-brand:hover .gpds-brand__logo img {
-    filter: grayscale(0%);
+    filter: grayscale(0%) opacity(1);
 }
 
-/* نام برند */
+/* ============================================
+ * Name — بزرگ‌تر و واضح‌تر
+ * ============================================ */
 .gpds-brand__name {
-    font-size: var(--gpds-fs-sm);
-    color: var(--gpds-text-secondary);
-    font-weight: var(--gpds-fw-medium);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-semibold);
+    color: var(--gpds-text-primary);
     text-align: center;
     line-height: 1.4;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    transition: color 0.2s ease;
-    padding-top: 10px;
+    margin: 0;
+    transition: color 0.25s ease;
 }
 
 .gpds-brand:hover .gpds-brand__name {
@@ -1212,18 +1294,76 @@ body.gpds-story-open {
 }
 
 /* ============================================
+ * CTA — مخفی که در hover ظاهر می‌شود
+ * ============================================ */
+.gpds-brand__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--gpds-fs-xs);
+    font-weight: var(--gpds-fw-medium);
+    color: var(--gpds-text-tertiary);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: 
+        opacity 0.25s ease,
+        transform 0.25s ease,
+        color 0.25s ease;
+    white-space: nowrap;
+}
+
+.gpds-brand:hover .gpds-brand__cta {
+    opacity: 1;
+    transform: translateY(0);
+    color: var(--gpds-color-primary);
+}
+
+.gpds-brand__cta svg {
+    transition: transform 0.25s ease;
+}
+
+.gpds-brand:hover .gpds-brand__cta svg {
+    transform: translateX(-3px);
+}
+
+/* ============================================
  * Responsive
  * ============================================ */
 @media (max-width: 768px) {
     .gpds-brand {
-        min-height: 120px;
-        padding: var(--gpds-space-xs);
+        min-height: 160px;
+        padding: var(--gpds-space-sm) var(--gpds-space-xs);
+        gap: var(--gpds-space-xs);
     }
-    
+
     .gpds-brand__logo {
-        width: 80px;
-        height: 60px;
+        width: 84px;
+        height: 84px;
+        padding: 10px;
+    }
+
+    .gpds-brand__name {
+        font-size: var(--gpds-fs-sm);
+    }
+
+    .gpds-brand__cta {
+        display: none;
     }
 }
 
+@media (max-width: 480px) {
+    .gpds-brand {
+        min-height: 140px;
+        padding: var(--gpds-space-sm) var(--gpds-space-xs);
+    }
 
+    .gpds-brand__logo {
+        width: 70px;
+        height: 70px;
+        padding: 8px;
+    }
+
+    .gpds-brand__name {
+        font-size: var(--gpds-fs-xs);
+    }
+}
