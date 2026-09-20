@@ -16,8 +16,8 @@ get_header(); ?>
     // 1. استوری‌ها
     get_template_part('template-parts/home/stories');
     
-    // 2. اسلایدر
-    get_template_part('template-parts/home/slider');
+    // 5. بنرها
+    get_template_part('template-parts/home/banners');
     
     // 3. خدمات (آیکون‌ها)
     get_template_part('template-parts/home/features');
@@ -25,11 +25,11 @@ get_header(); ?>
     // 4. شگفت‌انگیزها
     get_template_part('template-parts/home/special-offer');
     
-    // 5. بنرها
-    get_template_part('template-parts/home/banners');
-    
     // 6. دسته‌بندی‌ها
     get_template_part('template-parts/home/categories');
+    
+    // 2. اسلایدر
+    get_template_part('template-parts/home/slider');
     
     // 7. برندها
     get_template_part('template-parts/home/brands');
