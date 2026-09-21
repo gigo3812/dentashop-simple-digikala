@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Footer - Links + Newsletter + Socials
  */
@@ -12,7 +13,7 @@ $socials     = gpds_get_socials();
 <div class="gpds-footer-links">
     <div class="gpds-container">
         <div class="gpds-footer-links__inner">
-            
+
             <!-- ستون‌های لینک -->
             <?php foreach ($link_groups as $group) : ?>
                 <div class="gpds-footer-links__col">
@@ -30,25 +31,33 @@ $socials     = gpds_get_socials();
                     </ul>
                 </div>
             <?php endforeach; ?>
-            
-            <!-- ستون خبرنامه + شبکه‌ها -->
-            <div class="gpds-footer-links__col gpds-footer-links__col--newsletter">
+
+            <!-- ستون شبکه‌ها + اینماد -->
+            <div class="gpds-footer-links__col gpds-footer-links__col--social">
                 <h3 class="gpds-footer-links__title">همراه ما باشید</h3>
-                
+
                 <!-- شبکه‌های اجتماعی -->
                 <div class="gpds-footer-socials">
                     <?php foreach ($socials as $social) : ?>
-                        <a 
-                            href="<?php echo esc_url($social['url']); ?>" 
+                        <a
+                            href="<?php echo esc_url($social['url']); ?>"
                             class="gpds-footer-social"
                             aria-label="<?php echo esc_attr($social['title']); ?>"
                             target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                            rel="noopener noreferrer">
                             <?php gpds_icon($social['icon'], 20); ?>
                         </a>
                     <?php endforeach; ?>
                 </div>
+
+                <!-- 🎯 اینماد -->
+                <div class="gpds-footer-enamad">
+                    <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7609827&Code=KqRP1oiHgKaInmtUtckF121R7HSl3yFN'>
+                        <img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7609827&Code=KqRP1oiHgKaInmtUtckF121R7HSl3yFN' alt='' style='cursor:pointer' code='KqRP1oiHgKaInmtUtckF121R7HSl3yFN'>
+                    </a>
+                </div>
+
+                <?php /* 🚫 خبرنامه غیرفعال شد
                 
                 <!-- خبرنامه -->
                 <form class="gpds-footer-newsletter" data-gpds-newsletter>
@@ -74,9 +83,10 @@ $socials     = gpds_get_socials();
                     </div>
                     <div class="gpds-footer-newsletter__message" data-gpds-newsletter-message></div>
                 </form>
-                
+                */ ?>
+
             </div>
-            
+
         </div>
     </div>
 </div>
