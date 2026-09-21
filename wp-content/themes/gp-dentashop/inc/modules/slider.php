@@ -12,34 +12,36 @@ if (!defined('ABSPATH')) exit;
 // ثابت‌ها
 // ============================================================
 
-const GPDS_SLIDER_META_KEY   = '_gpds_slider_banner_id';
-const GPDS_SLIDER_IMAGE_SIZE = 'gpds-slider-banner';
-const GPDS_SLIDER_DIMS       = [1920, 600];
-const GPDS_SLIDER_NONCE      = 'gpds_slider_nonce';
+const GPDS_SLIDER_META_DESKTOP = '_gpds_slider_banner_desktop';
+const GPDS_SLIDER_META_TABLET  = '_gpds_slider_banner_tablet';
+const GPDS_SLIDER_META_MOBILE  = '_gpds_slider_banner_mobile';
+const GPDS_SLIDER_NONCE        = 'gpds_slider_nonce';
+
+// 🎯 سایزهای تصویر اختصاصی
+const GPDS_SLIDER_SIZE_DESKTOP = 'gpds-slider-desktop';
+const GPDS_SLIDER_SIZE_TABLET  = 'gpds-slider-tablet';
+const GPDS_SLIDER_SIZE_MOBILE  = 'gpds-slider-mobile';
 
 
 // ============================================================
-// ۱. ثبت سایز تصویر بنر
+// ۱. ثبت سایزهای تصویر
 // ============================================================
 
 add_action('after_setup_theme', function (): void {
-    add_image_size(
-        GPDS_SLIDER_IMAGE_SIZE,
-        GPDS_SLIDER_DIMS[0],
-        GPDS_SLIDER_DIMS[1],
-        true
-    );
+    add_image_size(GPDS_SLIDER_SIZE_DESKTOP, 1920, 600, true);
+    add_image_size(GPDS_SLIDER_SIZE_TABLET,  1200, 500, true);
+    add_image_size(GPDS_SLIDER_SIZE_MOBILE,   768, 600, true);
 });
 
 
 // ============================================================
-// ۲. متاباکس در صفحه ویرایش محصول
+// ۲. متاباکس — ۳ بنر مستقل
 // ============================================================
 
 add_action('add_meta_boxes', function (): void {
     add_meta_box(
         'gpds_slider_box',
-        __('بنر اسلایدر', 'gp-dentashop'),
+        __('بنرهای اسلایدر (۳ سایز)', 'gp-dentashop'),
         'gpds_slider_box_render',
         'product',
         'side',
@@ -48,46 +50,64 @@ add_action('add_meta_boxes', function (): void {
 });
 
 function gpds_slider_box_render($post): void {
-    $banner_id = (int) get_post_meta($post->ID, GPDS_SLIDER_META_KEY, true);
-    $preview   = $banner_id ? wp_get_attachment_image_url($banner_id, 'medium') : '';
-
     wp_nonce_field(GPDS_SLIDER_NONCE, GPDS_SLIDER_NONCE);
+
+    $sizes = [
+        'desktop' => [
+            'label' => __('دسکتاپ (1920×600)', 'gp-dentashop'),
+            'key'   => GPDS_SLIDER_META_DESKTOP,
+        ],
+        'tablet'  => [
+            'label' => __('تبلت (1200×500)', 'gp-dentashop'),
+            'key'   => GPDS_SLIDER_META_TABLET,
+        ],
+        'mobile'  => [
+            'label' => __('موبایل (768×600)', 'gp-dentashop'),
+            'key'   => GPDS_SLIDER_META_MOBILE,
+        ],
+    ];
     ?>
     <div class="gpds-slider-box">
 
-        <div class="gpds-slider-box__preview" <?php echo $preview ? '' : 'style="display:none"'; ?>>
-            <img src="<?php echo esc_url($preview); ?>" alt="">
-        </div>
+        <?php foreach ($sizes as $slug => $conf) :
+            $id      = (int) get_post_meta($post->ID, $conf['key'], true);
+            $preview = $id ? wp_get_attachment_image_url($id, 'medium') : '';
+            ?>
+            <div class="gpds-slider-box__field" data-size="<?php echo esc_attr($slug); ?>">
 
-        <input
-            type="hidden"
-            name="gpds_slider_banner_id"
-            id="gpds_slider_banner_id"
-            value="<?php echo esc_attr($banner_id); ?>"
-        >
+                <p class="gpds-slider-box__label">
+                    <?php echo esc_html($conf['label']); ?>
+                </p>
 
-        <p>
-            <button type="button" class="button button-primary gpds-slider-box__upload">
-                <?php echo $preview
-                    ? esc_html__('تغییر بنر', 'gp-dentashop')
-                    : esc_html__('انتخاب بنر', 'gp-dentashop'); ?>
-            </button>
+                <div class="gpds-slider-box__preview" <?php echo $preview ? '' : 'style="display:none"'; ?>>
+                    <img src="<?php echo esc_url($preview); ?>" alt="">
+                </div>
 
-            <button
-                type="button"
-                class="button gpds-slider-box__remove"
-                <?php echo $preview ? '' : 'style="display:none"'; ?>
-            >
-                <?php esc_html_e('حذف', 'gp-dentashop'); ?>
-            </button>
-        </p>
+                <input
+                    type="hidden"
+                    name="gpds_slider_banner_<?php echo esc_attr($slug); ?>"
+                    class="gpds-slider-box__input"
+                    value="<?php echo esc_attr($id); ?>"
+                >
 
-        <p style="font-size:11px;color:#666;margin:0;">
-            <?php printf(
-                esc_html__('ابعاد: %s پیکسل', 'gp-dentashop'),
-                400 . '×' . 1200
-            ); ?>
-        </p>
+                <p>
+                    <button type="button" class="button button-primary gpds-slider-box__upload">
+                        <?php echo $preview
+                            ? esc_html__('تغییر', 'gp-dentashop')
+                            : esc_html__('انتخاب', 'gp-dentashop'); ?>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="button gpds-slider-box__remove"
+                        <?php echo $preview ? '' : 'style="display:none"'; ?>
+                    >
+                        <?php esc_html_e('حذف', 'gp-dentashop'); ?>
+                    </button>
+                </p>
+
+            </div>
+        <?php endforeach; ?>
 
     </div>
     <?php
@@ -104,18 +124,25 @@ add_action('save_post_product', function (int $post_id): void {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
 
-    $banner_id = isset($_POST['gpds_slider_banner_id'])
-        ? absint($_POST['gpds_slider_banner_id'])
-        : 0;
+    $map = [
+        'desktop' => GPDS_SLIDER_META_DESKTOP,
+        'tablet'  => GPDS_SLIDER_META_TABLET,
+        'mobile'  => GPDS_SLIDER_META_MOBILE,
+    ];
 
-    $banner_id
-        ? update_post_meta($post_id, GPDS_SLIDER_META_KEY, $banner_id)
-        : delete_post_meta($post_id, GPDS_SLIDER_META_KEY);
+    foreach ($map as $slug => $meta_key) {
+        $field = "gpds_slider_banner_{$slug}";
+        $id    = isset($_POST[$field]) ? absint($_POST[$field]) : 0;
+
+        $id
+            ? update_post_meta($post_id, $meta_key, $id)
+            : delete_post_meta($post_id, $meta_key);
+    }
 });
 
 
 // ============================================================
-// ۴. Assets ادمین (فقط صفحه ویرایش محصول)
+// ۴. Assets ادمین
 // ============================================================
 
 add_action('admin_enqueue_scripts', function (string $hook): void {
@@ -133,12 +160,27 @@ add_action('admin_enqueue_scripts', function (string $hook): void {
     );
 
     wp_add_inline_style('wp-admin', '
-        .gpds-slider-box__preview { margin-bottom:10px; }
-        .gpds-slider-box__preview img {
-            max-width:100%; height:auto; border:1px solid #ddd;
-            border-radius:4px; padding:2px; background:#fff;
+        .gpds-slider-box__field {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
         }
-        .gpds-slider-box .button + .button { margin-right:4px; }
+        .gpds-slider-box__field:last-child { border-bottom: 0; }
+        .gpds-slider-box__label {
+            font-weight: 600;
+            margin: 0 0 6px;
+            font-size: 12px;
+            color: #333;
+        }
+        .gpds-slider-box__preview { margin-bottom: 8px; }
+        .gpds-slider-box__preview img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 2px;
+            background: #fff;
+        }
+        .gpds-slider-box .button + .button { margin-right: 4px; }
     ');
 });
 
@@ -165,44 +207,69 @@ function gpds_get_slider_items(int $limit = 5): array {
 
 
 /**
- * تبدیل محصول به آرایه اسلاید
+ * تبدیل محصول به آرایه اسلاید (با ۳ تصویر)
  */
 function gpds_slider_map_product($product): array {
+    $pid = $product->get_id();
+
     return [
-        'id'    => $product->get_id(),
-        'title' => $product->get_name(),
-        'url'   => $product->get_permalink(),
-        'image' => gpds_slider_resolve_image($product),
-        'price' => $product->get_price_html(),
-        'type'  => 'product',
+        'id'            => $pid,
+        'title'         => $product->get_name(),
+        'url'           => $product->get_permalink(),
+        'price'         => $product->get_price_html(),
+        'type'          => 'product',
+        // 🎯 سه تصویر
+        'image'         => gpds_slider_resolve_image($pid, $product, 'desktop'),
+        'image_tablet'  => gpds_slider_resolve_image($pid, $product, 'tablet'),
+        'image_mobile'  => gpds_slider_resolve_image($pid, $product, 'mobile'),
     ];
 }
 
 
 /**
- * اولویت تصویر: بنر → تصویر شاخص → placeholder
+ * اولویت تصویر:
+ *   ۱. بنر اختصاصی همان سایز
+ *   ۲. بنر دسکتاپ (fallback برای تبلت/موبایل)
+ *   ۳. تصویر شاخص با سایز مربوطه
+ *   ۴. placeholder
  */
-function gpds_slider_resolve_image($product): string {
-    $pid = $product->get_id();
+function gpds_slider_resolve_image(int $pid, $product, string $size): string {
+    $meta_map = [
+        'desktop' => GPDS_SLIDER_META_DESKTOP,
+        'tablet'  => GPDS_SLIDER_META_TABLET,
+        'mobile'  => GPDS_SLIDER_META_MOBILE,
+    ];
 
-    // ۱. بنر اختصاصی
-    $banner_id = (int) get_post_meta($pid, GPDS_SLIDER_META_KEY, true);
+    $img_size_map = [
+        'desktop' => GPDS_SLIDER_SIZE_DESKTOP,
+        'tablet'  => GPDS_SLIDER_SIZE_TABLET,
+        'mobile'  => GPDS_SLIDER_SIZE_MOBILE,
+    ];
+
+    // ۱. بنر اختصاصی همان سایز
+    $banner_id = (int) get_post_meta($pid, $meta_map[$size], true);
+
+    // ۲. fallback: اگه موبایل/تبلت خالی بود، از دسکتاپ استفاده کن
+    if (!$banner_id && $size !== 'desktop') {
+        $banner_id = (int) get_post_meta($pid, GPDS_SLIDER_META_DESKTOP, true);
+    }
 
     if ($banner_id) {
-        $image = wp_get_attachment_image_url($banner_id, GPDS_SLIDER_IMAGE_SIZE)
+        $image = wp_get_attachment_image_url($banner_id, $img_size_map[$size])
               ?: wp_get_attachment_image_url($banner_id, 'full');
 
         if ($image) return $image;
     }
 
-    // ۲. تصویر شاخص
+    // ۳. تصویر شاخص
     $thumb_id = $product->get_image_id();
-
     if ($thumb_id) {
-        $image = wp_get_attachment_image_url($thumb_id, 'full');
+        $image = wp_get_attachment_image_url($thumb_id, $img_size_map[$size])
+              ?: wp_get_attachment_image_url($thumb_id, 'full');
+
         if ($image) return $image;
     }
 
-    // ۳. placeholder
+    // ۴. placeholder
     return function_exists('wc_placeholder_img_src') ? wc_placeholder_img_src() : '';
 }

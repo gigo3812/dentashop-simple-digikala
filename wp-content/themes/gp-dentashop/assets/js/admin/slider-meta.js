@@ -1,5 +1,6 @@
 /**
- * Slider Meta - Media Uploader
+ * Slider Meta - Multi Media Uploader
+ * پشتیبانی از سه فیلد تصویر (دسکتاپ / تبلت / موبایل)
  */
 (function ($) {
     'use strict';
@@ -8,42 +9,51 @@
         const $box = $('.gpds-slider-box');
         if (!$box.length) return;
 
-        const $input   = $box.find('#gpds_slider_banner_id');
-        const $preview = $box.find('.gpds-slider-box__preview');
-        const $upload  = $box.find('.gpds-slider-box__upload');
-        const $remove  = $box.find('.gpds-slider-box__remove');
-
         let frame = null;
+        let $activeField = null;
 
-        $upload.on('click', function (e) {
+        // یک فریم مشترک، هدفش بر اساس فیلد فعال تغییر می‌کنه
+        function getFrame() {
+            if (frame) return frame;
+
+            frame = wp.media({
+                title:    'انتخاب بنر اسلایدر',
+                button:   { text: 'استفاده از این تصویر' },
+                library:  { type: 'image' },
+                multiple: false,
+            });
+
+            frame.on('select', function () {
+                const img = frame.state().get('selection').first().toJSON();
+                if (!$activeField) return;
+
+                $activeField.find('.gpds-slider-box__input').val(img.id);
+                $activeField.find('.gpds-slider-box__preview')
+                    .html('<img src="' + img.url + '" alt="">')
+                    .show();
+                $activeField.find('.gpds-slider-box__remove').show();
+                $activeField.find('.gpds-slider-box__upload').text('تغییر');
+            });
+
+            return frame;
+        }
+
+        // آپلود
+        $box.on('click', '.gpds-slider-box__upload', function (e) {
             e.preventDefault();
-
-            if (!frame) {
-                frame = wp.media({
-                    title:    'انتخاب بنر اسلایدر',
-                    button:   { text: 'استفاده از این تصویر' },
-                    library:  { type: 'image' },
-                    multiple: false,
-                });
-
-                frame.on('select', function () {
-                    const img = frame.state().get('selection').first().toJSON();
-                    $input.val(img.id);
-                    $preview.html('<img src="' + img.url + '" alt="">').show();
-                    $remove.show();
-                    $upload.text('تغییر بنر');
-                });
-            }
-
-            frame.open();
+            $activeField = $(this).closest('.gpds-slider-box__field');
+            getFrame().open();
         });
 
-        $remove.on('click', function (e) {
+        // حذف
+        $box.on('click', '.gpds-slider-box__remove', function (e) {
             e.preventDefault();
-            $input.val('');
-            $preview.hide().empty();
-            $remove.hide();
-            $upload.text('انتخاب بنر');
+            const $field = $(this).closest('.gpds-slider-box__field');
+
+            $field.find('.gpds-slider-box__input').val('');
+            $field.find('.gpds-slider-box__preview').hide().empty();
+            $field.find('.gpds-slider-box__remove').hide();
+            $field.find('.gpds-slider-box__upload').text('انتخاب');
         });
     });
 
