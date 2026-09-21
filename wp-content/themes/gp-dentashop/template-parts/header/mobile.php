@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Header - Mobile
  *
@@ -24,8 +25,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
             data-gpds-mobile-menu-trigger
             aria-label="باز کردن منو"
             aria-expanded="false"
-            aria-controls="gpds-mobile-menu"
-        >
+            aria-controls="gpds-mobile-menu">
             <?php gpds_icon('menu', 24); ?>
         </button>
 
@@ -39,21 +39,19 @@ $mobile_categories = gpds_get_top_product_categories(12);
             type="button"
             class="gpds-mobile-header__btn"
             data-gpds-search-overlay-trigger
-            aria-label="جستجو"
-        >
+            aria-label="جستجو">
             <?php gpds_icon('search', 22); ?>
         </button>
 
         <!-- حساب کاربری -->
         <a
             href="<?php echo esc_url(
-                is_user_logged_in()
-                    ? wc_get_account_endpoint_url('dashboard')
-                    : wc_get_page_permalink('myaccount')
-            ); ?>"
+                        is_user_logged_in()
+                            ? wc_get_account_endpoint_url('dashboard')
+                            : wc_get_page_permalink('myaccount')
+                    ); ?>"
             class="gpds-mobile-header__btn"
-            aria-label="حساب کاربری"
-        >
+            aria-label="حساب کاربری">
             <?php gpds_icon('user', 22); ?>
         </a>
 
@@ -61,15 +59,13 @@ $mobile_categories = gpds_get_top_product_categories(12);
         <a
             href="<?php echo esc_url(wc_get_cart_url()); ?>"
             class="gpds-mobile-header__btn gpds-mobile-header__cart"
-            aria-label="سبد خرید"
-        >
+            aria-label="سبد خرید">
             <?php gpds_icon('cart', 22); ?>
 
             <span
                 class="gpds-badge gpds-badge--primary gpds-badge--circle"
                 data-gpds-cart-count
-                <?php if (gpds_cart_count() === 0) echo 'hidden'; ?>
-            >
+                <?php if (gpds_cart_count() === 0) echo 'hidden'; ?>>
                 <?php echo esc_html(gpds_cart_count()); ?>
             </span>
         </a>
@@ -87,8 +83,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
     class="gpds-mobile-menu"
     data-gpds-mobile-menu
     hidden
-    aria-hidden="true"
->
+    aria-hidden="true">
 
     <!-- Header -->
     <div class="gpds-mobile-menu__header">
@@ -105,8 +100,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
             type="button"
             class="gpds-mobile-menu__close"
             data-gpds-mobile-menu-close
-            aria-label="بستن منو"
-        >
+            aria-label="بستن منو">
             <?php gpds_icon('close', 24); ?>
         </button>
 
@@ -126,13 +120,11 @@ $mobile_categories = gpds_get_top_product_categories(12);
 
         <div
             class="gpds-mobile-menu__level gpds-mobile-menu__level--root is-active"
-            data-gpds-mobile-level="root"
-        >
+            data-gpds-mobile-level="root">
 
             <nav
                 class="gpds-mobile-menu__nav"
-                aria-label="منوی اصلی موبایل"
-            >
+                aria-label="منوی اصلی موبایل">
 
                 <!-- دسته‌بندی محصولات -->
                 <?php if (!empty($mobile_categories)) : ?>
@@ -141,8 +133,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
                         type="button"
                         class="gpds-mobile-menu__category-trigger"
                         data-gpds-mobile-categories-trigger
-                        aria-expanded="false"
-                    >
+                        aria-expanded="false">
 
                         <span class="gpds-mobile-menu__item-icon">
                             <?php gpds_icon('category', 20); ?>
@@ -177,6 +168,14 @@ $mobile_categories = gpds_get_top_product_categories(12);
                     ]);
                     ?>
 
+                    <!-- اکشن‌های اضافی (سمت چپ) -->
+                    <div class="gpds-mainbar__extra">
+                        <a href="<?php echo esc_url(get_post_type_archive_link('office')); ?>" class="gpds-mainbar__extra-link">
+                            <?php gpds_icon('map-pin', 14); ?>
+                            <span>شعبه‌ها</span>
+
+                        </a>
+                    </div>
                 </div>
 
             </nav>
@@ -191,8 +190,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
         <div
             class="gpds-mobile-menu__level gpds-mobile-menu__level--categories"
             data-gpds-mobile-level="categories"
-            hidden
-        >
+            hidden>
 
             <div class="gpds-mobile-menu__level-header">
 
@@ -200,8 +198,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
                     type="button"
                     class="gpds-mobile-menu__back"
                     data-gpds-mobile-back="root"
-                    aria-label="بازگشت"
-                >
+                    aria-label="بازگشت">
                     <?php gpds_icon('arrow-right', 20); ?>
                 </button>
 
@@ -233,8 +230,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
 
                     <div
                         class="gpds-mobile-menu__category"
-                        data-gpds-mobile-category="<?php echo esc_attr($cat->term_id); ?>"
-                    >
+                        data-gpds-mobile-category="<?php echo esc_attr($cat->term_id); ?>">
 
                         <?php if ($has_children) : ?>
 
@@ -242,8 +238,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
                                 type="button"
                                 class="gpds-mobile-menu__category-row"
                                 data-gpds-mobile-category-trigger="<?php echo esc_attr($cat->term_id); ?>"
-                                aria-expanded="false"
-                            >
+                                aria-expanded="false">
 
                                 <span class="gpds-mobile-menu__category-icon">
                                     <?php gpds_icon('category', 20); ?>
@@ -263,8 +258,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
 
                             <a
                                 href="<?php echo esc_url($cat_link); ?>"
-                                class="gpds-mobile-menu__category-row"
-                            >
+                                class="gpds-mobile-menu__category-row">
 
                                 <span class="gpds-mobile-menu__category-icon">
                                     <?php gpds_icon('category', 20); ?>
@@ -290,8 +284,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
                             <div
                                 class="gpds-mobile-menu__sublevel"
                                 data-gpds-mobile-sublevel="<?php echo esc_attr($cat->term_id); ?>"
-                                hidden
-                            >
+                                hidden>
 
                                 <div class="gpds-mobile-menu__sublevel-header">
 
@@ -299,8 +292,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
                                         type="button"
                                         class="gpds-mobile-menu__back"
                                         data-gpds-mobile-category-back
-                                        aria-label="بازگشت"
-                                    >
+                                        aria-label="بازگشت">
                                         <?php gpds_icon('arrow-right', 20); ?>
                                     </button>
 
@@ -313,8 +305,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
 
                                 <a
                                     href="<?php echo esc_url($cat_link); ?>"
-                                    class="gpds-mobile-menu__view-all"
-                                >
+                                    class="gpds-mobile-menu__view-all">
 
                                     <span>
                                         <?php gpds_icon('grid', 18); ?>
@@ -341,8 +332,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
 
                                         <a
                                             href="<?php echo esc_url($child_link); ?>"
-                                            class="gpds-mobile-menu__child"
-                                        >
+                                            class="gpds-mobile-menu__child">
 
                                             <span>
                                                 <?php echo esc_html($child->name); ?>
@@ -365,8 +355,9 @@ $mobile_categories = gpds_get_top_product_categories(12);
                 <?php endforeach; ?>
 
             </div>
-
         </div>
+
+
 
     </div>
 
@@ -381,8 +372,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
 
             <a
                 href="<?php echo esc_url(wp_logout_url(home_url())); ?>"
-                class="gpds-mobile-menu__account"
-            >
+                class="gpds-mobile-menu__account">
                 <?php gpds_icon('logout', 18); ?>
                 <span>خروج از حساب</span>
             </a>
@@ -391,8 +381,7 @@ $mobile_categories = gpds_get_top_product_categories(12);
 
             <a
                 href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>"
-                class="gpds-mobile-menu__account gpds-mobile-menu__account--primary"
-            >
+                class="gpds-mobile-menu__account gpds-mobile-menu__account--primary">
                 <?php gpds_icon('user', 18); ?>
                 <span>ورود | ثبت‌نام</span>
             </a>
@@ -409,5 +398,4 @@ $mobile_categories = gpds_get_top_product_categories(12);
 <div
     class="gpds-mobile-menu-overlay"
     data-gpds-mobile-menu-overlay
-    hidden
-></div>
+    hidden></div>
