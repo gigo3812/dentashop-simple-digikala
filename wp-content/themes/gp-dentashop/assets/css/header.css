@@ -845,80 +845,671 @@
 /* ============================================================
  * 19. MOBILE MENU
  * ============================================================ */
+/* =========================================================
+   GPDS — MOBILE MENU
+   Lightweight / RTL / WooCommerce
+========================================================= */
 
 .gpds-mobile-menu {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
+
+    width: min(88vw, 380px);
+
     display: flex;
     flex-direction: column;
-    width: 85%;
-    max-width: 340px;
+
     background: var(--gpds-bg-surface);
+
     z-index: var(--gpds-z-modal);
+
     transform: translateX(100%);
-    transition: transform 250ms ease;
+    visibility: hidden;
+
+    transition:
+        transform 220ms ease,
+        visibility 0s linear 220ms;
+
+    overflow: hidden;
+
+    direction: rtl;
+
+    box-shadow: -10px 0 35px rgba(0, 0, 0, .10);
 }
 
-.gpds-mobile-menu[hidden] { display: none; }
-.gpds-mobile-menu.is-open { transform: translateX(0); }
+.gpds-mobile-menu[hidden] {
+    display: none;
+}
+
+.gpds-mobile-menu.is-open {
+    transform: translateX(0);
+    visibility: visible;
+
+    transition:
+        transform 220ms ease,
+        visibility 0s linear 0s;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .gpds-mobile-menu__header {
+    min-height: 62px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--gpds-space-md);
+
+    padding: 0 16px;
+
     border-bottom: 1px solid var(--gpds-border-light);
-    font-weight: var(--gpds-fw-bold);
+
+    flex-shrink: 0;
+
+    background: var(--gpds-bg-surface);
+}
+
+.gpds-mobile-menu__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: var(--gpds-text-primary);
+}
+
+.gpds-mobile-menu__title-icon {
+    display: none;
 }
 
 .gpds-mobile-menu__close {
+    width: 40px;
+    height: 40px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: var(--gpds-radius-sm);
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: transparent;
+
     color: var(--gpds-text-secondary);
+
+    cursor: pointer;
 }
+
+.gpds-mobile-menu__close:hover,
+.gpds-mobile-menu__close:focus-visible {
+    background: var(--gpds-bg-hover);
+    color: var(--gpds-text-primary);
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
 
 .gpds-mobile-menu__body {
+    position: relative;
+
     flex: 1;
-    padding: var(--gpds-space-sm) 0;
+    min-height: 0;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   LEVEL
+========================================================= */
+
+.gpds-mobile-menu__level {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
     overflow-y: auto;
+    overflow-x: hidden;
+
+    background: var(--gpds-bg-surface);
+
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
 }
 
-.gpds-mobile-menu__nav { margin: 0; padding: 0; list-style: none; }
+.gpds-mobile-menu__level[hidden] {
+    display: none;
+}
 
-.gpds-mobile-menu__nav > li > a {
-    display: block;
-    padding: var(--gpds-space-md);
+.gpds-mobile-menu__level--root {
+    position: absolute;
+}
+
+
+/* =========================================================
+   PRODUCT CATEGORY BUTTON
+========================================================= */
+
+.gpds-mobile-menu__category-trigger {
+    width: 100%;
+
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 10px 16px;
+
+    border: 0;
     border-bottom: 1px solid var(--gpds-border-light);
+
+    background: var(--gpds-bg-surface);
+
     color: var(--gpds-text-primary);
-    font-weight: var(--gpds-fw-medium);
-    transition: background-color 150ms ease, color 150ms ease;
+
+    text-align: right;
+
+    cursor: pointer;
 }
 
-.gpds-mobile-menu__nav > li > a:hover {
+.gpds-mobile-menu__category-trigger:hover,
+.gpds-mobile-menu__category-trigger:focus-visible {
     background: var(--gpds-bg-hover);
+}
+
+.gpds-mobile-menu__item-icon {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: var(--gpds-bg-hover);
+
     color: var(--gpds-color-primary);
 }
 
-.gpds-mobile-menu__footer {
-    padding: var(--gpds-space-md);
-    border-top: 1px solid var(--gpds-border-light);
+.gpds-mobile-menu__item-content {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 2px;
 }
+
+.gpds-mobile-menu__item-content strong {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.gpds-mobile-menu__item-content small {
+    max-width: 100%;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 11px;
+    line-height: 1.5;
+
+    color: var(--gpds-text-tertiary);
+}
+
+.gpds-mobile-menu__item-arrow {
+    display: flex;
+
+    color: var(--gpds-text-tertiary);
+}
+
+
+/* =========================================================
+   MAIN WORDPRESS MENU
+========================================================= */
+
+.gpds-mobile-menu__main-nav {
+    padding: 0;
+}
+
+.gpds-mobile-menu__nav-list,
+.gpds-mobile-menu__nav-list ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+.gpds-mobile-menu__nav-list > li {
+    margin: 0;
+
+    border-bottom: 1px solid var(--gpds-border-light);
+}
+
+.gpds-mobile-menu__nav-list > li > a {
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 16px;
+
+    color: var(--gpds-text-primary);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    text-decoration: none;
+}
+
+.gpds-mobile-menu__nav-list > li > a:hover,
+.gpds-mobile-menu__nav-list > li > a:focus-visible {
+    background: var(--gpds-bg-hover);
+
+    color: var(--gpds-color-primary);
+}
+
+
+/* =========================================================
+   CATEGORY LEVEL HEADER
+========================================================= */
+
+.gpds-mobile-menu__level-header,
+.gpds-mobile-menu__sublevel-header {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 10px;
+
+    flex-shrink: 0;
+
+    border-bottom: 1px solid var(--gpds-border-light);
+
+    background: var(--gpds-bg-surface);
+}
+
+.gpds-mobile-menu__back {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: var(--gpds-text-secondary);
+
+    cursor: pointer;
+}
+
+.gpds-mobile-menu__back:hover,
+.gpds-mobile-menu__back:focus-visible {
+    background: var(--gpds-bg-hover);
+
+    color: var(--gpds-color-primary);
+}
+
+.gpds-mobile-menu__level-title {
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    color: var(--gpds-text-primary);
+}
+
+
+/* =========================================================
+   CATEGORY LIST
+========================================================= */
+
+.gpds-mobile-menu__category-list {
+    padding: 4px 0 14px;
+}
+
+.gpds-mobile-menu__category {
+    margin: 0;
+}
+
+.gpds-mobile-menu__category-row {
+    width: 100%;
+
+    min-height: 56px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 8px 16px;
+
+    border: 0;
+    border-bottom: 1px solid var(--gpds-border-light);
+
+    background: var(--gpds-bg-surface);
+
+    color: var(--gpds-text-primary);
+
+    text-align: right;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.gpds-mobile-menu__category-row:hover,
+.gpds-mobile-menu__category-row:focus-visible {
+    background: var(--gpds-bg-hover);
+}
+
+.gpds-mobile-menu__category-icon {
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: var(--gpds-bg-hover);
+
+    color: var(--gpds-color-primary);
+}
+
+.gpds-mobile-menu__category-name {
+    flex: 1;
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.gpds-mobile-menu__category-arrow {
+    display: flex;
+
+    color: var(--gpds-text-tertiary);
+}
+
+
+/* =========================================================
+   IMPORTANT:
+   SUBLEVEL MUST COVER THE WHOLE MOBILE MENU
+========================================================= */
+
+.gpds-mobile-menu__sublevel {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 20;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: var(--gpds-bg-surface);
+
+    overscroll-behavior: contain;
+}
+
+.gpds-mobile-menu__sublevel[hidden] {
+    display: none;
+}
+
+
+/* =========================================================
+   VIEW ALL
+========================================================= */
+
+.gpds-mobile-menu__view-all {
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 10px 16px;
+
+    padding: 0 13px;
+
+    border: 1px solid var(--gpds-border-light);
+
+    border-radius: 10px;
+
+    background: var(--gpds-bg-hover);
+
+    color: var(--gpds-color-primary);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.gpds-mobile-menu__view-all span {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+/* =========================================================
+   CHILDREN
+========================================================= */
+
+.gpds-mobile-menu__children {
+    padding-bottom: 15px;
+}
+
+.gpds-mobile-menu__child {
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 16px;
+
+    border-bottom: 1px solid var(--gpds-border-light);
+
+    color: var(--gpds-text-secondary);
+
+    font-size: 13px;
+
+    text-decoration: none;
+}
+
+.gpds-mobile-menu__child:hover,
+.gpds-mobile-menu__child:focus-visible {
+    background: var(--gpds-bg-hover);
+
+    color: var(--gpds-color-primary);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.gpds-mobile-menu__footer {
+    flex-shrink: 0;
+
+    padding: 10px 16px;
+
+    border-top: 1px solid var(--gpds-border-light);
+
+    background: var(--gpds-bg-surface);
+}
+
+.gpds-mobile-menu__account {
+    min-height: 44px;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: 1px solid var(--gpds-border-light);
+
+    border-radius: 10px;
+
+    color: var(--gpds-text-secondary);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.gpds-mobile-menu__account--primary {
+    background: var(--gpds-color-primary);
+
+    border-color: var(--gpds-color-primary);
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
 
 .gpds-mobile-menu-overlay {
     position: fixed;
+
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+
     z-index: var(--gpds-z-modal-backdrop);
-    animation: gpds-fade-in 200ms ease;
+
+    background: rgba(15, 23, 42, .42);
+
+    opacity: 0;
+
+    transition: opacity 180ms ease;
 }
 
-.gpds-mobile-menu-overlay[hidden] { display: none; }
+.gpds-mobile-menu-overlay[hidden] {
+    display: none;
+}
+
+.gpds-mobile-menu-overlay.is-visible {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+@media (max-width: 1024px) {
+
+    .gpds-topbar,
+    .gpds-mainbar {
+        display: none;
+    }
+
+    .gpds-mobile-header {
+        display: block;
+
+        position: sticky;
+        top: 0;
+
+        z-index: var(--gpds-z-sticky);
+
+        background: var(--gpds-bg-surface);
+
+        box-shadow: var(--gpds-shadow-sm);
+    }
+
+    .gpds-mega-menu {
+        display: none !important;
+    }
+}
+
+
+/* =========================================================
+   SMALL DEVICES
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .gpds-mobile-menu {
+        width: 88vw;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .gpds-mobile-menu {
+        width: 92vw;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .gpds-mobile-menu,
+    .gpds-mobile-menu-overlay {
+        transition: none;
+    }
+}
 
 
 /* ============================================================
