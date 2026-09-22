@@ -23,7 +23,7 @@ $reading_min = gpds_get_reading_time(get_post_field('post_content', $post_id));
 // اندازه‌ها از پارامتر قابل تنظیم
 $img_size    = $img_size    ?? 'gpds-card';
 $show_excerpt = $show_excerpt ?? false;
-$excerpt_len  = $excerpt_len  ?? 12; // تعداد کلمه
+$excerpt_len  = $excerpt_len  ?? 30; // تعداد کلمه
 ?>
 
 <article class="gpds-blog-card" data-post-id="<?php echo esc_attr($post_id); ?>">

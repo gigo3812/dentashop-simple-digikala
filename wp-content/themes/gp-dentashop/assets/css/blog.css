@@ -106,10 +106,12 @@
     gap: var(--gpds-space-xs);
     flex: 1;
 }
-
+.gpds-blog-card__excerpt{
+    text-align: justify;
+}
 .gpds-blog-card__title {
     font-size: var(--gpds-fs-base);
-    font-weight: var(--gpds-fw-semibold);
+    font-weight: 600;
     line-height: 1.6;
     margin: 0;
     color: var(--gpds-text-primary);

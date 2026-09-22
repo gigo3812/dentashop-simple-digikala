@@ -13,7 +13,7 @@ $permalink  = get_permalink();
 $thumb_id   = get_post_thumbnail_id();
 $cats       = get_the_category();
 $excerpt    = get_the_excerpt();
-$excerpt_len = 15; // تعداد کلمه
+$excerpt_len = 30; // تعداد کلمه
 ?>
 
 <article class="gpds-blog-card" data-post-id="<?php echo esc_attr($post_id); ?>">

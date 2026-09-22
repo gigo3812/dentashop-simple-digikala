@@ -36,7 +36,7 @@ if (empty($categories)) {
                         href="<?php echo esc_url(get_term_link($cat)); ?>" 
                         class="gpds-category-card"
                     >
-                        <div class="gpds-category-card__image">
+                        <div class="gpds-category-card__image" style="overflow: visible;">
                             <?php if ($thumb_url) : ?>
                                 <img 
                                     src="<?php echo esc_url($thumb_url); ?>" 
