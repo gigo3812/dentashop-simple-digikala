@@ -53,7 +53,7 @@ $socials     = gpds_get_socials();
                 <!-- 🎯 اینماد -->
                 <div class="gpds-footer-enamad">
                     <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=7609827&Code=KqRP1oiHgKaInmtUtckF121R7HSl3yFN'>
-                        <img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7609827&Code=KqRP1oiHgKaInmtUtckF121R7HSl3yFN' alt='' style='cursor:pointer' code='KqRP1oiHgKaInmtUtckF121R7HSl3yFN'>
+                        <img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=7609827&Code=KqRP1oiHgKaInmtUtckF121R7HSl3yFN' alt='نماد اعتماد' style='cursor:pointer' code='KqRP1oiHgKaInmtUtckF121R7HSl3yFN'>
                     </a>
                 </div>
 

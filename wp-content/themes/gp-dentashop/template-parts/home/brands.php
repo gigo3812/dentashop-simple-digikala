@@ -53,10 +53,6 @@ if (empty($brands)) {
                                 <h3 class="gpds-brand__name">
                                     <?php echo esc_html($brand['name']); ?>
                                 </h3>
-                                <span class="gpds-brand__cta">
-                                    مشاهده محصولات
-                                    <?php gpds_icon('chevron-left', 12); ?>
-                                </span>
                             </a>
                         </div>
                     <?php endforeach; ?>

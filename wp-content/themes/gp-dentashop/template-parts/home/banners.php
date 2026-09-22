@@ -30,9 +30,10 @@ if (empty($banners)) return;
                     <img 
                         src="<?php echo esc_url($banner['image']); ?>"
                         alt="<?php echo esc_attr($banner['title']); ?>"
-                        loading="lazy"
+                        loading="eager"
+                        fetchpriority="high"
                         decoding="async"
-                        width="1920"
+                        width="1200"
                         height="500"
                     >
                 </picture>

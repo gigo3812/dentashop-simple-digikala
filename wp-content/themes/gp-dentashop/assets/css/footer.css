@@ -41,7 +41,7 @@
 }
 
 .gpds-footer-top__support strong {
-    color: var(--gpds-color-primary);
+    color: #c53030;
 }
 
 
@@ -141,7 +141,7 @@
 
 .gpds-footer-service__subtitle {
     font-size: var(--gpds-fs-xs);
-    color: var(--gpds-text-tertiary);
+    color: #4b5563;
 }
 
 
@@ -265,7 +265,7 @@
 
 .gpds-footer-copyright p {
     font-size: var(--gpds-fs-xs);
-    color: var(--gpds-text-tertiary);
+    color: #4b5563;
     line-height: 1.8;
     margin: 0;
 }
