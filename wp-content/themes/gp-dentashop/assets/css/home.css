@@ -1252,6 +1252,7 @@ body.gpds-story-open {
         transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
         background 0.3s ease;
     flex-shrink: 0;
+    padding: 13px;
 }
 
 .gpds-brand:hover .gpds-brand__logo {

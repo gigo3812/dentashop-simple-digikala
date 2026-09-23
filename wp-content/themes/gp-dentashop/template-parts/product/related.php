@@ -20,18 +20,8 @@ $related_ids = wc_get_related_products($product_id, 6);
 
 if (empty($related_ids)) return;
 
-$related_query = new WP_Query([
-    'post_type'      => 'product',
-    'post__in'       => $related_ids,
-    'posts_per_page' => 6,
-    'orderby'        => 'post__in',
-    'no_found_rows'  => true,
-]);
-
-if (!$related_query->have_posts()) {
-    wp_reset_postdata();
-    return;
-}
+// ذخیره وضعیت اولیه برای بازگردانی
+$original_product = $product;
 ?>
 
 <section class="gpds-related-products">
@@ -44,18 +34,20 @@ if (!$related_query->have_posts()) {
     </div>
     
     <div class="gpds-shop-grid">
-        <?php while ($related_query->have_posts()) : $related_query->the_post(); 
-            $rel_product = wc_get_product(get_the_ID());
-            if (!$rel_product) continue;
+        <?php foreach ($related_ids as $related_id) : 
+            // گرفتن محصول (از object cache ووکامرس، بدون کوئری اضافه)
+            $product = wc_get_product($related_id);
+            if (!$product || !$product->is_visible()) continue;
         ?>
             <div class="gpds-shop-grid__item">
-                <?php 
-                    include get_stylesheet_directory() . '/template-parts/product/card.php';
-                ?>
+                <?php include get_stylesheet_directory() . '/template-parts/product/card.php'; ?>
             </div>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
     </div>
     
 </section>
 
-<?php wp_reset_postdata(); ?>
+<?php 
+// بازگردانی $product به محصول اصلی (برای بقیه قالب)
+$product = $original_product;
+?>

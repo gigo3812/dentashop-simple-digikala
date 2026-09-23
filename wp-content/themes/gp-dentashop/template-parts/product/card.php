@@ -1,12 +1,10 @@
 <?php
 /**
- * Product Card
+ * Product Card (Optimized)
  *
  * @package GP_DentaShop
  * @var WC_Product $product
  */
-
-
 
 if (!defined('ABSPATH')) exit;
 
@@ -18,17 +16,29 @@ if (!isset($product) || !is_object($product) || !($product instanceof WC_Product
 $product_id  = $product->get_id();
 $permalink   = $product->get_permalink();
 $title       = $product->get_name();
-$image_id    = $product->get_image_id();
-$image_url   = $image_id 
-    ? wp_get_attachment_image_url($image_id, 'gpds-card')
-    : wc_placeholder_img_src('gpds-card');
-$price_html  = $product->get_price_html();
-$on_sale     = $product->is_on_sale();
-$rating      = (float) $product->get_average_rating();
-$rating_count= (int) $product->get_review_count();
-$in_stock    = $product->is_in_stock();
 
-// محاسبه درصد تخفیف
+// تصویر با srcset + sizes (لود بهینه)
+$image_id = $product->get_image_id();
+
+if ($image_id) {
+    $image_url = wp_get_attachment_image_url($image_id, 'gpds-card');
+    $srcset    = wp_get_attachment_image_srcset($image_id, 'gpds-card');
+    $sizes     = '(max-width: 600px) 50vw, (max-width: 1024px) 33vw, 300px';
+} else {
+    $image_url = wc_placeholder_img_src('gpds-card');
+    $srcset    = false;
+    $sizes     = '';
+}
+
+$price_html = $product->get_price_html();
+$on_sale    = $product->is_on_sale();
+$in_stock   = $product->is_in_stock();
+
+// امتیاز — از متای ذخیره‌شده (بدون کوئری اضافه)
+$rating       = (float) $product->get_average_rating();
+$rating_count = (int) get_post_meta($product_id, '_wc_review_count', true);
+
+// محاسبه درصد تخفیف — فقط وقتی لازم است
 $discount = 0;
 if ($on_sale) {
     $regular = (float) $product->get_regular_price();
@@ -45,7 +55,11 @@ if ($on_sale) {
     <a href="<?php echo esc_url($permalink); ?>" class="gpds-product-card__image-link">
         <div class="gpds-product-card__image">
             <img 
-                src="<?php echo esc_url($image_url); ?>" 
+                src="<?php echo esc_url($image_url); ?>"
+                <?php if ($srcset) : ?>
+                srcset="<?php echo esc_attr($srcset); ?>"
+                sizes="<?php echo esc_attr($sizes); ?>"
+                <?php endif; ?>
                 alt="<?php echo esc_attr($title); ?>"
                 loading="lazy"
                 decoding="async"
@@ -97,7 +111,7 @@ if ($on_sale) {
         </div>
         
         <!-- دکمه افزودن به سبد (اختیاری) -->
-        <?php if ($product->is_type('simple') && $in_stock) : ?>
+        <?php if ($in_stock && $product->is_type('simple')) : ?>
             <button 
                 type="button"
                 class="gpds-product-card__add-btn"
