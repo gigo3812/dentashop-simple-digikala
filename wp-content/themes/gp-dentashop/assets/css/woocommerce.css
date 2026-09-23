@@ -185,7 +185,16 @@ ul.products li.product {
  * ============================================ */
 .gpds-shop-pagination {
     margin-top: var(--gpds-space-lg);
-    text-align: center;
+}
+
+.gpds-shop-pagination ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .gpds-shop-pagination .page-numbers {
@@ -195,33 +204,25 @@ ul.products li.product {
     min-width: 40px;
     height: 40px;
     padding: 0 8px;
-    margin: 0 2px;
     background: var(--gpds-bg-surface);
     border-radius: var(--gpds-radius-sm);
     color: var(--gpds-text-primary);
     font-weight: var(--gpds-fw-medium);
-    transition: all var(--gpds-transition-fast);
+    text-decoration: none;
     box-shadow: var(--gpds-shadow-xs);
+    transition: background-color var(--gpds-transition-fast),
+                color var(--gpds-transition-fast);
 }
 
-.gpds-shop-pagination .page-numbers:hover,
+.gpds-shop-pagination a.page-numbers:hover,
 .gpds-shop-pagination .page-numbers.current {
     background: var(--gpds-color-primary);
-    color: white;
+    color: #fff;
 }
 
 .gpds-shop-pagination .page-numbers.dots {
     background: transparent;
     box-shadow: none;
-}
-
-.gpds-shop-pagination ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 4px;
 }
 
 /* ============================================
