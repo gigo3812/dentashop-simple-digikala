@@ -98,13 +98,23 @@ function gpds_enqueue_frontend()
         );
     }
 
-
     // ============================================
-    // Swiper (فقط صفحاتی که اسلایدر دارن)
+    // GPDS Slider Engine (جایگزین Swiper - سبک ۹۳٪)
     // ============================================
     if (gpds_page_has_slider()) {
-        wp_enqueue_style('gpds-swiper',  GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.css', [], '11.0.0');
-        wp_enqueue_script('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.js',  [], '11.0.0', true);
+        wp_enqueue_style(
+            'gpds-slider-engine',
+            GPDS_ASSETS . '/gpds/gpds-slider.css',
+            [],
+            GPDS_VERSION
+        );
+        wp_enqueue_script(
+            'gpds-slider-engine',
+            GPDS_ASSETS . '/gpds/gpds-slider.js',
+            [],
+            GPDS_VERSION,
+            true
+        );
     }
 
     // ============================================
@@ -115,10 +125,18 @@ function gpds_enqueue_frontend()
     // ============================================
     // JS اسلایدر (فقط صفحات با اسلایدر)
     // ============================================
-    if (is_front_page() || is_page_template('page-templates/template-home.php')) {
-        wp_enqueue_script('gpds-slider', GPDS_ASSETS . '/js/slider.js', ['gpds-swiper', 'gpds-main'], GPDS_VERSION, true);
+    // ============================================
+    // GPDS Main (اسلایدر + کانت‌داون + استوری)
+    // ============================================
+    if (gpds_page_has_slider()) {
+        wp_enqueue_script(
+            'gpds-slider-init',
+            GPDS_ASSETS . '/gpds/gpds-main.js',
+            ['gpds-slider-engine', 'gpds-main'],
+            GPDS_VERSION,
+            true
+        );
     }
-
     // ============================================
     // JS جستجو
     // ============================================
@@ -231,7 +249,8 @@ add_filter('script_loader_tag', function ($tag, $handle) {
     $defer = [
         'gpds-search',
         'gpds-cart',
-        'gpds-slider',
+        'gpds-slider-engine',
+        'gpds-slider-init',
         'gpds-footer',
         'gpds-product',
         'gpds-shop',
