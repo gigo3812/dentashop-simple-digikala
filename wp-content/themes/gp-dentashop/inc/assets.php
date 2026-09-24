@@ -3,7 +3,10 @@
 /**
  * Assets - مدیریت بهینه CSS/JS
  * 
- * استراتژی: فقط چیزی که لازمه لود بشه
+ * استراتژی:
+ *   - CSS پایه: 1 فایل (gpds-base.css = main + header + home + footer)
+ *   - بقیه CSS: شرطی
+ *   - JS: شرطی + defer
  *
  * @package GP_DentaShop
  */
@@ -17,174 +20,101 @@ add_action('wp_enqueue_scripts', 'gpds_enqueue_frontend', 20);
 
 function gpds_enqueue_frontend()
 {
+    $assets = GPDS_ASSETS;
+    $ver    = GPDS_VERSION;
 
     // ============================================
-    // CSS پایه (همیشه)
+    // 🎯 CSS پایه (همه صفحات) — 1 فایل
     // ============================================
-    wp_enqueue_style('gpds-fonts',      GPDS_ASSETS . '/fonts/fonts.css', [], GPDS_VERSION);
-    wp_enqueue_style('gpds-main',       GPDS_ASSETS . '/css/main.css',    ['gpds-fonts'], GPDS_VERSION);
-    wp_enqueue_style('gpds-header',     GPDS_ASSETS . '/css/header.css',  ['gpds-main'], GPDS_VERSION);
-    wp_enqueue_style('gpds-footer',     GPDS_ASSETS . '/css/footer.css',  ['gpds-main'], GPDS_VERSION);
-    wp_enqueue_style('gpds-responsive', GPDS_ASSETS . '/css/responsive.css', ['gpds-main'], GPDS_VERSION);
+    wp_enqueue_style('gpds-fonts', $assets . '/fonts/fonts.css', [], $ver);
+    wp_enqueue_style('gpds-base',  $assets . '/css/gpds-base.css', ['gpds-fonts'], $ver);
 
     // ============================================
-    // CSS صفحه اصلی
-    // ============================================
-    if (is_front_page() || is_page_template('page-templates/template-home.php')) {
-        wp_enqueue_style('gpds-home', GPDS_ASSETS . '/css/home.css', ['gpds-main'], GPDS_VERSION);
-    }
-
-    // ============================================
-    // CSS کارت محصول (همه صفحاتی که محصول نشون می‌دن)
+    // CSS کارت محصول
     // ============================================
     if (gpds_page_shows_products()) {
-        wp_enqueue_style('gpds-product-card', GPDS_ASSETS . '/css/product-card.css', ['gpds-main'], GPDS_VERSION);
+        wp_enqueue_style('gpds-product-card', $assets . '/css/product-card.css', ['gpds-base'], $ver);
     }
 
     // ============================================
-    // CSS ووکامرس (فقط صفحات مرتبط)
+    // CSS ووکامرس
     // ============================================
     if (is_woocommerce() || is_cart() || is_checkout() || is_account_page() || get_query_var('gpds_view') === 'all_brands') {
-        wp_enqueue_style('gpds-woo', GPDS_ASSETS . '/css/woocommerce.css', ['gpds-main'], GPDS_VERSION);
+        wp_enqueue_style('gpds-woo', $assets . '/css/woocommerce.css', ['gpds-base'], $ver);
     }
 
-    // ============================================
-    // CSS حساب کاربری
-    // ============================================
     if (function_exists('is_account_page') && is_account_page()) {
-        wp_enqueue_style(
-            'gpds-account',
-            GPDS_ASSETS . '/css/woocommerce-account.css',
-            ['gpds-main'],
-            GPDS_VERSION
-        );
+        wp_enqueue_style('gpds-account', $assets . '/css/woocommerce-account.css', ['gpds-base'], $ver);
     }
 
-    // ============================================
-    // CSS سبد خرید
-    // ============================================
     if (function_exists('is_cart') && is_cart()) {
-        wp_enqueue_style(
-            'gpds-cart',
-            GPDS_ASSETS . '/css/woocommerce-cart.css',
-            ['gpds-main'],
-            GPDS_VERSION
-        );
+        wp_enqueue_style('gpds-cart', $assets . '/css/woocommerce-cart.css', ['gpds-base'], $ver);
     }
 
-    // ============================================
-    // CSS تسویه حساب
-    // ============================================
     if (function_exists('is_checkout') && is_checkout() && !is_order_received_page()) {
-        wp_enqueue_style(
-            'gpds-checkout',
-            GPDS_ASSETS . '/css/woocommerce-checkout.css',
-            ['gpds-main'],
-            GPDS_VERSION
-        );
+        wp_enqueue_style('gpds-checkout', $assets . '/css/woocommerce-checkout.css', ['gpds-base'], $ver);
     }
-
-
 
     // ============================================
     // CSS صفحه 404
     // ============================================
     if (is_404()) {
-        wp_enqueue_style(
-            'gpds-404',
-            GPDS_ASSETS . '/css/404.css',
-            ['gpds-main'],
-            GPDS_VERSION
-        );
+        wp_enqueue_style('gpds-404', $assets . '/css/404.css', ['gpds-base'], $ver);
     }
 
     // ============================================
-    // GPDS Slider Engine (جایگزین Swiper - سبک ۹۳٪)
+    // CSS بلاگ
+    // ============================================
+    if (is_home() || is_singular('post') || is_category() || is_tag() || is_author() || is_date() || is_search()) {
+        wp_enqueue_style('gpds-blog', $assets . '/css/blog.css', ['gpds-base'], $ver);
+    }
+
+    // ============================================
+    // CSS دفاتر
+    // ============================================
+    if (is_post_type_archive('office') || is_singular('office')) {
+        wp_enqueue_style('gpds-offices', $assets . '/css/offices.css', ['gpds-base'], $ver);
+    }
+
+    // ============================================
+    // 🎯 Slider (CSS + JS) — فقط صفحات با اسلایدر
     // ============================================
     if (gpds_page_has_slider()) {
-        wp_enqueue_style(
-            'gpds-slider-engine',
-            GPDS_ASSETS . '/gpds/gpds-slider.css',
-            [],
-            GPDS_VERSION
-        );
-        wp_enqueue_script(
-            'gpds-slider-engine',
-            GPDS_ASSETS . '/gpds/gpds-slider.js',
-            [],
-            GPDS_VERSION,
-            true
-        );
+        wp_enqueue_style('gpds-slider-engine', $assets . '/gpds/gpds-slider.css', ['gpds-base'], $ver);
+        wp_enqueue_script('gpds-slider-engine', $assets . '/gpds/gpds-slider.js', [], $ver, true);
+        wp_enqueue_script('gpds-slider-init', $assets . '/gpds/gpds-main.js', ['gpds-slider-engine'], $ver, true);
     }
 
     // ============================================
-    // JS اصلی (همیشه)
+    // 🎯 JS پایه (همه صفحات)
     // ============================================
-    wp_enqueue_script('gpds-main', GPDS_ASSETS . '/js/main.js', ['jquery'], GPDS_VERSION, true);
+    wp_enqueue_script('gpds-main', $assets . '/js/main.js', ['jquery'], $ver, true);
+    wp_enqueue_script('gpds-search', $assets . '/js/search.js', ['gpds-main'], $ver, true);
 
-    // ============================================
-    // JS اسلایدر (فقط صفحات با اسلایدر)
-    // ============================================
-    // ============================================
-    // GPDS Main (اسلایدر + کانت‌داون + استوری)
-    // ============================================
-    if (gpds_page_has_slider()) {
-        wp_enqueue_script(
-            'gpds-slider-init',
-            GPDS_ASSETS . '/gpds/gpds-main.js',
-            ['gpds-slider-engine', 'gpds-main'],
-            GPDS_VERSION,
-            true
-        );
-    }
-    // ============================================
-    // JS جستجو
-    // ============================================
-    wp_enqueue_script('gpds-search', GPDS_ASSETS . '/js/search.js', ['gpds-main'], GPDS_VERSION, true);
-
-    // ============================================
-    // JS سبد خرید
-    // ============================================
     if (class_exists('WooCommerce')) {
-        wp_enqueue_script('gpds-cart', GPDS_ASSETS . '/js/cart.js', ['gpds-main'], GPDS_VERSION, true);
+        wp_enqueue_script('gpds-cart', $assets . '/js/cart.js', ['gpds-main'], $ver, true);
     }
 
+    wp_enqueue_script('gpds-footer', $assets . '/js/footer.js', ['gpds-main'], $ver, true);
+
     // ============================================
-    // JS محصول (فقط صفحات محصول/فروشگاه)
+    // JS شرطی
     // ============================================
     if (is_product()) {
-        wp_enqueue_script(
-            'gpds-product',
-            GPDS_ASSETS . '/js/product.js',
-            ['gpds-main'],
-            GPDS_VERSION,
-            true
-        );
+        wp_enqueue_script('gpds-product', $assets . '/js/product.js', ['gpds-main'], $ver, true);
     }
 
-    // ============================================
-    // JS فروشگاه (آرشیو: shop, category, brand)
-    // ============================================
     if (is_shop() || is_product_category() || is_product_tag() || is_tax('product_brand') || get_query_var('gpds_view')) {
-        wp_enqueue_script(
-            'gpds-shop',
-            GPDS_ASSETS . '/js/shop.js',
-            ['gpds-main'],
-            GPDS_VERSION,
-            true
-        );
+        wp_enqueue_script('gpds-shop', $assets . '/js/shop.js', ['gpds-main'], $ver, true);
     }
 
-    // ============================================
-    // JS فوتر (back to top + newsletter)
-    // ============================================
-    wp_enqueue_script(
-        'gpds-footer',
-        GPDS_ASSETS . '/js/footer.js',
-        ['gpds-main'],
-        GPDS_VERSION,
-        true
-    );
+    if (is_singular('post')) {
+        wp_enqueue_script('gpds-blog', $assets . '/js/blog.js', ['gpds-main'], $ver, true);
+    }
+
+    if (is_singular('office')) {
+        wp_enqueue_script('gpds-offices', $assets . '/js/offices.js', ['gpds-main'], $ver, true);
+    }
 
     // ============================================
     // Data به JS
@@ -206,38 +136,6 @@ function gpds_enqueue_frontend()
             'error'          => 'خطایی رخ داد، دوباره تلاش کنید',
         ],
     ]);
-
-
-
-    // ============================================
-    // CSS بلاگ (فقط صفحات بلاگ)
-    // ============================================
-    if (is_home() || is_singular('post') || is_category() || is_tag() || is_author() || is_date() || is_search()) {
-        wp_enqueue_style('gpds-blog', GPDS_ASSETS . '/css/blog.css', ['gpds-main'], GPDS_VERSION);
-    }
-
-    // ============================================
-    // JS بلاگ (فقط مقاله تکی)
-    // ============================================
-    if (is_singular('post')) {
-        wp_enqueue_script('gpds-blog', GPDS_ASSETS . '/js/blog.js', ['gpds-main'], GPDS_VERSION, true);
-    }
-
-
-    // ============================================
-    // CSS دفاتر (فقط صفحات دفاتر)
-    // ============================================
-    if (is_post_type_archive('office') || is_singular('office')) {
-        wp_enqueue_style('gpds-offices', GPDS_ASSETS . '/css/offices.css', ['gpds-main'], GPDS_VERSION);
-    }
-
-    // ============================================
-    // JS دفاتر (فقط صفحه تکی برای نقشه)
-    // ============================================
-    if (is_singular('office')) {
-        // فقط offices.js - Leaflet توسط خودش lazy load می‌شه
-        wp_enqueue_script('gpds-offices', GPDS_ASSETS . '/js/offices.js', ['gpds-main'], GPDS_VERSION, true);
-    }
 }
 
 // ============================================
@@ -247,15 +145,16 @@ add_filter('script_loader_tag', function ($tag, $handle) {
     if (is_admin()) return $tag;
 
     $defer = [
+        'gpds-main',
         'gpds-search',
         'gpds-cart',
-        'gpds-slider-engine',
-        'gpds-slider-init',
         'gpds-footer',
         'gpds-product',
         'gpds-shop',
         'gpds-blog',
         'gpds-offices',
+        'gpds-slider-engine',
+        'gpds-slider-init',
     ];
 
     if (in_array($handle, $defer, true)) {
@@ -272,11 +171,7 @@ add_action('wp_head', 'gpds_preload_fonts', 1);
 
 function gpds_preload_fonts()
 {
-    $fonts = [
-        'dana-regular.woff',
-        'dana-medium.woff',
-        'dana-bold.woff',
-    ];
+    $fonts = ['dana-regular.woff', 'dana-medium.woff', 'dana-bold.woff'];
 
     foreach ($fonts as $font) {
         printf(
@@ -296,8 +191,8 @@ function gpds_page_shows_products()
         || is_product_category()
         || is_product_tag()
         || is_product()
-        || is_tax('product_brand')              // ← اضافه
-        || get_query_var('gpds_view')           // ← اضافه
+        || is_tax('product_brand')
+        || get_query_var('gpds_view')
         || is_page_template('page-templates/template-home.php')
         || is_home()
         || is_archive();
