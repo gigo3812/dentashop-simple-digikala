@@ -369,7 +369,7 @@ ul.products li.product {
     display: none;
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
     padding: 12px 20px;
     background: var(--gpds-color-primary);
     color: white;
@@ -377,7 +377,7 @@ ul.products li.product {
     font-weight: var(--gpds-fw-semibold);
     font-size: var(--gpds-fs-base);
     box-shadow: var(--gpds-shadow-lg);
-    z-index: var(--gpds-z-fixed);
+    z-index: 0;
     align-items: center;
     gap: var(--gpds-space-xs);
 }
@@ -2176,7 +2176,7 @@ ul.products li.product {
 
 @media (max-width: 768px) {
     .gpds-brands-page-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3,  minmax(0, 1fr));
         gap: var(--gpds-space-sm);
     }
     
@@ -2186,6 +2186,10 @@ ul.products li.product {
 }
 
 @media (max-width: 480px) {
-    .gpds-brands-page-grid { grid-template-columns: repeat(2, 1fr); }
+    .gpds-brands-page-grid { 
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
     .gpds-brand-page-item__logo { max-width: 100px; }
 }

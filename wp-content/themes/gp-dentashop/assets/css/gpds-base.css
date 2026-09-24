@@ -2097,7 +2097,7 @@ body.gpds-is-loading {
 
 .gpds-stories-scroll {
     display: flex;
-    gap: 14px;
+    gap: 2px;
     padding: 6px 4px;
     overflow-x: auto;
     overflow-y: hidden;
@@ -2125,7 +2125,7 @@ a.gpds-story:active {
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    width: 86px;
+    width: 100px;
     padding: 0;
     font-family: inherit;
     text-align: center;
@@ -2157,8 +2157,8 @@ a.gpds-story:active { transform: translateY(0) scale(.97); }
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 76px;
-    height: 76px;
+    width: 80px;
+    height: 80px;
     padding: 3px;
     box-sizing: border-box;
     overflow: visible;
@@ -3086,16 +3086,6 @@ body.gpds-story-open { overflow: hidden; }
     }
 
     .gpds-story { width: 74px; }
-
-    .gpds-story__ring {
-        width: 60px;
-        height: 60px;
-    }
-
-    .gpds-category-card__image {
-        width: 76px;
-        height: 76px;
-    }
 
     .gpds-story-modal__container {
         max-width: 100%;

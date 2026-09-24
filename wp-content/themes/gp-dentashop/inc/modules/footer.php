@@ -19,7 +19,7 @@ function gpds_render_footer() {
         return;
     }
     ?>
-    <footer id="gpds-footer" class="gpds-footer" role="contentinfo">
+    <footer id="gpds-footer" class="gpds-footer" role="contentinfo" style="position: relative; z-index: 9999999;">
         <?php
         get_template_part('template-parts/footer/top');
         get_template_part('template-parts/footer/services');
