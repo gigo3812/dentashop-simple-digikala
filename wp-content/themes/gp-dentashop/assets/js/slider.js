@@ -51,32 +51,8 @@
 
 
         document.querySelectorAll('.gpds-brands-carousel').forEach(function (el) {
-    const nextEl = el.querySelector('.swiper-button-next');
-    const prevEl = el.querySelector('.swiper-button-prev');
-
-    new Swiper(el, {
-        slidesPerView: 3,
-        spaceBetween: 10,
-        watchSlidesProgress: true,
-        grabCursor: true,
-        breakpoints: {
-            480:  { slidesPerView: 3, spaceBetween: 10 },
-            640:  { slidesPerView: 3, spaceBetween: 12 },
-            768:  { slidesPerView: 5, spaceBetween: 14 },
-            1024: { slidesPerView: 6, spaceBetween: 14 },
-            1280: { slidesPerView: 7, spaceBetween: 16 },
-        },
-        navigation: (nextEl && prevEl) ? { nextEl, prevEl } : false,
-    });
-});
-
-
-        // 🎯 کاروسل برندها — با تنظیمات بهینه
-        document.querySelectorAll('.gpds-brands-carousel').forEach(function (el) {
-            const wrapper = el.closest('.gpds-brands-wrapper');
-            const nextEl = wrapper?.querySelector('.swiper-button-next');
-            const prevEl = wrapper?.querySelector('.swiper-button-prev');
-            
+            const nextEl = el.querySelector('.swiper-button-next');
+            const prevEl = el.querySelector('.swiper-button-prev');
 
             new Swiper(el, {
                 slidesPerView: 3,
@@ -90,9 +66,10 @@
                     1024: { slidesPerView: 6, spaceBetween: 14 },
                     1280: { slidesPerView: 7, spaceBetween: 16 },
                 },
-                navigation: nextEl && prevEl ? { nextEl, prevEl } : false,
+                navigation: (nextEl && prevEl) ? { nextEl, prevEl } : false,
             });
         });
+
     }
 
     // ============================================
