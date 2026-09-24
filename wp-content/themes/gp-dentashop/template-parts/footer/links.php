@@ -44,6 +44,7 @@ $socials     = gpds_get_socials();
                             class="gpds-footer-social"
                             aria-label="<?php echo esc_attr($social['title']); ?>"
                             target="_blank"
+                            title="<?php echo esc_attr($social['title']); ?>"
                             rel="noopener noreferrer">
                             <?php gpds_icon($social['icon'], 20); ?>
                         </a>

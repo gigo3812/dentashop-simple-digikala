@@ -280,7 +280,7 @@
         const { val, min, max } = readQtyConfig(input);
 
         if (minusBtn) {
-            minusBtn.disabled = !isNaN(min) && val <= min;
+            minusBtn.disabled = !isNaN(min) && val <= 1;
         }
         if (plusBtn) {
             plusBtn.disabled = !isNaN(max) && max > 0 && val >= max;

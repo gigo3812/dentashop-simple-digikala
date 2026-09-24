@@ -131,9 +131,9 @@ function gpds_get_offices_footer_links()
 function gpds_get_socials()
 {
     return apply_filters('gpds_socials', [
-        ['icon' => 'instagram', 'url' => '#', 'title' => 'اینستاگرام'],
-        ['icon' => 'telegram',  'url' => '#', 'title' => 'تلگرام'],
-        ['icon' => 'twitter',   'url' => '#', 'title' => 'توییتر'],
-        ['icon' => 'youtube',   'url' => '#', 'title' => 'یوتیوب'],
+        ['icon' => 'instagram', 'url' => 'https://www.instagram.com/navid_tajhiz', 'title' => 'اینستاگرام'],
+        ['icon' => 'telegram',  'url' => 'https://t.me/+f86ILfhtRvxmZjI0', 'title' => 'تلگرام'],
+        ['icon' => 'bale',      'url' => 'https://ble.ir/navidtajhiz', 'title' => 'بله'],
+        ['icon' => 'whatsapp',  'url' => 'https://wa.me/qr/B7734DORXFUBJ1', 'title' => 'واتس‌اپ'],
     ]);
 }

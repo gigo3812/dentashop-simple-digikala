@@ -8,6 +8,20 @@
 
 if (!defined('ABSPATH')) exit;
 
+/**
+ * تبدیل اعداد لاتین به فارسی — بهینه با strtr
+ */
+if ( ! function_exists( 'gpds_card_fa_num' ) ) {
+    function gpds_card_fa_num( $str ) {
+        static $map = [
+            '0'=>'۰','1'=>'۱','2'=>'۲','3'=>'۳','4'=>'۴',
+            '5'=>'۵','6'=>'۶','7'=>'۷','8'=>'۸','9'=>'۹',
+            ','=>'٬',
+        ];
+        return strtr( (string) $str, $map );
+    }
+}
+
 // چک‌های امنیتی
 if (!isset($product) || !is_object($product) || !($product instanceof WC_Product)) {
     return;
@@ -47,6 +61,7 @@ if ($on_sale) {
         $discount = round((($regular - $sale) / $regular) * 100);
     }
 }
+
 ?>
 
 <div class="gpds-product-card" data-product-id="<?php echo esc_attr($product_id); ?>">
@@ -107,7 +122,7 @@ if ($on_sale) {
         
         <!-- قیمت -->
         <div class="gpds-product-card__prices">
-            <?php echo wp_kses_post($price_html); ?>
+            <?php echo wp_kses_post( gpds_card_fa_num( $price_html ) ); ?>
         </div>
         
         <!-- دکمه افزودن به سبد (اختیاری) -->
