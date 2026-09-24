@@ -1,0 +1,143 @@
+/**
+ * GPDS Slider - استایل پایه
+ * جایگزین swiper-bundle.min.css
+ */
+
+/* ============================================
+ * Container
+ * ============================================ */
+.swiper,
+.gpds-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* ============================================
+ * Wrapper
+ * ============================================ */
+.swiper-wrapper {
+    display: flex;
+    flex-direction: row;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+}
+
+/* ============================================
+ * Slides
+ * ============================================ */
+.swiper-slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* ============================================
+ * Pagination
+ * ============================================ */
+.swiper-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.swiper-pagination-bullet-active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--gpds-color-primary, #007bff);
+}
+
+/* ============================================
+ * Navigation Buttons
+ * ============================================ */
+.swiper-button-next,
+.swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.swiper-button-disabled {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
+}
+
+.swiper-button-prev {
+    inset-inline-start: 8px;
+    inset-inline-end: auto;
+}
+
+.swiper-button-next {
+    inset-inline-end: 8px;
+    inset-inline-start: auto;
+}
+
+/* ============================================
+ * RTL
+ * ============================================ */
+[dir="rtl"] .swiper-button-next,
+[dir="rtl"] .swiper-button-prev {
+    transform: translateY(-50%) scaleX(-1);
+}
+
+[dir="rtl"] .swiper-button-next:hover,
+[dir="rtl"] .swiper-button-prev:hover {
+    transform: translateY(-50%) scaleX(-1) scale(1.1);
+}
+
+/* ============================================
+ * Mobile
+ * ============================================ */
+@media (max-width: 640px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* ============================================
+ * Reduced Motion
+ * ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .swiper-wrapper {
+        transition-duration: 0ms !important;
+    }
+}

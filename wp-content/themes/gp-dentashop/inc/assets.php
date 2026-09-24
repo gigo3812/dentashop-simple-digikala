@@ -80,9 +80,9 @@ function gpds_enqueue_frontend()
     // 🎯 Slider (CSS + JS) — فقط صفحات با اسلایدر
     // ============================================
     if (gpds_page_has_slider()) {
-        wp_enqueue_style('gpds-slider-engine', $assets . '/gpds/gpds-slider.css', ['gpds-base'], $ver);
-        wp_enqueue_script('gpds-slider-engine', $assets . '/gpds/gpds-slider.js', [], $ver, true);
-        wp_enqueue_script('gpds-slider-init', $assets . '/gpds/gpds-main.js', ['gpds-slider-engine'], $ver, true);
+        wp_enqueue_style('gpds-swiper',  GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.css', [], '11.0.0');
+        wp_enqueue_script('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.js',  [], '11.0.0', true);
+        wp_enqueue_script('gpds-slider', GPDS_ASSETS . '/js/slider.js', ['gpds-swiper', 'gpds-main'], GPDS_VERSION, true);
     }
 
     // ============================================
@@ -153,8 +153,7 @@ add_filter('script_loader_tag', function ($tag, $handle) {
         'gpds-shop',
         'gpds-blog',
         'gpds-offices',
-        'gpds-slider-engine',
-        'gpds-slider-init',
+        'gpds-slider',
     ];
 
     if (in_array($handle, $defer, true)) {
