@@ -1,0 +1,1175 @@
+/* ============================================================
+ * GP DentaShop — Home Styles
+ * 
+ * این فایل فقط در صفحه اصلی لود می‌شود:
+ *   - is_front_page()
+ *   - is_page_template('page-templates/template-home.php')
+ * 
+ * شامل: stories, slider, features, special offer, carousel,
+ *        categories, blog, brands
+ * 
+ * وابسته به: gpds-base.css
+ * ============================================================ */
+
+.gpds-home {
+    padding: var(--gpds-space-lg) 0;
+}
+
+/* ============================================================
+ * 1. STORIES
+ * ============================================================ */
+
+.gpds-stories-section,
+.gpds-slider-section,
+.gpds-brands-section {
+    padding: 0;
+}
+
+.gpds-stories {
+    padding: var(--gpds-space-md) var(--gpds-space-sm);
+}
+
+.gpds-stories-scroll {
+    display: flex;
+    gap: 14px;
+    padding: 6px 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    contain: layout style;
+}
+
+.gpds-stories-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* ---------- Story item ---------- */
+.gpds-story,
+a.gpds-story,
+a.gpds-story:hover,
+a.gpds-story:focus,
+a.gpds-story:active {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90px;
+    gap: 14px;
+    padding: 0;
+    font-family: inherit;
+    text-align: center;
+    cursor: pointer;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+    transition: transform .2s ease;
+    contain: layout style paint;
+    content-visibility: auto;
+    contain-intrinsic-size: 86px 96px;
+
+    /* Reset theme link/button styles */
+    margin: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+a.gpds-story:hover {
+    transform: translateY(-3px);
+}
+
+a.gpds-story:active {
+    transform: translateY(0) scale(.97);
+}
+
+.gpds-story__ring {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 90px;
+    height: 90px;
+    padding: 3px;
+    box-sizing: border-box;
+    overflow: visible;
+    border-radius: 50% !important;
+    transition: transform .25s ease;
+    will-change: transform;
+}
+
+.gpds-story:hover .gpds-story__ring {
+    transform: scale(1.05);
+}
+
+.gpds-story__progress {
+    position: absolute;
+    inset: -3px;
+    width: calc(100% + 6px);
+    height: calc(100% + 6px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+    transition: opacity .2s ease;
+}
+
+.gpds-story.is-loading .gpds-story__progress {
+    opacity: 1;
+}
+
+.gpds-story__progress circle {
+    stroke: #fff;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, .3));
+}
+
+.gpds-story.is-loading .gpds-story__progress circle {
+    animation: gpds-story-loading 1.2s linear infinite;
+}
+
+@keyframes gpds-story-loading {
+    from { stroke-dashoffset: 301.59; }
+    to   { stroke-dashoffset: 0; }
+}
+
+.gpds-story__image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: var(--gpds-bg-surface);
+    border: 3px solid var(--gpds-bg-surface);
+    border-radius: 50% !important;
+    z-index: 2;
+}
+
+.gpds-story__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: transparent;
+    border-radius: 50% !important;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.gpds-story.is-loading .gpds-story__image img {
+    opacity: .5;
+}
+
+.gpds-story__video-badge {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, .75);
+    border: 2px solid var(--gpds-bg-surface);
+    border-radius: 50%;
+    color: #fff;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.gpds-story__video-badge svg {
+    width: 10px;
+    height: 10px;
+    margin-right: -1px;
+}
+
+.gpds-story__title {
+    width: 100%;
+    padding: 0 2px;
+    overflow: hidden;
+    color: var(--gpds-text-secondary);
+    font-size: 11px;
+    font-weight: var(--gpds-fw-medium, 500);
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- Story modal ---------- */
+.gpds-story-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+    animation: gpds-fade-in .25s ease;
+}
+
+.gpds-story-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .92);
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.gpds-story-modal__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 420px;
+    height: 90vh;
+    max-height: 760px;
+    overflow: hidden;
+    background: #000;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+    animation: gpds-modal-zoom .3s ease;
+}
+
+@keyframes gpds-modal-zoom {
+    from { opacity: 0; transform: scale(.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.gpds-story-modal__progress {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 3px;
+    height: 3px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.gpds-story-modal__progress-bar {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .3);
+    border-radius: 3px;
+}
+
+.gpds-story-modal__progress-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    border-radius: 3px;
+    transform: scaleX(0);
+    transform-origin: right center;
+}
+
+.gpds-story-modal__progress-bar.is-active::after {
+    animation: gpds-story-progress var(--story-duration, 5s) linear forwards;
+}
+
+.gpds-story-modal__progress-bar.is-done::after {
+    transform: scaleX(1);
+}
+
+@keyframes gpds-story-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+
+.gpds-story-modal__header {
+    position: absolute;
+    top: 22px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.gpds-story-modal__user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.gpds-story-modal__avatar {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    overflow: hidden;
+    background: var(--gpds-color-primary);
+    border: 2px solid rgba(255, 255, 255, .9);
+    border-radius: 50%;
+}
+
+.gpds-story-modal__avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gpds-story-modal__user-info {
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+}
+
+.gpds-story-modal__username {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.gpds-story-modal__time {
+    margin-top: 2px;
+    font-size: 11px;
+    opacity: .75;
+}
+
+.gpds-story-modal__close,
+.gpds-story-modal__action-btn,
+.gpds-story-modal__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background-color .2s, transform .2s;
+}
+
+.gpds-story-modal__close,
+.gpds-story-modal__action-btn {
+    background: rgba(0, 0, 0, .5);
+}
+
+.gpds-story-modal__close {
+    width: 38px;
+    height: 38px;
+    pointer-events: auto;
+}
+
+.gpds-story-modal__action-btn {
+    width: 44px;
+    height: 44px;
+}
+
+.gpds-story-modal__close:hover,
+.gpds-story-modal__action-btn:hover {
+    transform: scale(1.1);
+}
+
+.gpds-story-modal__close:hover {
+    background: rgba(0, 0, 0, .8);
+}
+
+.gpds-story-modal__action-btn:hover {
+    background: rgba(0, 0, 0, .75);
+}
+
+.gpds-story-modal__action-btn[hidden] {
+    display: none;
+}
+
+.gpds-story-modal__content {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+}
+
+.gpds-story-modal__content img,
+.gpds-story-modal__content video {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.gpds-story-modal__content img {
+    animation: gpds-fade-in .3s ease;
+}
+
+.gpds-story-modal__content video {
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+.gpds-story-modal__actions {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    display: flex;
+    gap: 12px;
+    transform: translateX(-50%);
+    z-index: 5;
+}
+
+.gpds-story-modal__cta {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, .95);
+    border-radius: 100px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .3);
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateX(-50%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background-color .25s, color .25s, transform .25s;
+    z-index: 4;
+}
+
+.gpds-story-modal__cta:hover {
+    background: #fff;
+    color: #000;
+    transform: translateX(-50%) scale(1.05);
+}
+
+.gpds-story-modal__nav {
+    position: absolute;
+    top: 50%;
+    width: 42px;
+    height: 42px;
+    background: rgba(255, 255, 255, .15);
+    transform: translateY(-50%);
+    z-index: 4;
+}
+
+.gpds-story-modal__nav:hover {
+    background: rgba(255, 255, 255, .35);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.gpds-story-modal__nav--prev {
+    left: 12px;
+}
+
+.gpds-story-modal__nav--next {
+    right: 12px;
+}
+
+body.gpds-story-open {
+    overflow: hidden;
+}
+
+/* ============================================================
+ * 2. SLIDER
+ * ============================================================ */
+
+.gpds-slider {
+    overflow: hidden;
+    background: var(--gpds-bg-surface);
+    border-radius: var(--gpds-radius-lg);
+    box-shadow: var(--gpds-shadow-xs);
+}
+
+.gpds-slide {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 1;
+    overflow: hidden;
+}
+
+.gpds-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .6s ease;
+}
+
+.gpds-slide:hover img {
+    transform: scale(1.03);
+}
+
+.gpds-slide__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to left, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, 0) 60%);
+}
+
+.gpds-slide__info {
+    position: absolute;
+    bottom: var(--gpds-space-lg);
+    right: var(--gpds-space-lg);
+    left: var(--gpds-space-lg);
+    color: #fff;
+}
+
+.gpds-slide__title {
+    margin: 0 0 var(--gpds-space-xs);
+    color: #fff;
+    font-size: var(--gpds-fs-2xl);
+    font-weight: var(--gpds-fw-bold);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+}
+
+.gpds-slide__price {
+    color: #ffe082;
+    font-size: var(--gpds-fs-lg);
+    font-weight: var(--gpds-fw-semibold);
+}
+
+.gpds-slide__price .woocommerce-Price-amount {
+    color: #ffe082;
+}
+
+.gpds-slide__price del {
+    margin-left: var(--gpds-space-xs);
+    color: rgba(255, 255, 255, .7);
+    font-size: var(--gpds-fs-sm);
+}
+
+.gpds-slider__nav {
+    width: 40px !important;
+    height: 40px !important;
+    background: rgba(255, 255, 255, .9) !important;
+    border-radius: 50% !important;
+    box-shadow: var(--gpds-shadow-sm);
+    color: var(--gpds-text-primary) !important;
+    transition: background-color var(--gpds-transition-fast),
+                transform var(--gpds-transition-fast);
+}
+
+.gpds-slider__nav::after {
+    font-size: 14px !important;
+    font-weight: 700;
+}
+
+.gpds-slider__nav:hover {
+    background: #fff !important;
+    transform: scale(1.1);
+}
+
+/* ============================================================
+ * 3. FEATURES
+ * ============================================================ */
+
+.gpds-features {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--gpds-space-xs);
+    padding: var(--gpds-space-sm) var(--gpds-space-md);
+}
+
+.gpds-feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    padding: var(--gpds-space-sm) var(--gpds-space-xs);
+    border-radius: var(--gpds-radius-sm);
+    text-align: center;
+    transition: background-color var(--gpds-transition-fast),
+                color var(--gpds-transition-fast);
+}
+
+.gpds-feature:hover {
+    background: var(--gpds-bg-hover);
+    color: var(--gpds-color-primary);
+}
+
+.gpds-feature__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: var(--gpds-color-primary-light);
+    border-radius: var(--gpds-radius-full);
+    color: var(--gpds-color-primary);
+    transition: background-color var(--gpds-transition-fast),
+                color var(--gpds-transition-fast);
+}
+
+.gpds-feature:hover .gpds-feature__icon {
+    background: var(--gpds-color-primary);
+    color: #fff;
+}
+
+.gpds-feature__title {
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-xs);
+    font-weight: var(--gpds-fw-medium);
+    line-height: 1.3;
+}
+
+/* ============================================================
+ * 4. SPECIAL OFFER + COUNTDOWN
+ * ============================================================ */
+
+.gpds-special-offer {
+    padding: var(--gpds-space-md);
+    background: linear-gradient(135deg, #fff8f0 0%, #ffecec 100%);
+    border: 1px solid rgba(239, 64, 86, .1);
+}
+
+.gpds-special-offer__header {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-md);
+    margin-bottom: var(--gpds-space-md);
+}
+
+.gpds-special-offer__title-wrap {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+}
+
+.gpds-special-offer__icon {
+    color: var(--gpds-color-primary);
+}
+
+.gpds-special-offer__title {
+    color: var(--gpds-text-primary);
+    font-size: var(--gpds-fs-lg);
+    font-weight: var(--gpds-fw-bold);
+}
+
+.gpds-special-offer__subtitle {
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-xs);
+}
+
+.gpds-special-offer .gpds-section-more {
+    margin-right: auto;
+}
+
+.gpds-countdown {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    direction: ltr;
+}
+
+.gpds-countdown__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 4px 6px;
+    background: var(--gpds-text-primary);
+    border-radius: var(--gpds-radius-sm);
+    color: #fff;
+    font-weight: var(--gpds-fw-bold);
+}
+
+.gpds-countdown__box span {
+    font-size: var(--gpds-fs-lg);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+
+.gpds-countdown__box small {
+    margin-top: 2px;
+    font-size: 9px;
+    opacity: .7;
+}
+
+.gpds-countdown__sep {
+    color: var(--gpds-text-secondary);
+    font-size: var(--gpds-fs-lg);
+    font-weight: 700;
+}
+
+/* ============================================================
+ * 5. PRODUCTS CAROUSEL
+ * ============================================================ */
+
+.gpds-products-carousel {
+    position: relative;
+    padding: 0 4px;
+    overflow: hidden;
+}
+
+.gpds-products-carousel .swiper-slide {
+    height: auto;
+}
+
+.gpds-carousel-nav {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px !important;
+    height: 36px !important;
+    margin: 0 !important;
+    background: #fff !important;
+    border-radius: 50% !important;
+    box-shadow: var(--gpds-shadow-md);
+    color: var(--gpds-text-primary) !important;
+    transform: translateY(-50%);
+    transition: background-color var(--gpds-transition-fast),
+                color var(--gpds-transition-fast);
+    z-index: 10;
+}
+
+.gpds-carousel-nav::after {
+    display: none !important;
+}
+
+.gpds-carousel-nav:hover {
+    background: var(--gpds-color-primary) !important;
+    color: #fff !important;
+}
+
+.gpds-carousel-nav--prev {
+    right: -8px;
+}
+
+.gpds-carousel-nav--next {
+    left: -8px;
+}
+
+/* ============================================================
+ * 6. CATEGORIES
+ * ============================================================ */
+
+.gpds-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 120px);
+    justify-content: center;
+    gap: var(--gpds-space-xs);
+}
+
+.gpds-category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gpds-space-xs);
+    padding: var(--gpds-space-sm);
+    border-radius: var(--gpds-radius-sm);
+    text-align: center;
+    transition: background-color var(--gpds-transition-fast);
+}
+
+.gpds-category-card:hover {
+    background: var(--gpds-bg-hover);
+}
+
+.gpds-category-card__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    background: var(--gpds-bg-muted);
+    border-radius: 50%;
+    color: var(--gpds-text-tertiary);
+    transition: transform var(--gpds-transition-base);
+}
+
+.gpds-category-card:hover .gpds-category-card__image {
+    transform: scale(1.05);
+}
+
+.gpds-category-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gpds-category-card__title {
+    color: var(--gpds-text-primary);
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-medium);
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* ============================================================
+ * 7. BLOG (Home preview only)
+ * 
+ * توجه: blog.css این‌ها را هم دارد، ولی اینجا برای صفحه اصلی
+ *       کافی است. در صورت تداخل، blog.css برنده می‌شود چون
+ *       بعد از gpds-home.css لود می‌شود.
+ * ============================================================ */
+
+.gpds-home .gpds-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gpds-space-md);
+}
+
+/* ============================================================
+ * 8. BRANDS
+ * ============================================================ */
+
+.gpds-brands-section {
+    margin-top: var(--gpds-space-lg);
+}
+
+.gpds-section-header--brands {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gpds-space-md);
+    margin-bottom: var(--gpds-space-md);
+    padding: 0 4px;
+}
+
+.gpds-section-header__right {
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+}
+
+.gpds-section-header__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(
+        135deg,
+        var(--gpds-color-primary),
+        color-mix(in srgb, var(--gpds-color-primary) 60%, #fff)
+    );
+    border-radius: var(--gpds-radius-md);
+    box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--gpds-color-primary) 60%, transparent);
+    color: #fff;
+}
+
+.gpds-section-subtitle {
+    margin: 2px 0 0;
+    color: var(--gpds-text-tertiary);
+    font-size: var(--gpds-fs-xs);
+    line-height: 1.4;
+}
+
+.gpds-brand {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gpds-space-sm);
+    height: 100%;
+    min-height: 200px;
+    padding: var(--gpds-space-md) var(--gpds-space-sm);
+    overflow: hidden;
+    background: var(--gpds-bg-surface);
+    border: 1px solid var(--gpds-border-light);
+    border-radius: var(--gpds-radius-lg);
+    text-decoration: none;
+    transition: transform .3s cubic-bezier(.34, 1.56, .64, 1),
+                border-color .25s ease,
+                box-shadow .3s ease;
+}
+
+.gpds-brand::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--gpds-color-primary) 6%, transparent),
+        transparent 60%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.gpds-brand:hover {
+    border-color: color-mix(in srgb, var(--gpds-color-primary) 40%, transparent);
+    box-shadow: 0 12px 28px -10px rgba(0, 0, 0, .12),
+                0 4px 10px -4px color-mix(in srgb, var(--gpds-color-primary) 20%, transparent);
+    transform: translateY(-6px);
+}
+
+.gpds-brand:hover::before {
+    opacity: 1;
+}
+
+.gpds-brand__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    padding: 13px;
+    overflow: hidden;
+    background: var(--gpds-bg-muted);
+    border-radius: var(--gpds-radius-md);
+    transition: transform .35s cubic-bezier(.34, 1.56, .64, 1),
+                background-color .3s ease;
+}
+
+.gpds-brand:hover .gpds-brand__logo {
+    background: color-mix(in srgb, var(--gpds-color-primary) 8%, var(--gpds-bg-muted));
+    transform: scale(1.08);
+}
+
+.gpds-brand__logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(30%) opacity(.9);
+    transition: filter .3s ease;
+}
+
+.gpds-brand:hover .gpds-brand__logo img {
+    filter: none;
+}
+
+.gpds-brand__name {
+    max-width: 100%;
+    margin: 0;
+    overflow: hidden;
+    color: var(--gpds-text-primary);
+    font-size: var(--gpds-fs-base);
+    font-weight: var(--gpds-fw-semibold);
+    line-height: 1.4;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color .25s ease;
+}
+
+.gpds-brand:hover .gpds-brand__name {
+    color: var(--gpds-color-primary);
+}
+
+.gpds-brand__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--gpds-text-tertiary);
+    font-size: var(--gpds-fs-xs);
+    font-weight: var(--gpds-fw-medium);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity .25s ease, transform .25s ease, color .25s ease;
+}
+
+.gpds-brand:hover .gpds-brand__cta {
+    color: var(--gpds-color-primary);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gpds-brand__cta svg {
+    transition: transform .25s ease;
+}
+
+.gpds-brand:hover .gpds-brand__cta svg {
+    transform: translateX(-3px);
+}
+
+/* ============================================================
+ * Responsive
+ * ============================================================ */
+
+@media (max-width: 1200px) {
+    .gpds-features {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .gpds-categories-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .gpds-home {
+        padding: var(--gpds-space-md) 0;
+    }
+
+    .gpds-categories-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .gpds-home .gpds-blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gpds-slide {
+        aspect-ratio: 2 / 1;
+    }
+
+    .gpds-slide__title {
+        font-size: var(--gpds-fs-lg);
+    }
+
+    .gpds-slide__info {
+        bottom: var(--gpds-space-md);
+        right: var(--gpds-space-md);
+        left: var(--gpds-space-md);
+    }
+
+    .gpds-special-offer__header {
+        flex-wrap: wrap;
+    }
+
+    .gpds-countdown {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: var(--gpds-space-sm);
+    }
+
+    .gpds-story {
+        width: 74px;
+    }
+
+    .gpds-stories-scroll{
+        gap: 6px;
+
+    }
+    .gpds-story__ring {
+        width: 80px;
+        height: 80px;
+    }
+
+    .gpds-category-card__image {
+        width: 76px;
+        height: 76px;
+    }
+
+    .gpds-story-modal__container {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+
+    .gpds-story-modal__actions {
+        bottom: 100px;
+    }
+
+    .gpds-story-modal__nav {
+        width: 36px;
+        height: 36px;
+    }
+
+    .gpds-story-modal__action-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .gpds-brand {
+        gap: var(--gpds-space-xs);
+        min-height: 160px;
+        padding: var(--gpds-space-sm) var(--gpds-space-xs);
+    }
+
+    .gpds-brand__logo {
+        width: 84px;
+        height: 84px;
+        padding: 10px;
+    }
+
+    .gpds-brand__name {
+        font-size: var(--gpds-fs-sm);
+    }
+
+    .gpds-brand__cta {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .gpds-features {
+        gap: 0;
+    }
+
+    .gpds-feature {
+        padding: var(--gpds-space-xs) 4px;
+    }
+
+    .gpds-feature__icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .gpds-feature__title {
+        font-size: 10px;
+    }
+
+    .gpds-category-card {
+        padding: var(--gpds-space-xs);
+    }
+
+    .gpds-category-card__image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .gpds-category-card__title {
+        font-size: var(--gpds-fs-xs);
+    }
+
+    .gpds-home .gpds-blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gpds-slide {
+        aspect-ratio: 1 / 1;
+    }
+
+    .gpds-countdown__box {
+        min-width: 38px;
+        height: 38px;
+    }
+
+    .gpds-countdown__box span {
+        font-size: var(--gpds-fs-base);
+    }
+
+    .gpds-brand {
+        min-height: 140px;
+        padding: var(--gpds-space-sm) var(--gpds-space-xs);
+    }
+
+    .gpds-brand__logo {
+        width: 100px;
+        height: 100px;
+        padding: 8px;
+    }
+
+    .gpds-brand__name {
+        font-size: var(--gpds-fs-xs);
+    }
+}

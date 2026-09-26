@@ -34,6 +34,13 @@ function gpds_enqueue_frontend()
     wp_enqueue_style('gpds-base',  $assets . '/css/gpds-base.css', ['gpds-fonts'], $ver);
 
     // ============================================
+    // 🎯 Home Styles — فقط صفحه اصلی
+    // ============================================
+    if ($page['has_slider']) {  // همان شرط slider
+        wp_enqueue_style('gpds-home', $assets . '/css/gpds-home.css', ['gpds-base'], $ver);
+    }
+
+    // ============================================
     // 🎯 Product Card (کارت محصول)
     // فقط: shop، محصول، آرشیو محصول، برند، صفحه اصلی، بلاگ آرشیو
     // ============================================
@@ -83,6 +90,9 @@ function gpds_enqueue_frontend()
         wp_enqueue_style('gpds-blog', $assets . '/css/blog.css', ['gpds-base'], $ver);
     }
 
+    if (is_home() || is_singular('post') || is_category() || is_tag() || is_author() || is_date() || is_search()) {
+    wp_enqueue_style('gpds-blog', $assets . '/css/blog.css', ['gpds-base'], $ver);
+}
     // ============================================
     // 🎯 Offices (دفاتر)
     // ============================================
