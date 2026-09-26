@@ -131,49 +131,15 @@
 
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(function () {
-                        showToast('آدرس کپی شد ✓');
+                        window.GPDS_CORE.showToast('لینک کپی شد ✓');
                     }).catch(function () {
-                        fallbackCopy(text);
+                        window.GPDS_CORE.fallbackCopy(text, 'لینک کپی شد ✓');
                     });
                 } else {
-                    fallbackCopy(text);
+                    window.GPDS_CORE.fallbackCopy(text, 'لینک کپی شد ✓');
                 }
             });
         });
-
-        function fallbackCopy(text) {
-            var input = document.createElement('textarea');
-            input.value = text;
-            input.style.position = 'fixed';
-            input.style.opacity = '0';
-            document.body.appendChild(input);
-            input.select();
-            try {
-                document.execCommand('copy');
-                showToast('آدرس کپی شد ✓');
-            } catch (e) {
-                showToast('کپی نشد', 'error');
-            }
-            document.body.removeChild(input);
-        }
-
-        function showToast(message, type) {
-            var toast = document.createElement('div');
-            toast.className = 'gpds-toast' + (type === 'error' ? ' gpds-toast--error' : '');
-            toast.textContent = message;
-            document.body.appendChild(toast);
-
-            requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                    toast.classList.add('is-visible');
-                });
-            });
-
-            setTimeout(function () {
-                toast.classList.remove('is-visible');
-                setTimeout(function () { toast.remove(); }, 300);
-            }, 2000);
-        }
     }
 
 })();

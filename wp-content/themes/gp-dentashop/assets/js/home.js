@@ -1,6 +1,10 @@
 /**
- * GP DentaShop - Slider + Countdown + Stories
- * بهینه + کامل
+ * GP DentaShop - Home Scripts
+ * Slider + Countdown + Stories
+ * 
+ * فقط در صفحه اصلی لود می‌شود
+ * 
+ * @package GP_DentaShop
  */
 (function () {
     'use strict';
@@ -46,37 +50,11 @@
             });
         });
 
-
-
-
-
-        document.querySelectorAll('.gpds-brands-carousel').forEach(function (el) {
-    const nextEl = el.querySelector('.swiper-button-next');
-    const prevEl = el.querySelector('.swiper-button-prev');
-
-    new Swiper(el, {
-        slidesPerView: 3,
-        spaceBetween: 10,
-        watchSlidesProgress: true,
-        grabCursor: true,
-        breakpoints: {
-            480:  { slidesPerView: 3, spaceBetween: 10 },
-            640:  { slidesPerView: 3, spaceBetween: 12 },
-            768:  { slidesPerView: 5, spaceBetween: 14 },
-            1024: { slidesPerView: 6, spaceBetween: 14 },
-            1280: { slidesPerView: 7, spaceBetween: 16 },
-        },
-        navigation: (nextEl && prevEl) ? { nextEl, prevEl } : false,
-    });
-});
-
-
-        // 🎯 کاروسل برندها — با تنظیمات بهینه
+        // برندها — فقط یک‌بار (باگ تکرار حذف شد)
         document.querySelectorAll('.gpds-brands-carousel').forEach(function (el) {
             const wrapper = el.closest('.gpds-brands-wrapper');
             const nextEl = wrapper?.querySelector('.swiper-button-next');
             const prevEl = wrapper?.querySelector('.swiper-button-prev');
-            
 
             new Swiper(el, {
                 slidesPerView: 3,
@@ -96,7 +74,7 @@
     }
 
     // ============================================
-    // 2. Countdown (شگفت‌انگیزها)
+    // 2. Countdown
     // ============================================
     function initCountdowns() {
         document.querySelectorAll('[data-gpds-countdown]').forEach(function (el) {
@@ -121,9 +99,7 @@
                     if (section) {
                         section.style.transition = 'opacity 0.3s';
                         section.style.opacity = '0';
-                        setTimeout(function () {
-                            section.style.display = 'none';
-                        }, 300);
+                        setTimeout(function () { section.style.display = 'none'; }, 300);
                     }
                     if (intervalId) clearInterval(intervalId);
                     return;
@@ -144,18 +120,16 @@
     }
 
     // ============================================
-    // 3. Stories System (بهینه)
+    // 3. Stories
     // ============================================
     function initStories() {
         const storyButtons = document.querySelectorAll('[data-gpds-story]');
         if (!storyButtons.length) return;
 
-        // 🎯 State
-        const IMAGE_DURATION = 5000; // 5 ثانیه برای تصویر
-        const DEFAULT_VIDEO_DURATION = 0; // 0 = کل ویدیو
+        const IMAGE_DURATION = 5000;
+        const DEFAULT_VIDEO_DURATION = 0;
 
         const stories = Array.from(storyButtons).map(btn => {
-            // 🎯 رفع مشکل: 0 باید حفظ بشه، نه 5
             const rawDuration = btn.dataset.storyVideoDuration;
             const parsedDuration = (rawDuration === '' || rawDuration === undefined || rawDuration === null)
                 ? DEFAULT_VIDEO_DURATION
@@ -175,7 +149,6 @@
             };
         });
 
-        // 🎯 State Management
         const state = {
             modal: null,
             currentIndex: 0,
@@ -186,9 +159,6 @@
             videoEndedHandler: null,
         };
 
-        // ============================================
-        // ساخت Modal
-        // ============================================
         function buildModal() {
             if (state.modal) return state.modal;
 
@@ -201,7 +171,6 @@
                 <div class="gpds-story-modal__backdrop" data-gpds-story-close></div>
                 <div class="gpds-story-modal__container">
                     <div class="gpds-story-modal__progress" data-gpds-story-progress></div>
-                    
                     <div class="gpds-story-modal__header">
                         <div class="gpds-story-modal__user">
                             <div class="gpds-story-modal__avatar">
@@ -212,7 +181,6 @@
                                 <div class="gpds-story-modal__time">الان</div>
                             </div>
                         </div>
-                        
                         <button type="button" class="gpds-story-modal__close" data-gpds-story-close aria-label="بستن">
                             <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
                                 <line x1="18" y1="6" x2="6" y2="18"/>
@@ -220,12 +188,10 @@
                             </svg>
                         </button>
                     </div>
-                    
                     <div class="gpds-story-modal__content" data-gpds-story-content>
                         <img src="" alt="" data-gpds-story-image>
                         <video data-gpds-story-video preload="metadata" playsinline muted style="display:none;"></video>
                     </div>
-                    
                     <div class="gpds-story-modal__actions">
                         <button type="button" class="gpds-story-modal__action-btn" data-gpds-story-mute aria-label="صدا" hidden>
                             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -241,7 +207,6 @@
                                 </g>
                             </svg>
                         </button>
-                        
                         <button type="button" class="gpds-story-modal__action-btn" data-gpds-story-pause aria-label="توقف/پخش" hidden>
                             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                                 <g data-gpds-icon-pause>
@@ -254,20 +219,17 @@
                             </svg>
                         </button>
                     </div>
-                    
                     <a href="#" class="gpds-story-modal__cta" data-gpds-story-cta target="_self" rel="noopener">
                         مشاهده بیشتر
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="15 18 9 12 15 6"/>
                         </svg>
                     </a>
-                    
                     <button type="button" class="gpds-story-modal__nav gpds-story-modal__nav--prev" data-gpds-story-prev aria-label="قبلی">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="9 18 15 12 9 6"/>
                         </svg>
                     </button>
-                    
                     <button type="button" class="gpds-story-modal__nav gpds-story-modal__nav--next" data-gpds-story-next aria-label="بعدی">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="15 18 9 12 15 6"/>
@@ -279,7 +241,6 @@
             document.body.appendChild(modal);
             state.modal = modal;
 
-            // Event Listeners (یک بار)
             modal.querySelectorAll('[data-gpds-story-close]').forEach(btn =>
                 btn.addEventListener('click', closeStory)
             );
@@ -304,10 +265,8 @@
                 togglePause();
             });
 
-            // Keyboard
             document.addEventListener('keydown', function (e) {
                 if (!document.body.classList.contains('gpds-story-open')) return;
-
                 switch (e.key) {
                     case 'Escape': closeStory(); break;
                     case 'ArrowLeft': prevStory(); break;
@@ -317,7 +276,6 @@
                 }
             });
 
-            // Touch swipe
             let touchStartX = 0;
             modal.addEventListener('touchstart', e => {
                 touchStartX = e.touches[0].clientX;
@@ -334,12 +292,8 @@
             return modal;
         }
 
-        // ============================================
-        // 🎯 Mute Toggle
-        // ============================================
         function toggleMute() {
             if (!state.modal) return;
-
             const video = state.modal.querySelector('[data-gpds-story-video]');
             if (!video || video.style.display === 'none') return;
 
@@ -348,19 +302,14 @@
 
             const iconMuted = state.modal.querySelector('[data-gpds-icon-muted]');
             const iconUnmuted = state.modal.querySelector('[data-gpds-icon-unmuted]');
-
             if (iconMuted && iconUnmuted) {
                 iconMuted.style.display = state.isMuted ? '' : 'none';
                 iconUnmuted.style.display = state.isMuted ? 'none' : '';
             }
         }
 
-        // ============================================
-        // 🎯 Pause/Play
-        // ============================================
         function togglePause() {
             if (!state.modal) return;
-
             const video = state.modal.querySelector('[data-gpds-story-video]');
             const isVideo = video && video.style.display !== 'none';
 
@@ -368,7 +317,6 @@
                 if (video.paused) {
                     video.play();
                     state.isPaused = false;
-                    // ادامه تایمر فقط برای ویدیوی مدت‌دار
                     if (stories[state.currentIndex].videoDuration > 0) {
                         startTimer(stories[state.currentIndex]);
                     }
@@ -384,43 +332,31 @@
 
         function updatePauseIcon() {
             if (!state.modal) return;
-
             const video = state.modal.querySelector('[data-gpds-story-video]');
             const isVideo = video && video.style.display !== 'none';
             const isPausedNow = isVideo ? video.paused : state.isPaused;
 
             const iconPause = state.modal.querySelector('[data-gpds-icon-pause]');
             const iconPlay = state.modal.querySelector('[data-gpds-icon-play]');
-
             if (iconPause && iconPlay) {
-                iconPause.style.display = isPausedNow ? 'none' : '';
-                iconPlay.style.display = isPausedNow ? 'none' : '';
                 iconPause.style.display = isPausedNow ? 'none' : '';
                 iconPlay.style.display = isPausedNow ? '' : 'none';
             }
         }
 
-        // ============================================
-        // 🎯 Timer برای تصویر یا ویدیوی مدت‌دار
-        // ============================================
         function startTimer(story) {
             clearTimeout(state.timer);
             state.timer = null;
-
             if (!story) return;
 
-            let duration = IMAGE_DURATION; // پیش‌فرض برای تصویر
+            let duration = IMAGE_DURATION;
 
-            // اگه ویدیو داره و مدت مشخصی تنظیم شده
             if (story.video && story.videoDuration > 0) {
                 duration = story.videoDuration * 1000;
-            }
-            // اگه ویدیو داره ولی مدت 0 (کل ویدیو) → تایمر نذار
-            else if (story.video && story.videoDuration === 0) {
-                return; // `ended` event مدیریت می‌کنه
+            } else if (story.video && story.videoDuration === 0) {
+                return;
             }
 
-            // آپدیت progress bar
             const activeBar = state.modal.querySelector('.gpds-story-modal__progress-bar.is-active');
             if (activeBar) {
                 activeBar.style.setProperty('--story-duration', (duration / 1000) + 's');
@@ -432,9 +368,6 @@
             }, duration);
         }
 
-        // ============================================
-        // 🎯 ناوبری
-        // ============================================
         function nextStory() {
             clearTimeout(state.timer);
             state.timer = null;
@@ -466,9 +399,6 @@
             }
         }
 
-        // ============================================
-        // 🎯 بستن
-        // ============================================
         function closeStory() {
             clearTimeout(state.timer);
             state.timer = null;
@@ -476,10 +406,8 @@
 
             if (state.modal) {
                 state.modal.style.display = 'none';
-
                 const img = state.modal.querySelector('[data-gpds-story-image]');
                 if (img) img.src = '';
-
                 const video = state.modal.querySelector('[data-gpds-story-video]');
                 if (video) {
                     video.pause();
@@ -492,9 +420,6 @@
             document.body.classList.remove('gpds-story-open');
         }
 
-        // ============================================
-        // 🎯 نمایش Modal
-        // ============================================
         function showModal(index) {
             const story = stories[index];
             if (!story) return;
@@ -516,7 +441,6 @@
             state.isPaused = false;
             state.currentIndex = index;
 
-            // 🎯 Progress bars
             progress.innerHTML = '';
             stories.forEach((_, i) => {
                 const bar = document.createElement('div');
@@ -526,18 +450,15 @@
                 progress.appendChild(bar);
             });
 
-            // 🎯 تصویر یا ویدیو
             if (story.video) {
                 showVideo(story, video, img, muteBtn, pauseBtn);
             } else {
                 showImage(story, video, img, muteBtn, pauseBtn);
             }
 
-            // Avatar + Username
             avatar.src = story.thumb;
             username.textContent = story.title;
 
-            // CTA
             if (story.url) {
                 cta.href = story.url;
                 cta.style.display = '';
@@ -552,18 +473,13 @@
                 cta.style.display = 'none';
             }
 
-            // ناوبری
             prevBtn.style.display = index > 0 ? '' : 'none';
             nextBtn.style.display = index < stories.length - 1 ? '' : 'none';
 
-            // نمایش
             modal.style.display = 'flex';
             document.body.classList.add('gpds-story-open');
         }
 
-        // ============================================
-        // 🎯 نمایش ویدیو
-        // ============================================
         function showVideo(story, video, img, muteBtn, pauseBtn) {
             img.style.display = 'none';
             img.src = '';
@@ -571,13 +487,11 @@
             video.style.display = '';
             video.muted = state.isMuted;
 
-            // Reset
             video.pause();
             video.innerHTML = '';
             video.removeAttribute('src');
             video.load();
 
-            // Source
             const source = document.createElement('source');
             source.src = story.video;
             source.type = story.videoMime || 'video/mp4';
@@ -585,12 +499,10 @@
             video.load();
             video.currentTime = 0;
 
-            // دکمه‌ها
             muteBtn.hidden = false;
             pauseBtn.hidden = false;
             updatePauseIcon();
 
-            // Mute icon
             const iconMuted = state.modal.querySelector('[data-gpds-icon-muted]');
             const iconUnmuted = state.modal.querySelector('[data-gpds-icon-unmuted]');
             if (iconMuted && iconUnmuted) {
@@ -598,30 +510,22 @@
                 iconUnmuted.style.display = state.isMuted ? 'none' : '';
             }
 
-            // 🎯 وقتی آماده شد
             video.addEventListener('canplay', function onCanPlay() {
                 video.removeEventListener('canplay', onCanPlay);
-
                 video.play().catch(err => console.warn('Autoplay blocked:', err));
 
                 const realDuration = (video.duration && !isNaN(video.duration)) ? video.duration : 0;
                 const activeBar = state.modal.querySelector('.gpds-story-modal__progress-bar.is-active');
 
-                console.log('[GPDS] videoDuration =', story.videoDuration, '| realDuration =', realDuration);
-
                 if (story.videoDuration === 0) {
-                    // 🎬 کل ویدیو
                     if (realDuration > 0) {
-                        // 🎯 progress bar با مدت واقعی
                         if (activeBar) {
-                            // مستقیم از animation استفاده کن
                             activeBar.style.animation = 'none';
                             void activeBar.offsetWidth;
                             activeBar.style.setProperty('--story-duration', realDuration + 's');
                             activeBar.style.animation = '';
                         }
 
-                        // 🎯 `ended` event
                         state.videoEndedHandler = function () {
                             video.removeEventListener('ended', state.videoEndedHandler);
                             state.videoEndedHandler = null;
@@ -629,7 +533,6 @@
                         };
                         video.addEventListener('ended', state.videoEndedHandler, { once: true });
                     } else {
-                        // fallback
                         if (activeBar) {
                             activeBar.style.animation = 'gpds-story-progress 30s linear forwards';
                         }
@@ -639,18 +542,13 @@
                         }, 30000);
                     }
                 } else {
-                    // ⏱️ مدت مشخص
                     const durationMs = story.videoDuration * 1000;
-
-                    // 🎯 progress bar
                     if (activeBar) {
                         activeBar.style.animation = 'none';
                         void activeBar.offsetWidth;
                         activeBar.style.setProperty('--story-duration', story.videoDuration + 's');
                         activeBar.style.animation = '';
                     }
-
-                    // تایمر
                     clearTimeout(state.timer);
                     state.timer = setTimeout(function () {
                         state.timer = null;
@@ -659,9 +557,7 @@
                 }
             }, { once: true });
         }
-        // ============================================
-        // 🎯 نمایش تصویر
-        // ============================================
+
         function showImage(story, video, img, muteBtn, pauseBtn) {
             video.style.display = 'none';
             video.pause();
@@ -678,12 +574,8 @@
             startTimer(story);
         }
 
-        // ============================================
-        // 🎯 باز کردن استوری
-        // ============================================
         function openStory(index) {
             if (state.isLoading) return;
-
             const story = stories[index];
             if (!story) return;
 
@@ -691,7 +583,6 @@
             story.button.classList.add('is-loading');
 
             if (story.video) {
-                // 🎬 پیش‌لود ویدیو (metadata)
                 const vid = document.createElement('video');
                 vid.preload = 'metadata';
                 vid.muted = true;
@@ -710,7 +601,6 @@
 
                 vid.src = story.video;
             } else {
-                // 🖼️ پیش‌لود تصویر
                 const img = new Image();
                 img.onload = function () {
                     setTimeout(function () {
@@ -728,9 +618,6 @@
             }
         }
 
-        // ============================================
-        // 🎯 رویداد کلیک
-        // ============================================
         storyButtons.forEach(btn => {
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
