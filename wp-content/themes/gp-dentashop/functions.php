@@ -23,6 +23,31 @@ define('GPDS_TPL',     GPDS_DIR . '/template-parts');
 define('GPDS_ASSETS',  GPDS_URI . '/assets');
 
 
+// موقت - بعداً حذف کن
+add_action('template_redirect', function () {
+    if (!is_cart() && !is_checkout() && !is_account_page()) return;
+    
+    // لاگ فایل‌های لود شده
+    error_log('=== GPDS DEBUG ' . $_SERVER['REQUEST_URI'] . ' ===');
+    error_log('Styles done: ' . implode(', ', $GLOBALS['wp_styles']->done));
+    
+    add_action('wp_footer', function () {
+        $files = get_included_files();
+        $theme_files = array_filter($files, function ($f) {
+            return strpos($f, 'gp-dentashop') !== false 
+                && (strpos($f, 'cart') !== false 
+                    || strpos($f, 'checkout') !== false 
+                    || strpos($f, 'woocommerce') !== false);
+        });
+        
+        echo "\n<!-- GPDS TEMPLATES DEBUG:\n";
+        foreach ($theme_files as $f) {
+            echo "  " . str_replace(ABSPATH, '', $f) . "\n";
+        }
+        echo "-->\n";
+    }, 999);
+});
+
 
 // ============================================
 // بارگذاری لودر اصلی

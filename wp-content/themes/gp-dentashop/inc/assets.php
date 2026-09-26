@@ -4,64 +4,101 @@
  * Assets - مدیریت بهینه CSS/JS
  * 
  * استراتژی:
- *   - CSS پایه: 1 فایل (gpds-base.css = main + header + home + footer)
- *   - بقیه CSS: شرطی
+ *   - CSS پایه: gpds-base.css (همه صفحات)
+ *   - CSS شرطی: بر اساس نوع صفحه
  *   - JS: شرطی + defer
- *
+ * 
  * @package GP_DentaShop
  */
 
 if (!defined('ABSPATH')) exit;
 
+
 // ============================================
 // Frontend Assets
 // ============================================
 add_action('wp_enqueue_scripts', 'gpds_enqueue_frontend', 20);
+
 function gpds_enqueue_frontend()
 {
     $assets = GPDS_ASSETS;
     $ver    = GPDS_VERSION;
 
+    // تشخیص نوع صفحه (یک‌بار، برای استفاده در کل تابع)
+    $page = gpds_detect_page_type();
+
     // ============================================
-    // CSS پایه (بدون تغییر)
+    // CSS پایه (همه صفحات)
     // ============================================
     wp_enqueue_style('gpds-fonts', $assets . '/fonts/fonts.css', [], $ver);
     wp_enqueue_style('gpds-base',  $assets . '/css/gpds-base.css', ['gpds-fonts'], $ver);
 
-    if (gpds_page_shows_products()) {
+    // ============================================
+    // 🎯 Product Card (کارت محصول)
+    // فقط: shop، محصول، آرشیو محصول، برند، صفحه اصلی، بلاگ آرشیو
+    // ============================================
+    if ($page['has_product_card']) {
         wp_enqueue_style('gpds-product-card', $assets . '/css/product-card.css', ['gpds-base'], $ver);
     }
 
-    if (is_woocommerce() || is_cart() || is_checkout() || is_account_page() || get_query_var('gpds_view') === 'all_brands') {
+    // ============================================
+    // 🎯 WooCommerce Shop (فقط صفحات shop/product)
+    // ============================================
+    if ($page['is_shop']) {
         wp_enqueue_style('gpds-woo', $assets . '/css/woocommerce.css', ['gpds-base'], $ver);
     }
 
-    if (function_exists('is_account_page') && is_account_page()) {
-        wp_enqueue_style('gpds-account', $assets . '/css/woocommerce-account.css', ['gpds-base'], $ver);
-    }
-
-    if (function_exists('is_cart') && is_cart()) {
+    // ============================================
+    // 🎯 Cart (فقط /cart/)
+    // ============================================
+    if ($page['is_cart']) {
         wp_enqueue_style('gpds-cart', $assets . '/css/woocommerce-cart.css', ['gpds-base'], $ver);
     }
 
-    if (function_exists('is_checkout') && is_checkout() && !is_order_received_page()) {
+    // ============================================
+    // 🎯 Checkout (فقط /checkout/)
+    // ============================================
+    if ($page['is_checkout']) {
         wp_enqueue_style('gpds-checkout', $assets . '/css/woocommerce-checkout.css', ['gpds-base'], $ver);
     }
 
+    // ============================================
+    // 🎯 Account (فقط /my-account/)
+    // ============================================
+    if ($page['is_account']) {
+        wp_enqueue_style('gpds-account', $assets . '/css/woocommerce-account.css', ['gpds-base'], $ver);
+    }
+
+    // ============================================
+    // 🎯 404
+    // ============================================
     if (is_404()) {
         wp_enqueue_style('gpds-404', $assets . '/css/404.css', ['gpds-base'], $ver);
     }
 
-    if (is_home() || is_singular('post') || is_category() || is_tag() || is_author() || is_date() || is_search()) {
+    // ============================================
+    // 🎯 Blog (آرشیو، مقاله، دسته، برچسب، جستجو)
+    // ============================================
+    if ($page['is_blog']) {
         wp_enqueue_style('gpds-blog', $assets . '/css/blog.css', ['gpds-base'], $ver);
     }
 
-    if (is_post_type_archive('office') || is_singular('office')) {
+    // ============================================
+    // 🎯 Offices (دفاتر)
+    // ============================================
+    if ($page['is_office']) {
         wp_enqueue_style('gpds-offices', $assets . '/css/offices.css', ['gpds-base'], $ver);
     }
 
     // ============================================
-    // 🎯 JS پایه — core.js (ادغام 4 فایل)
+    // 🎯 Slider (Swiper CSS) — فقط صفحه اصلی
+    // ============================================
+    if ($page['has_slider']) {
+        wp_enqueue_style('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.css', [], '11.0.0');
+    }
+
+    // ============================================
+    // 🎯 JS پایه — core.js (همه صفحات)
     // ============================================
     wp_enqueue_script('gpds-core', $assets . '/js/core.js', [], $ver, true);
 
@@ -76,51 +113,114 @@ function gpds_enqueue_frontend()
         'themeUri'    => GPDS_URI,
         'currency'    => function_exists('get_woocommerce_currency_symbol') ? get_woocommerce_currency_symbol() : 'تومان',
         'i18n'        => [
-            'searchLoading'  => 'در حال جستجو...',
-            'searchEmpty'    => 'نتیجه‌ای یافت نشد',
-            'cartEmpty'      => 'سبد خرید شما خالی است',
-            'addedToCart'    => 'به سبد خرید اضافه شد',
-            'error'          => 'خطایی رخ داد، دوباره تلاش کنید',
+            'searchLoading' => 'در حال جستجو...',
+            'searchEmpty'   => 'نتیجه‌ای یافت نشد',
+            'cartEmpty'     => 'سبد خرید شما خالی است',
+            'addedToCart'   => 'به سبد خرید اضافه شد',
+            'error'         => 'خطایی رخ داد، دوباره تلاش کنید',
         ],
     ]);
 
     // ============================================
-    // 🎯 Slider — فقط صفحات با اسلایدر
+    // 🎯 Home Scripts (Swiper JS + home.js) — فقط صفحه اصلی
     // ============================================
-    if (gpds_page_has_slider()) {
-        wp_enqueue_style('gpds-swiper',  GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.css', [], '11.0.0');
-        wp_enqueue_script('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.js',  [], '11.0.0', true);
+    if ($page['has_slider']) {
+        wp_enqueue_script('gpds-swiper', GPDS_ASSETS . '/vendor/swiper/swiper-bundle.min.js', [], '11.0.0', true);
         wp_enqueue_script('gpds-home',   $assets . '/js/home.js', ['gpds-swiper', 'gpds-core'], $ver, true);
     }
 
     // ============================================
-    // 🎯 Products — ادغام product + shop
+    // 🎯 Products JS — فقط صفحات shop/product
     // ============================================
-    $is_products_page = is_product()
-        || is_shop()
-        || is_product_category()
-        || is_product_tag()
-        || is_tax('product_brand')
-        || get_query_var('gpds_view');
-
-    if ($is_products_page) {
+    if ($page['is_shop']) {
         wp_enqueue_script('gpds-products', $assets . '/js/products.js', ['gpds-core'], $ver, true);
     }
 
     // ============================================
-    // 🎯 Blog
+    // 🎯 Blog JS — فقط مقاله تک
     // ============================================
     if (is_singular('post')) {
         wp_enqueue_script('gpds-blog', $assets . '/js/blog.js', ['gpds-core'], $ver, true);
     }
 
     // ============================================
-    // 🎯 Offices
+    // 🎯 Offices JS — فقط دفتر تک
     // ============================================
     if (is_singular('office')) {
         wp_enqueue_script('gpds-offices', $assets . '/js/offices.js', ['gpds-core'], $ver, true);
     }
 }
+
+
+// ============================================
+// تشخیص نوع صفحه (یک‌بار در هر request)
+// ============================================
+function gpds_detect_page_type()
+{
+    static $cache = null;
+    if ($cache !== null) return $cache;
+
+    // --- WooCommerce Shop / Product ---
+    $is_shop = false;
+    if (function_exists('is_shop')) {
+        $is_shop = is_shop()
+            || is_product()
+            || is_product_category()
+            || is_product_tag()
+            || is_tax('product_brand')
+            || get_query_var('gpds_view') === 'all_brands';
+    }
+
+    // --- WooCommerce Cart ---
+    $is_cart = function_exists('is_cart') && is_cart();
+
+    // --- WooCommerce Checkout (نه thank-you) ---
+    $is_checkout = function_exists('is_checkout')
+        && is_checkout()
+        && !is_order_received_page();
+
+    // --- WooCommerce Account ---
+    $is_account = function_exists('is_account_page') && is_account_page();
+
+    // --- Blog ---
+    $is_blog = is_home()
+        || is_singular('post')
+        || is_category()
+        || is_tag()
+        || is_author()
+        || is_date()
+        || is_search();
+
+    // --- Offices ---
+    $is_office = is_post_type_archive('office') || is_singular('office');
+
+    // --- Slider (فقط صفحه اصلی) ---
+    $has_slider = is_front_page()
+        || is_page_template('page-templates/template-home.php');
+
+    // --- Product Card ---
+    // کارت محصول در: shop، محصول، آرشیو محصول، برند، صفحه اصلی، بلاگ آرشیو
+    $has_product_card = $is_shop
+        || is_front_page()
+        || is_home()
+        || is_page_template('page-templates/template-home.php')
+        || is_archive();
+
+    $cache = [
+        'is_shop'          => $is_shop,
+        'is_cart'          => $is_cart,
+        'is_checkout'      => $is_checkout,
+        'is_account'       => $is_account,
+        'is_blog'          => $is_blog,
+        'is_office'        => $is_office,
+        'has_slider'       => $has_slider,
+        'has_product_card' => $has_product_card,
+    ];
+
+    return $cache;
+}
+
+
 // ============================================
 // Defer اسکریپت‌های غیرحیاتی
 // ============================================
@@ -142,8 +242,9 @@ add_filter('script_loader_tag', function ($tag, $handle) {
     return $tag;
 }, 10, 2);
 
+
 // ============================================
-// Preload فونت‌ها
+// Preload فونت‌ها (فقط وزن‌های حیاتی)
 // ============================================
 add_action('wp_head', 'gpds_preload_fonts', 1);
 
@@ -159,36 +260,8 @@ function gpds_preload_fonts()
     }
 }
 
+
 // ============================================
-// توابع کمکی شرطی
+// Hide WordPress Admin Bar on frontend
 // ============================================
-function gpds_page_shows_products()
-{
-    return is_front_page()
-        || is_shop()
-        || is_product_category()
-        || is_product_tag()
-        || is_product()
-        || is_tax('product_brand')
-        || get_query_var('gpds_view')
-        || is_page_template('page-templates/template-home.php')
-        || is_home()
-        || is_archive();
-}
-
-function gpds_page_has_slider()
-{
-    return is_front_page()
-        || is_page_template('page-templates/template-home.php')
-        || is_shop()
-        || is_product();
-}
-
-
-
-
-
-/**
- * Hide WordPress Admin Bar on frontend
- */
 add_filter('show_admin_bar', '__return_false');

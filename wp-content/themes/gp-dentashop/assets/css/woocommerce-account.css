@@ -1,5 +1,9 @@
 /* ============================================================
- * GP DentaShop - My Account Styles
+ * GP DentaShop — My Account
+ * 
+ * این فایل فقط در /my-account/ لود می‌شود.
+ * 
+ * وابسته به متغیرهای --gpds-ui-* که در gpds-base.css تعریف شده‌اند.
  * ============================================================ */
 
 /* ============================================
@@ -32,12 +36,6 @@
     margin: 0 auto;
 }
 
-@media (max-width: 768px) {
-    .gpds-account-auth {
-        grid-template-columns: 1fr;
-    }
-}
-
 .gpds-account-auth__box {
     background: var(--gpds-bg-surface);
     border: 1px solid var(--gpds-border-light);
@@ -62,7 +60,7 @@
     color: var(--gpds-color-primary);
 }
 
-/* فرم‌ها */
+/* Forms */
 .gpds-account-auth .form-row {
     margin-bottom: var(--gpds-space-md);
 }
@@ -88,7 +86,7 @@
     font-size: var(--gpds-fs-base);
     color: var(--gpds-text-primary);
     min-height: 44px;
-    transition: border-color 0.2s ease;
+    transition: border-color var(--gpds-transition-fast);
     font-family: inherit;
 }
 
@@ -129,19 +127,13 @@
 }
 
 /* ============================================
- * Account Layout (Dashboard)
+ * Account Layout
  * ============================================ */
 .gpds-account-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
     gap: var(--gpds-space-lg);
     align-items: start;
-}
-
-@media (max-width: 992px) {
-    .gpds-account-layout {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* ============================================
@@ -157,13 +149,6 @@
     top: var(--gpds-space-md);
 }
 
-@media (max-width: 992px) {
-    .gpds-account-nav {
-        position: static;
-    }
-}
-
-/* کاربر */
 .gpds-account-nav__user {
     display: flex;
     align-items: center;
@@ -180,7 +165,7 @@
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--gpds-color-primary), #c7304a);
-    color: white;
+    color: #fff;
     border-radius: 50%;
     font-size: var(--gpds-fs-lg);
     font-weight: var(--gpds-fw-bold);
@@ -212,7 +197,6 @@
     text-align: right;
 }
 
-/* منو */
 .gpds-account-nav__list {
     list-style: none;
     padding: 0;
@@ -222,7 +206,8 @@
     gap: 2px;
 }
 
-.gpds-account-nav__item a {
+.gpds-account-nav__item a,
+.gpds-account-nav__link {
     display: flex;
     align-items: center;
     gap: var(--gpds-space-sm);
@@ -232,30 +217,36 @@
     font-size: var(--gpds-fs-base);
     font-weight: var(--gpds-fw-medium);
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: background-color var(--gpds-transition-fast),
+                color var(--gpds-transition-fast);
 }
 
-.gpds-account-nav__item a svg {
+.gpds-account-nav__item a svg,
+.gpds-account-nav__link svg {
     color: var(--gpds-text-tertiary);
-    transition: color 0.2s ease;
+    transition: color var(--gpds-transition-fast);
 }
 
-.gpds-account-nav__item a:hover {
+.gpds-account-nav__item a:hover,
+.gpds-account-nav__link:hover {
     background: var(--gpds-bg-hover);
     color: var(--gpds-color-primary);
 }
 
-.gpds-account-nav__item a:hover svg {
+.gpds-account-nav__item a:hover svg,
+.gpds-account-nav__link:hover svg {
     color: var(--gpds-color-primary);
 }
 
-.gpds-account-nav__item.is-active a {
+.gpds-account-nav__item.is-active a,
+.gpds-account-nav__item.is-active .gpds-account-nav__link {
     background: var(--gpds-color-primary-light);
     color: var(--gpds-color-primary);
     font-weight: var(--gpds-fw-semibold);
 }
 
-.gpds-account-nav__item.is-active a svg {
+.gpds-account-nav__item.is-active a svg,
+.gpds-account-nav__item.is-active .gpds-account-nav__link svg {
     color: var(--gpds-color-primary);
 }
 
@@ -307,7 +298,8 @@
     font-weight: var(--gpds-fw-bold);
     font-family: inherit;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color var(--gpds-transition-fast),
+                transform var(--gpds-transition-fast);
     text-decoration: none;
     min-height: 44px;
     line-height: 1;
@@ -317,13 +309,13 @@
 .gpds-account-page button.button.alt,
 .gpds-account-page .woocommerce-Button {
     background: var(--gpds-color-primary);
-    color: white;
+    color: #fff;
 }
 
 .gpds-account-page .gpds-btn--primary:hover,
 .gpds-account-page button.button.alt:hover {
     background: var(--gpds-color-primary-hover);
-    color: white;
+    color: #fff;
     transform: translateY(-1px);
 }
 
@@ -368,7 +360,6 @@
     color: var(--gpds-color-primary);
 }
 
-/* جدول سفارش‌ها */
 .gpds-account-content table.shop_table {
     width: 100%;
     border-collapse: collapse;
@@ -394,31 +385,21 @@
     color: var(--gpds-text-secondary);
 }
 
-/* Notices */
-.gpds-account-page .woocommerce-message,
-.gpds-account-page .woocommerce-info,
-.gpds-account-page .woocommerce-error {
-    padding: var(--gpds-space-md);
-    border-radius: var(--gpds-radius-md);
-    margin-bottom: var(--gpds-space-md);
-    border-right: 4px solid;
-    font-size: var(--gpds-fs-sm);
+/* ============================================
+ * Responsive
+ * ============================================ */
+@media (max-width: 992px) {
+    .gpds-account-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .gpds-account-nav {
+        position: static;
+    }
 }
 
-.gpds-account-page .woocommerce-message {
-    background: #ecfdf5;
-    color: #065f46;
-    border-color: #10b981;
-}
-
-.gpds-account-page .woocommerce-info {
-    background: #eff6ff;
-    color: #1e40af;
-    border-color: #3b82f6;
-}
-
-.gpds-account-page .woocommerce-error {
-    background: #fef2f2;
-    color: #991b1b;
-    border-color: #ef4444;
+@media (max-width: 768px) {
+    .gpds-account-auth {
+        grid-template-columns: 1fr;
+    }
 }

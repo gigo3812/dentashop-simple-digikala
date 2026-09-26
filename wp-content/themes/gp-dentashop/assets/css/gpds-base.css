@@ -3541,3 +3541,113 @@ body.gpds-story-open { overflow: hidden; }
     bottom: unset !important;
     top: 0 !important;
 }
+
+
+
+/* ============================================================
+ * WooCommerce Shared — مشترک همه صفحات ووکامرس
+ * (یک‌بار تعریف، همه‌جا استفاده)
+ * ============================================================ */
+
+/* --- UI Variables --- */
+:root {
+    --gpds-ui-bg:          var(--gpds-bg-body);
+    --gpds-ui-card:        var(--gpds-bg-surface);
+    --gpds-ui-border:      var(--gpds-border-base);
+    --gpds-ui-text:        var(--gpds-text-primary);
+    --gpds-ui-muted:       var(--gpds-text-secondary);
+    --gpds-ui-accent:      var(--gpds-color-primary);
+    --gpds-ui-accent-dark: var(--gpds-color-primary-hover);
+    --gpds-ui-danger:      var(--gpds-color-danger);
+    --gpds-ui-radius:      var(--gpds-radius-lg);
+    --gpds-ui-shadow:      var(--gpds-shadow-sm);
+}
+
+/* --- Notices --- */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+    padding: var(--gpds-space-md);
+    border-radius: var(--gpds-radius-md);
+    margin-bottom: var(--gpds-space-md);
+    font-size: var(--gpds-fs-base);
+    display: flex;
+    align-items: center;
+    gap: var(--gpds-space-sm);
+    list-style: none;
+    border-right: 4px solid;
+}
+
+.woocommerce-message { background: #ecfdf5; color: #065f46; border-color: #10b981; }
+.woocommerce-info    { background: #eff6ff; color: #1e40af; border-color: #3b82f6; }
+.woocommerce-error   { background: #fef2f2; color: #991b1b; border-color: #ef4444; }
+
+.woocommerce-message .button,
+.woocommerce-info .button,
+.woocommerce-error .button {
+    margin-right: auto;
+    padding: 6px 14px;
+    background: currentColor;
+    color: white;
+    border-radius: var(--gpds-radius-sm);
+    font-size: var(--gpds-fs-sm);
+    font-weight: var(--gpds-fw-medium);
+}
+
+/* --- Page Header (Cart + Checkout) --- */
+.gpds-page-header--compact {
+    margin: 0 0 22px;
+}
+
+.gpds-page-header--compact .gpds-page-title {
+    margin: 0;
+}
+
+.gpds-page-subtitle {
+    margin: 7px 0 0;
+    color: var(--gpds-ui-muted);
+    font-size: var(--gpds-fs-base);
+}
+
+/* --- Cart Empty --- */
+.gpds-cart-page .cart-empty {
+    margin: 0;
+    padding: 48px 20px;
+    border: 1px solid var(--gpds-ui-border);
+    border-radius: var(--gpds-ui-radius);
+    background: var(--gpds-ui-card);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.gpds-cart-page .cart-empty::before {
+    content: '🛒';
+    font-size: 3.5rem;
+    opacity: 0.3;
+    line-height: 1;
+}
+
+.gpds-cart-page .return-to-shop {
+    text-align: center;
+}
+
+.gpds-cart-page .return-to-shop a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: var(--gpds-radius-sm);
+    background: var(--gpds-ui-accent);
+    color: var(--gpds-text-inverse);
+    text-decoration: none;
+    transition: background-color var(--gpds-transition-fast);
+}
+
+.gpds-cart-page .return-to-shop a:hover {
+    background: var(--gpds-ui-accent-dark);
+    color: var(--gpds-text-inverse);
+}
