@@ -1,0 +1,560 @@
+/**
+ * KafiChat Lite - Admin Panel Styles (Optimized & Minified-friendly)
+ * Design: Vertical tabs layout with SPA-style switching
+ * Language: Persian (RTL-first)
+ */
+
+/* ==========================================================================   Variables========================================================================== */
+:root {
+    --kafichat-primary: #5B6CE7;
+    --kafichat-primary-dark: #4a5bd4;
+    --kafichat-primary-light: #7a88ee;
+    --kafichat-primary-gradient: linear-gradient(135deg, #5B6CE7 0%, #7a88ee 100%);
+    --kafichat-bale-primary: #00B894;
+    --kafichat-bale-gradient: linear-gradient(135deg, #00B894 0%, #00cec9 100%);
+    --kafichat-success: #10b981;
+    --kafichat-error: #ef4444;
+    --kafichat-warning: #f59e0b;
+    --kafichat-info: #3b82f6;
+    --kafichat-gray-50: #f9fafb;
+    --kafichat-gray-100: #f3f4f6;
+    --kafichat-gray-200: #e5e7eb;
+    --kafichat-gray-300: #d1d5db;
+    --kafichat-gray-400: #9ca3af;
+    --kafichat-gray-500: #6b7280;
+    --kafichat-gray-600: #4b5563;
+    --kafichat-gray-700: #374151;
+    --kafichat-gray-800: #1f2937;
+    --kafichat-gray-900: #111827;
+    --kafichat-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --kafichat-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --kafichat-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --kafichat-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --kafichat-radius: 10px;
+    --kafichat-radius-lg: 14px;
+    --kafichat-radius-xl: 18px;
+    --kafichat-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --kafichat-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================   Base========================================================================== */
+.kafichat-admin-wrap {
+    margin: 20px 20px 20px 0;
+    font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.rtl h1,.rtl h2,.rtl h3,.rtl h4,.rtl h5,.rtl h6 {
+    font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-weight: 600;
+}
+
+.kafichat-admin-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--kafichat-gray-900);
+    margin: 0 0 30px 0;
+    padding: 0;
+    letter-spacing: -0.5px;
+}
+
+.kafichat-admin-title .dashicons {
+    font-size: 34px;
+    width: 34px;
+    height: 34px;
+    color: var(--kafichat-primary);
+    filter: drop-shadow(0 2px 4px rgba(91, 108, 231, 0.3));
+}
+
+.kafichat-version {
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--kafichat-primary-gradient);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-right: 12px;
+    box-shadow: 0 2px 8px rgba(91, 108, 231, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================================================   Notification========================================================================== */
+.kafichat-notification {
+    padding: 16px 20px;
+    border-radius: var(--kafichat-radius);
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--kafichat-shadow-md);
+    animation: kafichat-slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes kafichat-slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.kafichat-notification::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 0;
+    animation: kafichat-progress 5s linear forwards;
+    transform-origin: right center;
+}
+
+@keyframes kafichat-progress {
+    from { transform: scaleX(1); opacity: 1; }
+    to { transform: scaleX(0); opacity: 0.5; }
+}
+
+.kafichat-notification > * {
+    position: relative;
+    z-index: 1;
+}
+
+.kafichat-notification .dashicons {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.kafichat-notification.success { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; }
+.kafichat-notification.success::before { background: var(--kafichat-success); }
+.kafichat-notification.error { background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); color: #991b1b; }
+.kafichat-notification.error::before { background: var(--kafichat-error); }
+.kafichat-notification.info { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); color: #1e40af; }
+.kafichat-notification.info::before { background: var(--kafichat-info); }
+
+/* ==========================================================================   Vertical Tabs Layout========================================================================== */
+.kafichat-admin-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.kafichat-sidebar {
+    background: white;
+    border-radius: var(--kafichat-radius-lg);
+    padding: 12px;
+    box-shadow: var(--kafichat-shadow-md);
+    position: sticky;
+    top: 40px;
+}
+
+.kafichat-tabs-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kafichat-tab-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: transparent;
+    border: none;
+    border-radius: var(--kafichat-radius);
+    color: var(--kafichat-gray-600);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--kafichat-transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.kafichat-tab-item::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--kafichat-primary);
+    transform: scaleY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kafichat-tab-item:hover {
+    background: var(--kafichat-gray-50);
+    color: var(--kafichat-gray-900);
+    transform: translateX(-4px);
+}
+
+.kafichat-tab-item.active {
+    background: linear-gradient(135deg, rgba(91, 108, 231, 0.1) 0%, rgba(122, 136, 238, 0.05) 100%);
+    color: var(--kafichat-primary);
+    font-weight: 600;
+}
+
+.kafichat-tab-item.active::before { transform: scaleY(1); }
+.kafichat-tab-item .dashicons { font-size: 20px; width: 20px; height: 20px; opacity: 0.7; transition: var(--kafichat-transition); flex-shrink: 0; }
+.kafichat-tab-item:hover .dashicons, .kafichat-tab-item.active .dashicons { opacity: 1; }
+.kafichat-tab-item.active .dashicons { color: var(--kafichat-primary); }
+
+.kafichat-pro-badge-vertical {
+    background: var(--kafichat-primary-gradient);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(91, 108, 231, 0.2);
+}
+
+.kafichat-main-content {
+    background: white;
+    border-radius: var(--kafichat-radius-lg);
+    padding: 40px;
+    box-shadow: var(--kafichat-shadow-md);
+    min-height: 600px;
+    position: relative;
+}
+
+/* ==========================================================================   Tab Content========================================================================== */
+.kafichat-tab-pane {
+    display: none;
+    animation: kafichat-fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kafichat-tab-pane.active { display: block; }
+
+@keyframes kafichat-fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.kafichat-tab-pane h2 {
+    margin: 0 0 10px 0;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--kafichat-gray-900);
+    letter-spacing: -0.5px;
+}
+
+.kafichat-tab-pane > .description {
+    color: var(--kafichat-gray-500);
+    font-size: 15px;
+    margin: 0 0 35px 0;
+    line-height: 1.6;
+}
+
+/* ==========================================================================   Form Tables========================================================================== */
+.kafichat-tab-pane .form-table { margin: 0; border-collapse: separate; border-spacing: 0; }
+.kafichat-tab-pane .form-table tr { display: block; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--kafichat-gray-100); transition: var(--kafichat-transition); }
+.kafichat-tab-pane .form-table tr:hover { background: var(--kafichat-gray-50); margin-right: -20px; margin-left: -20px; padding-right: 20px; padding-left: 20px; border-radius: var(--kafichat-radius); }
+.kafichat-tab-pane .form-table tr:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.kafichat-tab-pane .form-table th { display: block; width: auto; padding: 0 0 10px 0; font-size: 14px; font-weight: 600; color: var(--kafichat-gray-700); }
+.kafichat-tab-pane .form-table td { display: block; padding: 0; }
+
+.kafichat-tab-pane .form-table input[type="text"],
+.kafichat-tab-pane .form-table input[type="password"],
+.kafichat-tab-pane .form-table input[type="number"],
+.kafichat-tab-pane .form-table input[type="email"],
+.kafichat-tab-pane .form-table select,
+.kafichat-tab-pane .form-table textarea {
+    width: 100%;
+    max-width: 520px;
+    padding: 11px 16px;
+    border: 2px solid var(--kafichat-gray-200);
+    border-radius: var(--kafichat-radius);
+    font-size: 14px;
+    color: var(--kafichat-gray-900);
+    background: white;
+    transition: var(--kafichat-transition);
+    box-shadow: var(--kafichat-shadow-sm);
+}
+
+.kafichat-tab-pane .form-table input[type="text"]:hover,
+.kafichat-tab-pane .form-table input[type="password"]:hover,
+.kafichat-tab-pane .form-table input[type="number"]:hover,
+.kafichat-tab-pane .form-table select:hover,
+.kafichat-tab-pane .form-table textarea:hover { border-color: var(--kafichat-gray-300); }
+
+.kafichat-tab-pane .form-table input[type="text"]:focus,
+.kafichat-tab-pane .form-table input[type="password"]:focus,
+.kafichat-tab-pane .form-table input[type="number"]:focus,
+.kafichat-tab-pane .form-table select:focus,
+.kafichat-tab-pane .form-table textarea:focus {
+    outline: none;
+    border-color: var(--kafichat-primary);
+    box-shadow: 0 0 0 4px rgba(91, 108, 231, 0.15);
+}
+
+.kafichat-tab-pane .form-table input[type="color"] {
+    width: 90px;
+    height: 60px;
+    padding: 6px;
+    border: 3px solid var(--kafichat-gray-200);
+    border-radius: var(--kafichat-radius);
+    cursor: pointer;
+    transition: var(--kafichat-transition);
+}
+
+.kafichat-tab-pane .form-table input[type="color"]:hover { border-color: var(--kafichat-primary); transform: scale(1.05) rotate(2deg); }
+.kafichat-tab-pane .form-table textarea { resize: vertical; min-height: 110px; }
+.kafichat-tab-pane .form-table .description { margin-top: 10px; color: var(--kafichat-gray-500); font-size: 13px; line-height: 1.6; }
+.kafichat-tab-pane .form-table label { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px 0; transition: var(--kafichat-transition-fast); }
+.kafichat-tab-pane .form-table label:hover { color: var(--kafichat-primary); }
+.kafichat-tab-pane .form-table input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; accent-color: var(--kafichat-primary); }
+
+/* ==========================================================================   Submit Button & Action Rows========================================================================== */
+.kafichat-tab-pane .button-primary,
+.kafichat-actions-row .button-primary {
+    background: var(--kafichat-primary-gradient);
+    border: none;
+    border-radius: var(--kafichat-radius);
+    padding: 13px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: var(--kafichat-transition);
+    box-shadow: 0 4px 12px rgba(91, 108, 231, 0.3);
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    line-height: 1 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.kafichat-tab-pane .button-primary:hover,
+.kafichat-actions-row .button-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(91, 108, 231, 0.4); }
+
+.kafichat-actions-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; margin: 24px 0; }
+
+.kafichat-actions-row .button {
+    background: white;
+    border: 2px solid var(--kafichat-gray-200);
+    border-radius: var(--kafichat-radius);
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--kafichat-gray-700);
+    cursor: pointer;
+    transition: var(--kafichat-transition);
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    line-height: 1 !important;
+}
+
+.kafichat-actions-row .button:hover { background: var(--kafichat-gray-50); border-color: var(--kafichat-primary); color: var(--kafichat-primary); transform: translateY(-2px); box-shadow: var(--kafichat-shadow-md); }
+.kafichat-btn-test-connection { background: #f3f4f6 !important; border: 2px dashed #9ca3af !important; color: #4b5563 !important; }
+.kafichat-btn-test-connection:hover { background: #e5e7eb !important; border-color: #6b7280 !important; color: #1f2937 !important; transform: translateY(-2px) !important; }
+.kafichat-btn-action:hover { background: var(--kafichat-gray-50); border-color: var(--kafichat-primary); color: var(--kafichat-primary); transform: translateY(-2px); }
+
+.kafichat-tab-pane .button .dashicons,
+.kafichat-actions-row .button .dashicons { display: flex !important; align-items: center !important; justify-content: center !important; width: 18px !important; height: 18px !important; font-size: 18px !important; margin-top: 0 !important; margin-bottom: 0 !important; }
+
+/* ==========================================================================   Info & Help Boxes========================================================================== */
+.kafichat-help-box,
+.kafichat-info-box { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 2px solid #bfdbfe; padding: 24px 28px; margin: 35px 0; border-radius: var(--kafichat-radius-lg); box-shadow: var(--kafichat-shadow); position: relative; overflow: hidden; }
+.kafichat-help-box::before { content: ''; position: absolute; top: 0; right: 0; width: 4px; height: 100%; background: var(--kafichat-info); }
+.kafichat-help-box h3 { margin: 0 0 14px 0; font-size: 17px; font-weight: 700; color: var(--kafichat-gray-900); display: flex; align-items: center; gap: 10px; }
+.kafichat-help-box ol { margin: 0; padding-right: 24px; }
+.kafichat-help-box li { margin: 12px 0; line-height: 1.7; color: var(--kafichat-gray-700); }
+.kafichat-help-box code { background: white; padding: 4px 10px; border-radius: 6px; font-size: 12px; color: var(--kafichat-primary); border: 1px solid var(--kafichat-gray-200); font-weight: 600; }
+
+/* ==========================================================================   Pro Tab========================================================================== */
+.kafichat-pro-tab-wrapper {
+    background: var(--kafichat-bale-gradient);
+    color: #ffffff;
+    padding: 50px 40px;
+    border-radius: var(--kafichat-radius-lg);
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 184, 148, 0.3);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.kafichat-pro-tab-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: kafichat-rotate 30s linear infinite;
+}
+
+@keyframes kafichat-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.kafichat-pro-tab-wrapper > * { position: relative; z-index: 1; }
+
+.kafichat-pro-header h2 { color: #ffffff; font-size: 34px; font-weight: 800; margin: 0 0 10px 0; text-shadow: 0 2px 10px rgba(0,0,0,0.15); letter-spacing: -0.5px; }
+.kafichat-pro-subtitle { font-size: 18px; opacity: 0.95; margin: 0 0 40px 0; font-weight: 500; line-height: 1.6; color: #f0fdfa; }
+
+.kafichat-compare-table-wrapper { background: rgba(255, 255, 255, 0.95); border-radius: var(--kafichat-radius-lg); padding: 20px; margin-bottom: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow-x: auto; }
+.kafichat-compare-table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; text-align: right; color: var(--kafichat-gray-800); }
+.kafichat-compare-table th, .kafichat-compare-table td { padding: 12px 10px; border-bottom: 1px solid var(--kafichat-gray-100); font-size: 14px; word-wrap: break-word; }
+.kafichat-compare-table th { font-weight: 700; color: var(--kafichat-gray-600); text-transform: uppercase; letter-spacing: 0.5px; background: var(--kafichat-gray-50); }
+.kafichat-compare-table th.kafichat-col-pro { background: var(--kafichat-bale-primary); color: #ffffff; border-radius: 0 var(--kafichat-radius) 0 0; }
+.kafichat-compare-table th:first-child { border-radius: var(--kafichat-radius) 0 0 0; }
+.kafichat-compare-table td:first-child { font-weight: 600; color: var(--kafichat-gray-900); }
+.kafichat-compare-table tr:last-child td { border-bottom: none; }
+.kafichat-compare-table tr:hover td { background: var(--kafichat-gray-50); }
+.kafichat-icon-check { color: var(--kafichat-success); font-size: 18px; }
+.kafichat-icon-cross { color: var(--kafichat-gray-400); font-size: 18px; }
+
+.kafichat-pro-cta { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+@keyframes kafichat-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+.kafichat-pro-tab-wrapper .button-hero {
+    background: #ffffff !important;
+    color: var(--kafichat-bale-primary) !important;
+    border: none !important;
+    font-weight: 800 !important;
+    padding: 16px 48px !important;
+    font-size: 17px !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+    border-radius: var(--kafichat-radius) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    transition: var(--kafichat-transition) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    animation: kafichat-float 3s ease-in-out infinite;
+}
+
+.kafichat-pro-tab-wrapper .button-hero:hover { animation: none !important; background: #f0fdfa !important; transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important; }
+.kafichat-pro-migration-notice { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff; padding: 12px 24px; border-radius: var(--kafichat-radius); font-size: 14px; font-weight: 600; display: inline-block; margin-top: 10px; backdrop-filter: blur(5px); }
+
+/* ==========================================================================   System Info========================================================================== */
+.kafichat-system-info { background: var(--kafichat-gray-50); border: 2px solid var(--kafichat-gray-200); border-radius: var(--kafichat-radius-lg); padding: 24px; margin: 24px 0; }
+.kafichat-system-info tr { border-bottom: none !important; padding: 10px 0 !important; margin: 0 !important; transition: var(--kafichat-transition-fast); }
+.kafichat-system-info tr:hover { background: white; border-radius: var(--kafichat-radius); padding-right: 12px !important; padding-left: 12px !important; }
+.kafichat-system-info th { width: 220px !important; padding: 10px 20px 10px 0 !important; font-weight: 700 !important; color: var(--kafichat-gray-700) !important; font-size: 13px !important; text-transform: uppercase; letter-spacing: 0.5px; }
+.kafichat-system-info td { padding: 10px 0 !important; }
+.kafichat-system-info code { background: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; color: var(--kafichat-gray-900); border: 1px solid var(--kafichat-gray-200); display: inline-block; font-weight: 600; box-shadow: var(--kafichat-shadow-sm); }
+.kafichat-status-ok { color: var(--kafichat-success); font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+.kafichat-status-warn { color: var(--kafichat-warning); font-weight: 700; display: inline-flex; align-items: center; gap: 8px; }
+
+/* ==========================================================================   Conversation List Page========================================================================== */
+.kafichat-filters { display: flex; gap: 18px; align-items: center; margin: 24px 0; flex-wrap: wrap; background: white; padding: 24px; border-radius: var(--kafichat-radius-lg); box-shadow: var(--kafichat-shadow-md); }
+.kafichat-filter-tabs { display: flex; gap: 10px; }
+.kafichat-filter-tab { padding: 10px 20px; text-decoration: none; background: var(--kafichat-gray-100); border: 2px solid var(--kafichat-gray-200); border-radius: var(--kafichat-radius); color: var(--kafichat-gray-600); font-size: 13px; font-weight: 600; transition: var(--kafichat-transition); }
+.kafichat-filter-tab:hover { background: var(--kafichat-gray-200); color: var(--kafichat-gray-900); transform: translateY(-1px); }
+.kafichat-filter-tab.active { background: var(--kafichat-primary-gradient); color: white; border-color: var(--kafichat-primary); box-shadow: 0 4px 12px rgba(91, 108, 231, 0.3); }
+.kafichat-filter-search { flex: 1; min-width: 280px; }
+.kafichat-filter-search input { width: 100%; padding: 12px 16px; border: 2px solid var(--kafichat-gray-200); border-radius: var(--kafichat-radius); font-size: 14px; transition: var(--kafichat-transition); }
+.kafichat-filter-search input:focus { outline: none; border-color: var(--kafichat-primary); box-shadow: 0 0 0 4px rgba(91, 108, 231, 0.15); }
+
+.kafichat-loading, .kafichat-empty { text-align: center; padding: 80px 20px; background: white; border-radius: var(--kafichat-radius-lg); box-shadow: var(--kafichat-shadow-md); color: var(--kafichat-gray-500); }
+.kafichat-empty .dashicons { font-size: 90px; width: 90px; height: 90px; color: var(--kafichat-gray-300); margin-bottom: 20px; }
+.kafichat-empty p { font-size: 17px; margin: 0; font-weight: 500; }
+
+.kafichat-conversations-list { background: white; border-radius: var(--kafichat-radius-lg); overflow: hidden; box-shadow: var(--kafichat-shadow-md); }
+.kafichat-conversation-item { display: grid; grid-template-columns: 1fr auto auto; gap: 24px; align-items: center; padding: 24px 28px; border-bottom: 1px solid var(--kafichat-gray-100); transition: var(--kafichat-transition); }
+.kafichat-conversation-item:last-child { border-bottom: none; }
+.kafichat-conversation-item:hover { background: linear-gradient(135deg, var(--kafichat-gray-50) 0%, white 100%); padding-right: 32px; }
+.kafichat-conv-info { min-width: 0; }
+.kafichat-conv-name { font-weight: 700; color: var(--kafichat-gray-900); margin-bottom: 8px; font-size: 16px; }
+.kafichat-conv-meta { color: var(--kafichat-gray-500); font-size: 13px; display: flex; gap: 18px; flex-wrap: wrap; }
+.kafichat-conv-meta span { display: inline-flex; align-items: center; gap: 6px; }
+.kafichat-conv-meta code { background: var(--kafichat-gray-100); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+
+.kafichat-status-badge { padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: var(--kafichat-shadow-sm); }
+.kafichat-status-badge.open { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #065f46; }
+.kafichat-status-badge.closed { background: var(--kafichat-gray-200); color: var(--kafichat-gray-600); }
+
+.kafichat-conv-actions { display: flex; gap: 10px; }
+.kafichat-conv-actions .button { min-height: auto; background: white; border: 2px solid var(--kafichat-gray-200); border-radius: var(--kafichat-radius); cursor: pointer; transition: var(--kafichat-transition); }
+.kafichat-conv-actions .button:hover { background: var(--kafichat-primary); border-color: var(--kafichat-primary); color: white; transform: scale(1.1) rotate(5deg); box-shadow: var(--kafichat-shadow-md); }
+
+/* ==========================================================================   Modal========================================================================== */
+.kafichat-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; animation: kafichat-fadeIn 0.3s ease; }
+@keyframes kafichat-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.kafichat-modal-backdrop { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); }
+.kafichat-modal-content { position: relative; background: white; border-radius: var(--kafichat-radius-xl); width: 90%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--kafichat-shadow-lg); animation: kafichat-scaleIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+@keyframes kafichat-scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+.kafichat-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 24px 28px; border-bottom: 2px solid var(--kafichat-gray-100); background: linear-gradient(135deg, var(--kafichat-gray-50) 0%, white 100%); }
+.kafichat-modal-header h2 { margin: 0; font-size: 22px; font-weight: 700; color: var(--kafichat-gray-900); }
+.kafichat-modal-close { background: var(--kafichat-gray-100); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; color: var(--kafichat-gray-600); transition: var(--kafichat-transition); display: flex; align-items: center; justify-content: center; }
+.kafichat-modal-close:hover { background: var(--kafichat-error); color: white; transform: rotate(90deg); }
+.kafichat-modal-body { font-family: 'Vazirmatn'; padding: 28px; overflow-y: auto; flex: 1; background: var(--kafichat-gray-50); }
+.kafichat-modal-message { padding: 16px 20px; border-radius: 14px; margin-bottom: 14px; max-width: 85%; word-wrap: break-word; box-shadow: var(--kafichat-shadow); animation: kafichat-slideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); position: relative; }
+@keyframes kafichat-slideUp { from { opacity: 0; transform: translateY(15px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.kafichat-modal-message.user { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); color: #1e40af; margin-right: auto; border-bottom-right-radius: 4px; }
+.kafichat-modal-message.admin { background: var(--kafichat-primary-gradient); color: white; margin-left: auto; border-bottom-left-radius: 4px; }
+.kafichat-modal-message.system { background: var(--kafichat-gray-200); color: var(--kafichat-gray-600); text-align: center; margin: 14px auto; font-size: 13px; font-style: italic; max-width: 60%; }
+.kafichat-modal-message-time { font-size: 11px; opacity: 0.7; margin-top: 8px; font-weight: 600; }
+
+/* ==========================================================================   Spinner & Logs========================================================================== */
+.kafichat-admin-wrap .spinner.is-active { float: none !important; margin: 0 8px 0 0 !important; vertical-align: middle !important; display: inline-flex !important; visibility: visible; }
+.kafichat-logs-table-wrapper { background: white; border-radius: var(--kafichat-radius-lg); overflow: hidden; box-shadow: var(--kafichat-shadow-md); border: 1px solid var(--kafichat-gray-200); }
+.kafichat-logs-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.kafichat-logs-table thead { background: var(--kafichat-gray-50); border-bottom: 2px solid var(--kafichat-gray-200); }
+.kafichat-logs-table th { padding: 14px 16px; text-align: right; font-weight: 700; color: var(--kafichat-gray-700); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.kafichat-logs-table td { padding: 14px 16px; border-bottom: 1px solid var(--kafichat-gray-100); vertical-align: top; line-height: 1.6; }
+.kafichat-logs-table tbody tr:hover { background: var(--kafichat-gray-50); }
+.kafichat-logs-table tbody tr:last-child td { border-bottom: none; }
+.kafichat-logs-table code { background: var(--kafichat-gray-100); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; color: var(--kafichat-gray-700); }
+.kafichat-logs-table details summary { user-select: none; }
+.kafichat-logs-table pre { white-space: pre-wrap; word-break: break-word; }
+.kafichat-logs-empty { text-align: center; padding: 40px; color: var(--kafichat-gray-500); }
+
+/* ==========================================================================   Pagination========================================================================== */
+.kafichat-pagination { display: flex; justify-content: space-between; align-items: center; padding: 20px 28px; background: white; border-top: 1px solid var(--kafichat-gray-100); gap: 20px; flex-wrap: wrap; }
+.kafichat-pagination-info { font-size: 13px; color: var(--kafichat-gray-600); font-weight: 500; }
+.kafichat-pagination-buttons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.kafichat-page-btn { min-width: 36px; height: 36px; padding: 0 12px; border: 2px solid var(--kafichat-gray-200); border-radius: var(--kafichat-radius); background: white; color: var(--kafichat-gray-700); font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--kafichat-transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.kafichat-page-btn:hover:not(.active) { background: var(--kafichat-gray-50); border-color: var(--kafichat-primary); color: var(--kafichat-primary); transform: translateY(-2px); box-shadow: var(--kafichat-shadow); }
+.kafichat-page-btn.active { background: var(--kafichat-primary-gradient); color: white; border-color: var(--kafichat-primary); box-shadow: 0 4px 12px rgba(91, 108, 231, 0.3); cursor: default; }
+.kafichat-page-btn .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.kafichat-page-dots { padding: 0 8px; color: var(--kafichat-gray-400); font-weight: 700; }
+
+/* ==========================================================================   Responsive========================================================================== */
+@media (max-width: 1024px) {
+    .kafichat-admin-layout { grid-template-columns: 1fr; }
+    .kafichat-sidebar { position: static; }
+    .kafichat-tabs-vertical { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .kafichat-tab-item { flex: 1; min-width: 140px; justify-content: center; }
+    .kafichat-tab-item::before { width: 100%; height: 3px; top: auto; bottom: 0; transform: scaleX(0); }
+    .kafichat-tab-item.active::before { transform: scaleX(1); }
+    .kafichat-tab-item:hover { transform: translateY(-2px); }
+}
+
+@media (max-width: 782px) {
+    .kafichat-admin-wrap { margin: 10px; }
+    .kafichat-main-content { padding: 28px 20px; }
+    .kafichat-admin-title { font-size: 24px; flex-wrap: wrap; }
+    .kafichat-pro-tab-wrapper { padding: 40px 20px; }
+    .kafichat-filters { flex-direction: column; align-items: stretch; }
+    .kafichat-conversation-item { grid-template-columns: 1fr; gap: 14px; }
+    .kafichat-conv-actions { justify-content: flex-start; }
+    .kafichat-modal-content { width: 95%; max-height: 90vh; }
+    .kafichat-actions-row { flex-direction: column; }
+    .kafichat-actions-row .button { width: 100%; justify-content: center; }
+    .kafichat-compare-table th, .kafichat-compare-table td { padding: 10px 8px; font-size: 13px; }
+    .kafichat-logs-table th, .kafichat-logs-table td { padding: 10px 8px; font-size: 12px; }
+    .kafichat-logs-table th:nth-child(4), .kafichat-logs-table td:nth-child(4) { display: none; }
+    .kafichat-pagination { flex-direction: column; gap: 14px; }
+    .kafichat-page-btn { min-width: 32px; height: 32px; padding: 0 10px; font-size: 12px; }
+}

@@ -204,3 +204,12 @@ function gpds_page_has_slider()
         || is_shop()
         || is_product();
 }
+
+
+
+
+
+/**
+ * Hide WordPress Admin Bar on frontend
+ */
+add_filter('show_admin_bar', '__return_false');
