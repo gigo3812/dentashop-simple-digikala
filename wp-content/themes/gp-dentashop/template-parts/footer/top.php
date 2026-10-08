@@ -17,10 +17,10 @@ if (!defined('ABSPATH')) exit;
             </div>
 
             <!-- تلفن پشتیبانی -->
-            <div class="gpds-footer-top__support">
-                <?php gpds_icon('phone', 20); ?>
+            <!-- <div class="gpds-footer-top__support">
+                
                 <span>پشتیبانی ۲۴ ساعته: <strong>056-0000000</strong></span>
-            </div>
+            </div> -->
 
             <!-- بازگشت به بالا -->
             <button

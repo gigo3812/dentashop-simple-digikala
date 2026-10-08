@@ -1,0 +1,1171 @@
+        <!DOCTYPE html>
+        <html dir="rtl" lang="fa">
+
+        <head>
+            <meta charset="utf-8" />
+            <title>تخفیف ویژه</title>
+            <style>
+                @page {
+                    margin: 15mm 15mm 15mm 15mm;
+                }
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    font-family: 'dana', 'dejavusans', sans-serif;
+                    font-size: 11pt;
+                    direction: rtl;
+                    text-align: right;
+                    color: #1d2327;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                h1,
+                h2,
+                h3 {
+                    margin: 0 0 8px;
+                    font-weight: bold;
+                    color: #1a73e8;
+                }
+
+                /* ---------- جلد ---------- */
+                .dsc-cover {
+                    position: relative;
+                    height: 240mm;
+                    text-align: center;
+                    padding-top: 60mm;
+                    page-break-after: always;
+                    background-size: cover;
+                    background-position: center;
+                }
+
+                .dsc-cover-logo {
+                    max-width: 60mm;
+                    max-height: 30mm;
+                    margin-bottom: 12mm;
+                }
+
+                .dsc-cover-title {
+                    font-size: 32pt;
+                    color: #1a73e8;
+                    margin-bottom: 6mm;
+                }
+
+                .dsc-cover-subtitle {
+                    font-size: 16pt;
+                    color: #50575e;
+                    margin-bottom: 20mm;
+                }
+
+                .dsc-cover-meta {
+                    font-size: 11pt;
+                    color: #50575e;
+                    line-height: 1.8;
+                }
+
+                .dsc-cover-meta strong {
+                    color: #1a73e8;
+                }
+
+                /* ---------- هدر صفحات ---------- */
+                .dsc-page-header {
+                    border-bottom: 2px solid #1a73e8;
+                    padding-bottom: 3mm;
+                    margin-bottom: 5mm;
+                    font-size: 10pt;
+                    color: #50575e;
+                }
+
+                .dsc-page-header .dsc-title {
+                    font-size: 12pt;
+                    color: #1a73e8;
+                    font-weight: bold;
+                }
+
+                /* ---------- کارت محصول ---------- */
+                .dsc-product {
+                    border: 1px solid #dcdcde;
+                    border-radius: 4px;
+                    padding: 4mm;
+                    margin-bottom: 10px;
+                    background: #fff;
+                    page-break-inside: avoid;
+                }
+
+                .dsc-product table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                .dsc-product td {
+                    vertical-align: top;
+                    padding: 0;
+                }
+
+                .dsc-product .dsc-image-cell {
+                    width: 20px;
+                    padding-left: 4mm;
+                }
+
+                .dsc-product .dsc-image-cell img {
+                    width: 20px;
+                    height: 20px;
+                    object-fit: cover;
+                    border-radius: 3px;
+                    border: 1px solid #f0f0f1;
+                }
+
+                .dsc-product .dsc-content-cell {
+                    vertical-align: top;
+                }
+
+                .dsc-product .dsc-product-name {
+                    font-size: 13pt;
+                    font-weight: bold;
+                    color: #1d2327;
+                    margin-bottom: 2mm;
+                }
+
+                .dsc-product .dsc-product-row {
+                    font-size: 10pt;
+                    color: #50575e;
+                    margin-bottom: 1mm;
+                    line-height: 1.6;
+                }
+
+                .dsc-product .dsc-product-row .dsc-label {
+                    color: #8c8f94;
+                    display: inline-block;
+                    min-width: 18mm;
+                }
+
+                .dsc-product .dsc-price {
+                    font-size: 13pt;
+                    font-weight: bold;
+                    color: #1a73e8;
+                    margin-top: 2mm;
+                }
+
+                .dsc-product .dsc-sale-price {
+                    color: #b32d2e;
+                    font-size: 13pt;
+                    font-weight: bold;
+                    margin-top: 2mm;
+                }
+
+                .dsc-product .dsc-price-call {
+                    color: #8c8f94;
+                    font-style: italic;
+                    font-size: 11pt;
+                }
+
+                .dsc-product .dsc-old-price {
+                    font-size: 10pt;
+                    color: #8c8f94;
+                    text-decoration: line-through;
+                    margin-right: 3mm;
+                }
+
+                .dsc-product .dsc-stock {
+                    display: inline-block;
+                    padding: 1mm 3mm;
+                    border-radius: 3px;
+                    font-size: 9pt;
+                    font-weight: bold;
+                }
+
+                .dsc-stock.instock {
+                    background: #edfaef;
+                    color: #00a32a;
+                }
+
+                .dsc-stock.outofstock {
+                    background: #fcf0f1;
+                    color: #b32d2e;
+                }
+
+                .dsc-stock.onbackorder {
+                    background: #fcf9e8;
+                    color: #997404;
+                }
+
+                .dsc-product .dsc-short-desc {
+                    font-size: 9pt;
+                    color: #646970;
+                    margin-top: 2mm;
+                    line-height: 1.6;
+                }
+
+                /* ---------- شبکه‌ای ---------- */
+                .dsc-grid {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                .dsc-grid td {
+                    vertical-align: top;
+                    width: 50%;
+                    padding: 2mm;
+                }
+
+                /* ---------- چیدمان فشرده ---------- */
+                .dsc-compact .dsc-product {
+                    padding: 2mm;
+                    margin-bottom: 2mm;
+                }
+
+                .dsc-compact .dsc-product-name {
+                    font-size: 11pt;
+                }
+
+                .dsc-compact .dsc-product-row {
+                    font-size: 9pt;
+                }
+
+                .dsc-compact .dsc-price,
+                .dsc-compact .dsc-sale-price {
+                    font-size: 11pt;
+                }
+
+                /* ---------- توضیحات پایانی ---------- */
+                .dsc-final-desc {
+                    margin-top: 8mm;
+                    padding: 5mm;
+                    background: #f1f3f4;
+                    border-radius: 4px;
+                    font-size: 10pt;
+                    line-height: 1.8;
+                    page-break-inside: avoid;
+                }
+
+                .dsc-final-desc h3 {
+                    margin-bottom: 3mm;
+                }
+
+                /* ---------- فوتر ---------- */
+                .dsc-footer {
+                    position: fixed;
+                    bottom: -10mm;
+                    left: 0;
+                    right: 0;
+                    height: 8mm;
+                    font-size: 9pt;
+                    color: #8c8f94;
+                    text-align: center;
+                    border-top: 1px solid #f0f0f1;
+                    padding-top: 2mm;
+                }
+
+                .dsc-footer .dsc-page-num {
+                    font-weight: bold;
+                    color: #1a73e8;
+                }
+
+                .dsc-page-break {
+                    page-break-after: always;
+                }
+            </style>
+        </head>
+
+        <body>
+
+
+
+            <!-- ============ جلد ============ -->
+                        <div class="dsc-cover" style="">
+
+                
+                <h1 class="dsc-cover-title">تخفیف ویژه</h1>
+
+                                    <div class="dsc-cover-subtitle">تخفیف بهاره</div>
+                
+                <div class="dsc-cover-meta">
+                                            <div><strong>فروشنده:</strong> حسن عابدیمی</div>
+                                                                <div><strong>نمایندگی:</strong> مشهد</div>
+                                                            
+
+                    <div style="margin-top: 10mm; color: #8c8f94; font-size: 10pt;">
+                        نسخه: 1.0.0                                            </div>
+                </div>
+            </div>
+
+            <!-- ============ صفحه محصولات ============ -->
+                            <div class="dsc-page-header">
+                    <table style="width:100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="text-align:right;">
+                                <span class="dsc-title">تخفیف ویژه</span>
+                            </td>
+                            <td style="text-align:left;">
+                                                                    حسن عابدیمی                                                            </td>
+                        </tr>
+                    </table>
+                </div>
+            
+            
+
+
+                                    <table class="dsc-grid">
+                        <tr>
+                                                                                    <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">محلول نقره فلوراید کبالت (Cobalt SDF)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-sdf</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، مواد و خمیرهای اندو                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">محلول نقره فلوراید (SDF) برای توقف پوسیدگی و کاهش حساسیت</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">خشک‌کننده کانال کبالت (Canal Dry)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-canal-dry</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، شستشو و ضدعفونی کانال                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">خشک‌کننده کانال ریشه برای جذب رطوبت قبل از پر کردن</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">مدلینگ رزین کبالت (Modeling Resin)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-modeling-resin</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اسید اچ و باندینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">مدلینگ رزین برای فرم‌دهی و مدل‌سازی ترمیم‌های کامپوزیتی</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">لاینر نوری کلسیم هیدروکساید کبالت (CobaLine LC)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-cobaline-lc</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اسید اچ و باندینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">لاینر نوری کلسیم هیدروکساید برای محافظت از پالپ در ترمیم‌های عمیق</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">پودر کلسیم هیدروکساید + مایع کلسیم کبالت</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-calcium-hydroxide-powder</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، مواد و خمیرهای اندو                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">پودر و مایع کلسیم هیدروکساید برای تهیه خمیر پانسمان تازه</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">محلول ۲٪ کلرهگزیدین کبالت (Cobixidine)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-cobixidine</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، شستشو و ضدعفونی کانال                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">محلول ۲٪ کلرهگزیدین برای شستشو و ضدعفونی کانال ریشه</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">پانسمان موقت نوری کبالت (Temp LC)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-temp-lc</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                سمان و مواد کمکی ترمیم، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">پانسمان موقت نورپلیمریزه برای ترمیم‌های موقت بین جلسات</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">خمیر کلسیم هیدروکساید دارای یدوفرم کبالت (Filpex)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-filpex</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، مواد و خمیرهای اندو                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">خمیر کلسیم هیدروکساید + یدوفرم برای پانسمان طولانی‌مدت کانال</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">پرسلن باند کبالت (Porcelain Bond)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-porcelain-bond</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اسید اچ و باندینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">سیستم باندینگ تخصصی برای اتصال کامپوزیت به پرسلن و سرامیک</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">وتینگ رزین کبالت (Wetting Resin)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-wetting-resin</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اسید اچ و باندینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">رزین خیس‌کننده برای بهبود نفوذ باندینگ روی سطوح دشوار</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                </tr>
+                    </table>
+                
+
+
+
+                                    <pagebreak />
+                                                    <div class="dsc-page-header">
+                            <table style="width:100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="text-align:right;">
+                                        <span class="dsc-title">تخفیف ویژه</span>
+                                    </td>
+                                    <td style="text-align:left;">
+                                                                                    حسن عابدیمی                                                                            </td>
+                                </tr>
+                            </table>
+                        </div>
+                
+
+
+                                    <table class="dsc-grid">
+                        <tr>
+                                                                                    <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">کیت رزین اینفیلترانت کبالت (Resin Infiltrant Kit)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-resin-infiltrant-kit</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                سمان و مواد کمکی ترمیم، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">کیت رزین اینفیلترانت برای درمان ضایعات اولیه (White Spot) بدون تراش</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">فیشور سیلانت کبالت (Cobalt Sealant)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-sealant</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                سمان و مواد کمکی ترمیم، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">فیشور سیلانت نورپلیمریزه برای پیشگیری از پوسیدگی شیارهای دندان</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">رزین محافظ لثه کبالت (Cobalt Dam)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-dam</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                سمان و مواد کمکی ترمیم، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">رزین محافظ لثه به عنوان سد فیزیکی موقت در حین درمان</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">ژل ضدحساسیت کبالت (Desensitizing Gel)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-desensitizing-gel</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                جرم‌گیری و بلیچینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">ژل ضدحساسیت برای کاهش حساسیت عاجی و درمان حساسیت‌های دندانی</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">آرسی‌پرپ کبالت (Cobalt Prep)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-prep</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، شستشو و ضدعفونی کانال                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">ژل نرم‌کننده و ضدعفونی‌کننده کانال ریشه</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">ژل سفیدکننده خانگی کبالت (Home Bleach)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-home-bleach</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                جرم‌گیری و بلیچینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">ژل سفیدکننده خانگی با غلظت مناسب برای استفاده در قالب‌های شخصی</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">محلول EDTA ۱۷٪ کبالت (Canal Clean)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-canal-clean</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، شستشو و ضدعفونی کانال                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">محلول EDTA ۱۷٪ برای حذف اسمیر لایه و نرم‌کردن کانال ریشه</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">ژل فسفات فلوراید اسیدی کبالت (Fluoride Gel)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-fluoride-gel</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                جرم‌گیری و بلیچینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">ژل فلوراید اسیدی برای پیشگیری از پوسیدگی و کاهش حساسیت</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            </tr>
+                        <tr>
+                                                <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">خمیر کلسیم هیدروکساید کبالت (Cobalt Paste)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-paste</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اندو - درمان ریشه، مواد و خمیرهای اندو                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">خمیر کلسیم هیدروکساید برای پانسمان داخل کانال</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">اسید اچ سیلیکایی کبالت (Classic Etch)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-classic-etch</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اسید اچ و باندینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">اسید اچ سیلیکایی برای آماده‌سازی سطوح سرامیکی و شیشه‌ای</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                </tr>
+                    </table>
+                
+
+
+
+                                    <pagebreak />
+                                                    <div class="dsc-page-header">
+                            <table style="width:100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="text-align:right;">
+                                        <span class="dsc-title">تخفیف ویژه</span>
+                                    </td>
+                                    <td style="text-align:left;">
+                                                                                    حسن عابدیمی                                                                            </td>
+                                </tr>
+                            </table>
+                        </div>
+                
+
+
+                                    <table class="dsc-grid">
+                        <tr>
+                                                                                    <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">اسید اچ پرسلن کبالت (Porcelain Etch)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-porcelain-etch</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                اسید اچ و باندینگ، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">اسید اچ تخصصی پرسلن برای باند مطمئن کامپوزیت به روکش‌های پرسلنی</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                            <td>
+                                    <div class="dsc-product">
+            <table>
+                <tr>
+                    
+                    <td class="dsc-content-cell">
+                                                    <div class="dsc-product-name">دای آشکارساز پوسیدگی کبالت (Caries Detector)</div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">کد:</span>
+                                <span dir="ltr">cobalt-caries-detector</span>
+                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">برند:</span>
+                                کبالت (Cobalt)                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-label">دسته:</span>
+                                سمان و مواد کمکی ترمیم، مواد ترمیمی و کامپوزیت                            </div>
+                        
+                                                    <div class="dsc-product-row">
+                                <span class="dsc-stock instock">
+                                    موجود                                </span>
+                            </div>
+                        
+                                                    <div class="dsc-price dsc-price-call">
+                                قیمت: تماس بگیرید                            </div>
+                        
+                                                    <div class="dsc-short-desc">دای رنگی آشکارساز پوسیدگی برای تشخیص دقیق و حذف کامل بافت پوسیده</div>
+                                            </td>
+                </tr>
+            </table>
+        </div>
+                        </td>
+                                                                </tr>
+                    </table>
+                
+
+
+
+                            
+            <!-- ============ توضیحات پایانی ============ -->
+            
+            <!-- ============ فوتر ثابت ============ -->
+                            <htmlpagefooter name="dsc-footer">
+                    <div class="dsc-footer">
+                                                    مشهد                            &nbsp;|&nbsp;
+                        
+                        
+                        
+                                                    &nbsp;|&nbsp;
+                            صفحه                            <span class="dsc-page-num">{PAGENO}</span>
+                            از                            {nbpg}
+                                            </div>
+                </htmlpagefooter>
+                <sethtmlpagefooter name="dsc-footer" value="on" />
+            
+        </body>
+
+        </html>
+    

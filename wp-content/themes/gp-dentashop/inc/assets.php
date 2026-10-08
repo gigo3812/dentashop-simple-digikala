@@ -274,3 +274,4 @@ function gpds_preload_fonts()
 // Hide WordPress Admin Bar on frontend
 // ============================================
 add_filter('show_admin_bar', '__return_false');
+

@@ -27,7 +27,7 @@ if (empty($slides)) {
                             class="gpds-slide"
                             aria-label="<?php echo esc_attr($slide['title']); ?>"
                         >
-                            <picture>
+                            <picture style="height: 100%;">
                                 <?php if (!empty($slide['image_mobile'])) : ?>
                                     <source
                                         media="(max-width: 767px)"

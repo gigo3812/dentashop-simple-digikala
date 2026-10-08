@@ -1,3 +1,11 @@
+
+minify :
+C:\wamp64\www\dentashop\wp-content\themes\gp-dentashop\assets\js>minifier . --output-dir "*.min.js"
+
+kafichat
+بازنویسی کامل فایل C:\wamp64\www\dentashop\wp-content\plugins\kafichat-lite\kafichat-lite.php
+
+
 # GP DentaShop
 
 > قالب فروشگاهی فوق سریع بر پایه GeneratePress + WooCommerce  
