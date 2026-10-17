@@ -1,16 +1,22 @@
 /* ============================================================
  * GP DentaShop — WooCommerce Shop / Archive / Single Product
- * 
- * لود شرطی در:
+ *
+ * بارگذاری شرطی در:
  *   - is_shop()
  *   - is_product_category() / is_product_tag()
  *   - is_product()
  *   - is_tax('product_brand')
- *   - صفحه برندها
+ *   - صفحه برندها (/brands/)
+ *
+ * Breakpoints (نزولی):
+ *   1200px — تبلت افقی
+ *   1024px — تبلت
+ *    768px — موبایل بزرگ
+ *    480px — موبایل کوچک
  * ============================================================ */
 
 /* ============================================
- * Shop Header
+ * 1) Shop Header
  * ============================================ */
 .gpds-shop {
     padding-bottom: var(--gpds-space-xxl);
@@ -74,11 +80,11 @@
 }
 
 /* ============================================
- * Shop Layout
+ * 2) Shop Layout (Sidebar + Main)
  * ============================================ */
 .gpds-shop-layout {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 260px minmax(0, 1fr);
     gap: var(--gpds-space-lg);
     align-items: start;
 }
@@ -103,7 +109,7 @@
 }
 
 /* ============================================
- * Shop Toolbar
+ * 3) Shop Toolbar
  * ============================================ */
 .gpds-shop-toolbar {
     display: flex;
@@ -174,12 +180,12 @@
 }
 
 /* ============================================
- * Shop Grid
+ * 4) Shop Grid
  * ============================================ */
 .gpds-shop-grid,
 ul.products {
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     gap: var(--gpds-space-md) !important;
     list-style: none !important;
     padding: 0 !important;
@@ -189,6 +195,7 @@ ul.products {
 .gpds-shop-grid__item,
 ul.products li.product {
     width: 100% !important;
+    min-width: 0 !important;
     margin: 0 !important;
     float: none !important;
     background: var(--gpds-bg-surface);
@@ -202,7 +209,7 @@ ul.products li.product {
 }
 
 /* ============================================
- * Shop Pagination
+ * 5) Shop Pagination
  * ============================================ */
 .gpds-shop-pagination {
     margin-top: var(--gpds-space-lg);
@@ -247,7 +254,7 @@ ul.products li.product {
 }
 
 /* ============================================
- * Shop Filters
+ * 6) Shop Filters
  * ============================================ */
 .gpds-shop-filters {
     display: flex;
@@ -402,7 +409,7 @@ ul.products li.product {
 }
 
 /* ============================================
- * Single Product
+ * 7) Single Product
  * ============================================ */
 .gpds-product-single {
     padding: var(--gpds-space-lg) 0;
@@ -423,6 +430,7 @@ ul.products li.product {
     position: sticky;
     top: var(--gpds-space-md);
     align-self: start;
+    min-width: 0;
 }
 
 .gpds-product-gallery__main {
@@ -484,6 +492,7 @@ ul.products li.product {
     display: flex;
     flex-direction: column;
     gap: var(--gpds-space-md);
+    min-width: 0;
 }
 
 .gpds-product-info__title {
@@ -887,7 +896,7 @@ ul.products li.product {
 }
 
 /* ============================================
- * Brand Archive Header
+ * 8) Brand Archive Header
  * ============================================ */
 .gpds-brand-header__inner {
     display: flex;
@@ -967,7 +976,7 @@ ul.products li.product {
 }
 
 /* ============================================
- * Brands Page (/brands/)
+ * 9) Brands Page (/brands/)
  * ============================================ */
 .gpds-brands-page {
     padding: var(--gpds-space-lg) 0 var(--gpds-space-xxl);
@@ -987,7 +996,7 @@ ul.products li.product {
 
 .gpds-brands-page-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--gpds-space-md);
 }
 
@@ -1004,6 +1013,7 @@ ul.products li.product {
     color: inherit;
     transition: all 0.25s ease;
     text-align: center;
+    min-width: 0;
 }
 
 .gpds-brand-page-item:hover {
@@ -1018,8 +1028,7 @@ ul.products li.product {
     justify-content: center;
     width: 100%;
     aspect-ratio: 1 / 1;
-    max-width: 140px;
-    padding: var(--gpds-space-sm);
+    padding: var(--gpds-space-xs);
     background: var(--gpds-bg-muted);
     border-radius: var(--gpds-radius-sm);
     overflow: hidden;
@@ -1080,8 +1089,18 @@ ul.products li.product {
 }
 
 /* ============================================
- * Responsive
+ * 10) Responsive — Desktop → Mobile
+ *      ترتیب نزولی: 1200 → 1024 → 768 → 480
  * ============================================ */
+
+/* --- 1200px: تبلت افقی --- */
+@media (max-width: 1200px) {
+    .gpds-brands-page-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* --- 1024px: تبلت --- */
 @media (max-width: 1024px) {
     .gpds-shop-layout {
         grid-template-columns: 1fr;
@@ -1129,7 +1148,7 @@ ul.products li.product {
 
     .gpds-shop-grid,
     ul.products {
-        grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     }
 
     .gpds-product-single__main {
@@ -1139,12 +1158,17 @@ ul.products li.product {
     .gpds-product-gallery {
         position: static;
     }
+
+    .gpds-brands-page-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
+/* --- 768px: موبایل بزرگ --- */
 @media (max-width: 768px) {
     .gpds-shop-grid,
     ul.products {
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: var(--gpds-space-sm) !important;
     }
 
@@ -1179,6 +1203,7 @@ ul.products li.product {
         font-size: var(--gpds-fs-2xl);
     }
 
+    /* Brand archive header */
     .gpds-brand-header__inner {
         flex-direction: column;
         text-align: center;
@@ -1194,6 +1219,7 @@ ul.products li.product {
         justify-content: center;
     }
 
+    /* Brands grid — 3 ستون */
     .gpds-brands-page-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: var(--gpds-space-sm);
@@ -1201,10 +1227,18 @@ ul.products li.product {
 
     .gpds-brand-page-item {
         padding: var(--gpds-space-sm);
+        gap: 6px;
     }
 
     .gpds-brand-page-item__name {
         font-size: var(--gpds-fs-sm);
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.35;
+        min-height: calc(1.35em * 2);
     }
 
     .gpds-brands-page .gpds-page-title {
@@ -1212,7 +1246,9 @@ ul.products li.product {
     }
 }
 
+/* --- 480px: موبایل کوچک --- */
 @media (max-width: 480px) {
+    /* Single product */
     .gpds-product-info__title {
         font-size: var(--gpds-fs-lg);
     }
@@ -1240,32 +1276,37 @@ ul.products li.product {
         text-align: right;
     }
 
+    /* Brands grid — 2 ستون */
     .gpds-brands-page-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
+        gap: 10px;
+    }
+
+    .gpds-brand-page-item {
+        padding: 8px;
+        gap: 6px;
+        border-radius: var(--gpds-radius-sm);
     }
 
     .gpds-brand-page-item__logo {
-        max-width: 100px;
+        padding: 4px;
     }
-}
 
-@media (max-width: 1200px) {
-    .gpds-brands-page-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (max-width: 992px) {
-    .gpds-brands-page-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .gpds-brand-page-item__count {
+        font-size: 10px;
+        padding: 1px 8px;
     }
 }
 
 /* ============================================
- * Animation
+ * 11) Animations
  * ============================================ */
 @keyframes gpds-slide-in-right {
     from { transform: translateX(100%); }
     to   { transform: translateX(0); }
+}
+
+@keyframes gpds-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
