@@ -81,9 +81,12 @@
             var endTime = parseInt(el.dataset.end, 10) * 1000;
             if (!endTime || isNaN(endTime)) return;
 
+            var daysEl = el.querySelector('[data-gpds-cd="days"]');
             var hoursEl = el.querySelector('[data-gpds-cd="hours"]');
             var minutesEl = el.querySelector('[data-gpds-cd="minutes"]');
             var secondsEl = el.querySelector('[data-gpds-cd="seconds"]');
+            var daysBox = el.querySelector('[data-gpds-cd-box="days"]');
+            var daysSep = el.querySelector('[data-gpds-cd-sep="days"]');
 
             var serverNow = parseInt(el.dataset.serverNow || 0, 10) * 1000;
             var clientNow = Date.now();
@@ -105,10 +108,15 @@
                     return;
                 }
 
-                var h = Math.floor(diff / 3600000);
+                var d = Math.floor(diff / 86400000);
+                var h = Math.floor((diff % 86400000) / 3600000);
                 var m = Math.floor((diff % 3600000) / 60000);
                 var s = Math.floor((diff % 60000) / 1000);
 
+                var showDays = d >= 1;
+                if (daysBox) daysBox.hidden = !showDays;
+                if (daysSep) daysSep.hidden = !showDays;
+                if (daysEl) daysEl.textContent = String(d).padStart(2, '0');
                 if (hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
                 if (minutesEl) minutesEl.textContent = String(m).padStart(2, '0');
                 if (secondsEl) secondsEl.textContent = String(s).padStart(2, '0');
@@ -118,7 +126,6 @@
             intervalId = setInterval(update, 1000);
         });
     }
-
     // ============================================
     // 3. Stories
     // ============================================

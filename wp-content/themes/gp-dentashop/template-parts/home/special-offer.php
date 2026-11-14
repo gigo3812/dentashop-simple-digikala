@@ -45,6 +45,24 @@ foreach ($products as $product) {
         }
     }
 }
+
+// محاسبه نمایش تایمر (فقط اگر کمتر از یک ماه باقی مانده باشد)
+$end_ts = 0;
+if (!empty($end_time)) {
+    $end_ts = is_numeric($end_time) ? (int) $end_time : strtotime($end_time);
+}
+
+$now_ts     = current_time('timestamp');
+$diff       = ($end_ts > $now_ts) ? ($end_ts - $now_ts) : 0;
+$one_month  = 30 * DAY_IN_SECONDS;
+$show_timer = ($diff > 0 && $diff <= $one_month);
+
+// محاسبه اجزای زمان برای رندر اولیه
+$has_days  = ($diff >= DAY_IN_SECONDS);
+$init_days = $has_days ? (int) floor($diff / DAY_IN_SECONDS) : 0;
+$init_hrs  = (int) floor(($diff % DAY_IN_SECONDS) / HOUR_IN_SECONDS);
+$init_min  = (int) floor(($diff % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS);
+$init_sec  = (int) ($diff % MINUTE_IN_SECONDS);
 ?>
 
 <section class="gpds-section" aria-label="<?php echo esc_attr($title); ?>">
@@ -69,28 +87,35 @@ foreach ($products as $product) {
                     </div>
                 </div>
                 
-                <!-- تایمر (از سرور) -->
-               <div 
-                    class="gpds-countdown" 
-                    data-gpds-countdown 
-                    data-end="<?php echo esc_attr($end_time); ?>"
-                    data-server-now="<?php echo esc_attr(current_time('timestamp')); ?>"
-                >
-                    <div class="gpds-countdown__box">
-                        <span data-gpds-cd="hours">00</span>
-                        <small>ساعت</small>
+                <!-- تایمر (فقط اگر کمتر از یک ماه باقی مانده باشد) -->
+                <?php if ($show_timer) : ?>
+                    <div 
+                        class="gpds-countdown" 
+                        data-gpds-countdown 
+                        data-end="<?php echo esc_attr($end_ts); ?>"
+                        data-server-now="<?php echo esc_attr($now_ts); ?>"
+                    >
+                        <div class="gpds-countdown__box" data-gpds-cd-box="days" <?php echo $has_days ? '' : 'hidden'; ?>>
+                            <span data-gpds-cd="days"><?php echo esc_html(str_pad($init_days, 2, '0', STR_PAD_LEFT)); ?></span>
+                            <small>روز</small>
+                        </div>
+                        <div class="gpds-countdown__sep" data-gpds-cd-sep="days" <?php echo $has_days ? '' : 'hidden'; ?>>:</div>
+                        <div class="gpds-countdown__box">
+                            <span data-gpds-cd="hours"><?php echo esc_html(str_pad($init_hrs, 2, '0', STR_PAD_LEFT)); ?></span>
+                            <small>ساعت</small>
+                        </div>
+                        <div class="gpds-countdown__sep">:</div>
+                        <div class="gpds-countdown__box">
+                            <span data-gpds-cd="minutes"><?php echo esc_html(str_pad($init_min, 2, '0', STR_PAD_LEFT)); ?></span>
+                            <small>دقیقه</small>
+                        </div>
+                        <div class="gpds-countdown__sep">:</div>
+                        <div class="gpds-countdown__box">
+                            <span data-gpds-cd="seconds"><?php echo esc_html(str_pad($init_sec, 2, '0', STR_PAD_LEFT)); ?></span>
+                            <small>ثانیه</small>
+                        </div>
                     </div>
-                    <div class="gpds-countdown__sep">:</div>
-                    <div class="gpds-countdown__box">
-                        <span data-gpds-cd="minutes">00</span>
-                        <small>دقیقه</small>
-                    </div>
-                    <div class="gpds-countdown__sep">:</div>
-                    <div class="gpds-countdown__box">
-                        <span data-gpds-cd="seconds">00</span>
-                        <small>ثانیه</small>
-                    </div>
-                </div>
+                <?php endif; ?>
                 
                 <a href="<?php echo esc_url($shop_link); ?>" class="gpds-section-more">
                     مشاهده همه
