@@ -57,6 +57,11 @@ require_once GPDS_INC . '/modules/brands-filters.php';
 
 require_once GPDS_INC . '/modules/offices.php';
 
+
+// WooCommerce - Thank You Page
+require_once GPDS_INC . '/woocommerce/thankyou.php';
+
+
 // ============================================
 // ماژول WooCommerce (فقط اگه ووکامرس فعاله)
 // ============================================
